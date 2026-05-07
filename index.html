@@ -2,75 +2,564 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Pro WP Landing Page Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WP Landing Page Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; }
-    .main { display: grid; grid-template-columns: 400px 1fr; gap: 20px; max-width: 1200px; margin: auto; }
-    .panel { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-    label { display: block; margin-top: 12px; font-weight: 600; font-size: 0.9rem; }
-    input, textarea { width: 100%; padding: 10px; margin-top: 4px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
-    button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 20px; }
-    #output { width: 100%; height: 700px; font-family: monospace; font-size: 0.8rem; background: #1e293b; color: #e2e8f0; padding: 15px; border-radius: 6px; }
+    :root, [data-theme="light"] {
+      --text-xs:   clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm:   clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg:   clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+
+      --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
+      --space-4: 1rem;    --space-5: 1.25rem; --space-6: 1.5rem;
+      --space-8: 2rem;
+
+      --color-bg:               #f7f6f2;
+      --color-surface:          #ffffff;
+      --color-surface-2:        #f9f8f5;
+      --color-surface-offset:   #f1f0ec;
+      --color-divider:          #e4e2dc;
+      --color-border:           #d4d1ca;
+      --color-text:             #1e1c17;
+      --color-text-muted:       #6b6963;
+      --color-text-faint:       #a8a6a0;
+      --color-primary:          #01696f;
+      --color-primary-hover:    #0c4e54;
+      --color-primary-active:   #0f3638;
+      --color-primary-highlight:#d0dedd;
+      --color-error:            #c0392b;
+      --color-success:          #1a7a3c;
+      --color-success-bg:       #f0faf4;
+
+      --radius-sm: 0.375rem; --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;  --radius-full: 9999px;
+
+      --shadow-sm: 0 1px 2px oklch(0.2 0.01 80 / 0.06);
+      --shadow-md: 0 4px 12px oklch(0.2 0.01 80 / 0.08);
+
+      --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+      --font-body: 'Inter', 'Helvetica Neue', sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+
+    [data-theme="dark"] {
+      --color-bg: #141311; --color-surface: #1c1b18; --color-surface-2: #211f1c;
+      --color-surface-offset: #1a1917; --color-divider: #2c2a27; --color-border: #3a3835;
+      --color-text: #e8e6e2; --color-text-muted: #888580; --color-text-faint: #575450;
+      --color-primary: #4fa8b2; --color-primary-hover: #3a909a; --color-primary-active: #2a7480;
+      --color-primary-highlight: #1e3a3d;
+      --color-error: #f87171; --color-success: #6ee7a0; --color-success-bg: #1a2d22;
+      --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.25); --shadow-md: 0 4px 12px oklch(0 0 0 / 0.35);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
+        --color-bg: #141311; --color-surface: #1c1b18; --color-surface-2: #211f1c;
+        --color-surface-offset: #1a1917; --color-divider: #2c2a27; --color-border: #3a3835;
+        --color-text: #e8e6e2; --color-text-muted: #888580; --color-text-faint: #575450;
+        --color-primary: #4fa8b2; --color-primary-hover: #3a909a; --color-primary-active: #2a7480;
+        --color-primary-highlight: #1e3a3d;
+        --color-error: #f87171; --color-success: #6ee7a0; --color-success-bg: #1a2d22;
+        --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.25); --shadow-md: 0 4px 12px oklch(0 0 0 / 0.35);
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      -webkit-text-size-adjust: none; text-size-adjust: none;
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    body {
+      min-height: 100dvh; font-family: var(--font-body);
+      font-size: var(--text-sm); color: var(--color-text);
+      background: var(--color-bg); line-height: 1.6;
+    }
+    button, input, textarea, select { font: inherit; color: inherit; }
+    button { cursor: pointer; background: none; border: none; }
+    :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; border-radius: var(--radius-sm); }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* Layout */
+    .app-shell { display: grid; grid-template-rows: auto 1fr; min-height: 100dvh; }
+
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-3) var(--space-6);
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-divider);
+      box-shadow: var(--shadow-sm);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .topbar-left { display: flex; align-items: center; gap: var(--space-3); }
+    .logo { display: flex; align-items: center; gap: var(--space-2); text-decoration: none; color: var(--color-text); }
+    .logo-text { font-size: var(--text-sm); font-weight: 600; letter-spacing: -0.01em; }
+    .logo-badge {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.05em;
+      color: var(--color-primary); background: var(--color-primary-highlight);
+      padding: 2px 6px; border-radius: var(--radius-full); text-transform: uppercase;
+    }
+    .theme-toggle {
+      display: flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: var(--radius-md);
+      color: var(--color-text-muted);
+      transition: background var(--transition), color var(--transition);
+    }
+    .theme-toggle:hover { background: var(--color-surface-offset); color: var(--color-text); }
+
+    .workspace {
+      display: grid; grid-template-columns: 380px 1fr;
+      overflow: hidden; height: calc(100dvh - 53px);
+    }
+
+    /* Left panel */
+    .form-panel {
+      display: flex; flex-direction: column;
+      background: var(--color-surface);
+      border-right: 1px solid var(--color-divider);
+      overflow: hidden;
+    }
+    .section-nav {
+      display: flex; gap: var(--space-1); flex-wrap: wrap;
+      padding: var(--space-3) var(--space-4) 0;
+      border-bottom: 1px solid var(--color-divider);
+      background: var(--color-surface);
+    }
+    .section-pill {
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full) var(--radius-full) 0 0;
+      font-size: var(--text-xs); font-weight: 500;
+      color: var(--color-text-muted); cursor: pointer;
+      border: 1px solid transparent; border-bottom: none;
+      transition: all var(--transition);
+      position: relative; bottom: -1px; background: transparent; white-space: nowrap;
+    }
+    .section-pill:hover { color: var(--color-text); background: var(--color-surface-offset); }
+    .section-pill.active {
+      color: var(--color-text); background: var(--color-surface);
+      border-color: var(--color-divider); border-bottom-color: var(--color-surface); font-weight: 600;
+    }
+    .section-panel { display: none; }
+    .section-panel.active { display: block; }
+
+    .form-scroll {
+      flex: 1; overflow-y: auto; padding: var(--space-5) var(--space-5) var(--space-3);
+    }
+    .form-scroll::-webkit-scrollbar { width: 5px; }
+    .form-scroll::-webkit-scrollbar-track { background: transparent; }
+    .form-scroll::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: var(--radius-full); }
+
+    .field-row { margin-bottom: var(--space-3); }
+    .field-label {
+      display: block; font-size: var(--text-xs); font-weight: 500;
+      color: var(--color-text-muted); margin-bottom: var(--space-1);
+    }
+    .field-input {
+      width: 100%; padding: var(--space-2) var(--space-3);
+      background: var(--color-surface-2); border: 1px solid var(--color-border);
+      border-radius: var(--radius-md); font-size: var(--text-sm); color: var(--color-text);
+      transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+    }
+    .field-input:hover { border-color: var(--color-text-faint); }
+    .field-input:focus {
+      outline: none; border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px oklch(from var(--color-primary) l c h / 0.15);
+      background: var(--color-surface);
+    }
+    .field-input::placeholder { color: var(--color-text-faint); }
+    .field-input.error { border-color: var(--color-error); }
+    .field-error { display: none; font-size: var(--text-xs); color: var(--color-error); margin-top: var(--space-1); }
+    .field-error.visible { display: block; }
+    .field-hint { font-size: var(--text-xs); color: var(--color-text-faint); margin-top: var(--space-1); }
+    .field-2col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+    .field-divider { height: 1px; background: var(--color-divider); margin: var(--space-3) 0; }
+    .field-group-label {
+      font-size: var(--text-xs); font-weight: 600; color: var(--color-text);
+      margin-bottom: var(--space-2); margin-top: var(--space-1);
+    }
+
+    .form-footer {
+      padding: var(--space-4) var(--space-5);
+      border-top: 1px solid var(--color-divider);
+      background: var(--color-surface);
+    }
+    .btn-generate {
+      display: flex; align-items: center; justify-content: center; gap: var(--space-2);
+      width: 100%; padding: var(--space-3) var(--space-4);
+      background: var(--color-primary); color: white;
+      border-radius: var(--radius-md); font-size: var(--text-sm); font-weight: 600;
+      transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-generate:hover { background: var(--color-primary-hover); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+    .btn-generate:active { background: var(--color-primary-active); transform: translateY(0); }
+
+    /* Right panel */
+    .output-panel { display: flex; flex-direction: column; background: var(--color-bg); overflow: hidden; }
+    .output-toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-3) var(--space-5);
+      background: var(--color-surface); border-bottom: 1px solid var(--color-divider);
+    }
+    .output-toolbar-left { display: flex; align-items: center; gap: var(--space-3); }
+    .output-label { font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-text-muted); }
+    .output-badge {
+      font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: var(--radius-full);
+      background: var(--color-surface-offset); color: var(--color-text-faint); border: 1px solid var(--color-border);
+    }
+    .output-badge.ready { background: var(--color-success-bg); color: var(--color-success); border-color: transparent; }
+    .output-actions { display: flex; align-items: center; gap: var(--space-2); }
+    .btn-action {
+      display: flex; align-items: center; gap: var(--space-1);
+      padding: var(--space-1) var(--space-3); height: 32px;
+      border-radius: var(--radius-md); font-size: var(--text-xs); font-weight: 500;
+      border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text-muted);
+      transition: all var(--transition); white-space: nowrap;
+    }
+    .btn-action svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .btn-action:hover { background: var(--color-surface-offset); color: var(--color-text); border-color: var(--color-text-faint); }
+    .btn-action.copied { background: var(--color-success-bg); color: var(--color-success); border-color: transparent; }
+
+    .output-area { flex: 1; overflow-y: auto; padding: var(--space-5); }
+    .output-area::-webkit-scrollbar { width: 5px; }
+    .output-area::-webkit-scrollbar-track { background: transparent; }
+    .output-area::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: var(--radius-full); }
+
+    .output-code {
+      font-family: var(--font-mono); font-size: 12px; line-height: 1.7;
+      color: var(--color-text); white-space: pre-wrap; word-break: break-all;
+      background: var(--color-surface); border: 1px solid var(--color-divider);
+      border-radius: var(--radius-lg); padding: var(--space-5); min-height: 100%;
+    }
+    .output-empty {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; height: 100%; min-height: 400px;
+      gap: var(--space-4); color: var(--color-text-faint);
+    }
+    .output-empty svg { width: 48px; height: 48px; opacity: 0.35; }
+    .output-empty h3 { font-size: var(--text-base); color: var(--color-text-muted); font-weight: 500; }
+    .output-empty p { font-size: var(--text-xs); max-width: 28ch; }
+
+    @media (max-width: 768px) {
+      .workspace { grid-template-columns: 1fr; grid-template-rows: auto 1fr; height: auto; }
+      .output-panel { min-height: 400px; }
+      .logo-badge { display: none; }
+    }
   </style>
 </head>
 <body>
-  <div class="main">
-    <div class="panel">
-      <h3>Landing Page Builder</h3>
-      <div id="fields">
-        <!-- Fields will be injected via JS -->
+<div class="app-shell">
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <a href="#" class="logo" aria-label="WP Landing Page Builder">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect width="32" height="32" rx="7" fill="var(--color-primary)"/>
+          <path d="M6 11h3.5l2.5 8 2.5-8h3l2.5 8 2.5-8H26" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 20.5h16" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
+        </svg>
+        <span class="logo-text">LP Builder</span>
+      </a>
+      <span class="logo-badge">Gutenberg</span>
+    </div>
+    <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </header>
+
+  <div class="workspace">
+
+    <!-- Left: Form -->
+    <aside class="form-panel">
+      <nav class="section-nav" aria-label="Page sections">
+        <button class="section-pill active" data-tab="hero"         onclick="switchTab('hero')">Hero</button>
+        <button class="section-pill"        data-tab="main"         onclick="switchTab('main')">Main</button>
+        <button class="section-pill"        data-tab="columns"      onclick="switchTab('columns')">3 Columns</button>
+        <button class="section-pill"        data-tab="testimonials" onclick="switchTab('testimonials')">Testimonials</button>
+        <button class="section-pill"        data-tab="portfolio"    onclick="switchTab('portfolio')">Portfolio</button>
+        <button class="section-pill"        data-tab="contact"      onclick="switchTab('contact')">Contact</button>
+      </nav>
+
+      <div class="form-scroll">
+
+        <!-- HERO -->
+        <div class="section-panel active" id="tab-hero">
+          <div class="field-row" style="margin-top:var(--space-4)">
+            <label class="field-label" for="hero">Hero Title</label>
+            <input class="field-input" type="text" id="hero" placeholder="e.g. Transform Your Business Today" autocomplete="off"/>
+          </div>
+          <div class="field-row">
+            <label class="field-label" for="sub">Hero Subtitle</label>
+            <input class="field-input" type="text" id="sub" placeholder="Supporting tagline or description" autocomplete="off"/>
+          </div>
+          <div class="field-row">
+            <label class="field-label" for="buttontext">Button Text</label>
+            <input class="field-input" type="text" id="buttontext" placeholder="e.g. Get Started" autocomplete="off"/>
+          </div>
+          <div class="field-row">
+            <label class="field-label" for="link">Button Link</label>
+            <input class="field-input" type="text" id="link" placeholder="https:// or /page-slug" autocomplete="off"/>
+            <p class="field-hint">Accepts full URLs, relative paths, or tel:/mailto:</p>
+            <p class="field-error" id="link-error">Enter a valid link (e.g. https://example.com or /contact)</p>
+          </div>
+        </div>
+
+        <!-- MAIN -->
+        <div class="section-panel" id="tab-main">
+          <div class="field-row" style="margin-top:var(--space-4)">
+            <label class="field-label" for="main">Section Title</label>
+            <input class="field-input" type="text" id="main" placeholder="e.g. About Our Services" autocomplete="off"/>
+          </div>
+          <div class="field-row">
+            <label class="field-label" for="maintext">Section Text</label>
+            <input class="field-input" type="text" id="maintext" placeholder="A short paragraph describing this section" autocomplete="off"/>
+          </div>
+        </div>
+
+        <!-- 3 COLUMNS -->
+        <div class="section-panel" id="tab-columns">
+          <p class="field-hint" style="margin-top:var(--space-4);margin-bottom:var(--space-3)">Leave all three empty to omit this section.</p>
+
+          <p class="field-group-label">Column 1</p>
+          <div class="field-row">
+            <label class="field-label" for="col1">Title</label>
+            <input class="field-input" type="text" id="col1" placeholder="Column 1 title" autocomplete="off"/>
+          </div>
+          <div class="field-row">
+            <label class="field-label" for="col1text">Text</label>
+            <input class="field-input" type="text" id="col1text" placeholder="Column 1 description" autocomplete="off"/>
+          </div>
+          <div class="field-divider"></div>
+
+          <p class="field-group-label">Column 2</p>
+          <div class="field-row">
+            <label class="field-label" for="col2">Title</label>
+            <input class="field-input" type="text" id="col2" placeholder="Column 2 title" autocomplete="off"/>
+          </div>
+          <div class="field-row">
+            <label class="field-label" for="col2text">Text</label>
+            <input class="field-input" type="text" id="col2text" placeholder="Column 2 description" autocomplete="off"/>
+          </div>
+          <div class="field-divider"></div>
+
+          <p class="field-group-label">Column 3</p>
+          <div class="field-row">
+            <label class="field-label" for="col3">Title</label>
+            <input class="field-input" type="text" id="col3" placeholder="Column 3 title" autocomplete="off"/>
+          </div>
+          <div class="field-row">
+            <label class="field-label" for="col3text">Text</label>
+            <input class="field-input" type="text" id="col3text" placeholder="Column 3 description" autocomplete="off"/>
+          </div>
+        </div>
+
+        <!-- TESTIMONIALS -->
+        <div class="section-panel" id="tab-testimonials">
+          <div class="field-row" style="margin-top:var(--space-4)">
+            <label class="field-label" for="test">Section Title</label>
+            <input class="field-input" type="text" id="test" placeholder="e.g. What Our Clients Say" autocomplete="off"/>
+          </div>
+          <div class="field-row">
+            <label class="field-label" for="testtext">Intro Text</label>
+            <input class="field-input" type="text" id="testtext" placeholder="Short intro sentence" autocomplete="off"/>
+          </div>
+          <div class="field-divider"></div>
+
+          <p class="field-group-label">Quote 1</p>
+          <div class="field-row">
+            <label class="field-label" for="testcol1title">Quote</label>
+            <input class="field-input" type="text" id="testcol1title" placeholder="The quote text" autocomplete="off"/>
+          </div>
+          <div class="field-2col">
+            <div class="field-row">
+              <label class="field-label" for="testcol1text">Name</label>
+              <input class="field-input" type="text" id="testcol1text" placeholder="Jane Doe" autocomplete="off"/>
+            </div>
+            <div class="field-row">
+              <label class="field-label" for="testcol1tit">Title</label>
+              <input class="field-input" type="text" id="testcol1tit" placeholder="CEO, Acme Inc." autocomplete="off"/>
+            </div>
+          </div>
+          <div class="field-divider"></div>
+
+          <p class="field-group-label">Quote 2</p>
+          <div class="field-row">
+            <label class="field-label" for="testcol2title">Quote</label>
+            <input class="field-input" type="text" id="testcol2title" placeholder="The quote text" autocomplete="off"/>
+          </div>
+          <div class="field-2col">
+            <div class="field-row">
+              <label class="field-label" for="testcol2text">Name</label>
+              <input class="field-input" type="text" id="testcol2text" placeholder="John Smith" autocomplete="off"/>
+            </div>
+            <div class="field-row">
+              <label class="field-label" for="testcol2tit">Title</label>
+              <input class="field-input" type="text" id="testcol2tit" placeholder="Director, Corp." autocomplete="off"/>
+            </div>
+          </div>
+          <div class="field-divider"></div>
+
+          <p class="field-group-label">Quote 3</p>
+          <div class="field-row">
+            <label class="field-label" for="testcol3title">Quote</label>
+            <input class="field-input" type="text" id="testcol3title" placeholder="The quote text" autocomplete="off"/>
+          </div>
+          <div class="field-2col">
+            <div class="field-row">
+              <label class="field-label" for="testcol3text">Name</label>
+              <input class="field-input" type="text" id="testcol3text" placeholder="Sara Lee" autocomplete="off"/>
+            </div>
+            <div class="field-row">
+              <label class="field-label" for="testcol3tit">Title</label>
+              <input class="field-input" type="text" id="testcol3tit" placeholder="VP, Startup" autocomplete="off"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- PORTFOLIO -->
+        <div class="section-panel" id="tab-portfolio">
+          <div class="field-row" style="margin-top:var(--space-4)">
+            <label class="field-label" for="port">Portfolio Section Title</label>
+            <input class="field-input" type="text" id="port" placeholder="e.g. Our Work" autocomplete="off"/>
+          </div>
+        </div>
+
+        <!-- CONTACT -->
+        <div class="section-panel" id="tab-contact">
+          <div class="field-row" style="margin-top:var(--space-4)">
+            <label class="field-label" for="contacttext">Section Text</label>
+            <input class="field-input" type="text" id="contacttext" placeholder="e.g. We'd love to hear from you" autocomplete="off"/>
+          </div>
+          <div class="field-row">
+            <label class="field-label" for="address">Address</label>
+            <input class="field-input" type="text" id="address" placeholder="123 Main St, City, State 12345" autocomplete="off"/>
+          </div>
+          <div class="field-2col">
+            <div class="field-row">
+              <label class="field-label" for="phone">Phone</label>
+              <input class="field-input" type="text" id="phone" placeholder="(555) 000-0000" autocomplete="off"/>
+            </div>
+            <div class="field-row">
+              <label class="field-label" for="email">Email</label>
+              <input class="field-input" type="email" id="email" placeholder="hello@example.com" autocomplete="off"/>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /form-scroll -->
+
+      <div class="form-footer">
+        <button class="btn-generate" id="gen">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <path d="M2 8h12M8 2l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Generate Gutenberg Code
+        </button>
       </div>
-      <button id="gen">Generate Landing Page Code</button>
-    </div>
-    <div class="panel">
-      <h3>Gutenberg Code Output</h3>
-      <textarea id="output" readonly></textarea>
-    </div>
+    </aside>
+
+    <!-- Right: Output -->
+    <main class="output-panel">
+      <div class="output-toolbar">
+        <div class="output-toolbar-left">
+          <span class="output-label">Output</span>
+          <span class="output-badge" id="output-badge">Waiting for input</span>
+        </div>
+        <div class="output-actions">
+          <button class="btn-action" id="clear-btn" onclick="clearOutput()" aria-label="Clear output">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75">
+              <path d="M2 4h12M6 4V2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V4M5 4l.5 9.5h5L11 4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Clear
+          </button>
+          <button class="btn-action" id="copy-btn" onclick="copyCode()" aria-label="Copy to clipboard">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75">
+              <rect x="5" y="5" width="9" height="9" rx="1.5"/>
+              <path d="M10 5V3.5A1.5 1.5 0 0 0 8.5 2h-5A1.5 1.5 0 0 0 2 3.5v5A1.5 1.5 0 0 0 3.5 10H5" stroke-linecap="round"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+      </div>
+
+      <div class="output-area" id="output-area">
+        <div class="output-empty" id="output-empty">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="8" y="4" width="32" height="40" rx="3"/>
+            <path d="M16 16h16M16 22h16M16 28h10"/>
+          </svg>
+          <h3>No code generated yet</h3>
+          <p>Fill in the fields and click Generate</p>
+        </div>
+        <pre class="output-code" id="output-code" style="display:none" aria-live="polite"></pre>
+      </div>
+    </main>
+
   </div>
-  <script>
-    const FIELDS = [
-      {id: "hero", label: "Hero Title", group: "Hero"}, {id: "sub", label: "Hero Subtitle", group: "Hero"}, {id: "link", label: "Hero Link", group: "Hero"}, {id: "buttontext", label: "Hero Button Text", group: "Hero"},
-      {id: "main", label: "Main Title", group: "Main"}, {id: "maintext", label: "Main Text", group: "Main"},
-      {id: "col1", label: "Col 1 Title", group: "Three Column"}, {id: "col1text", label: "Col 1 Text", group: "Three Column"}, {id: "col2", label: "Col 2 Title", group: "Three Column"}, {id: "col2text", label: "Col 2 Text", group: "Three Column"}, {id: "col3", label: "Col 3 Title", group: "Three Column"}, {id: "col3text", label: "Col 3 Text", group: "Three Column"},
-      {id: "test", label: "Testimonial Title", group: "Testimonials"}, {id: "testtext", label: "Testimonial Text", group: "Testimonials"}, {id: "testcol1title", label: "Quote 1", group: "Testimonials"}, {id: "testcol1text", label: "Quote Name 1", group: "Testimonials"}, {id: "testcol1tit", label: "Quote Title 1", group: "Testimonials"}, {id: "testcol2title", label: "Quote 2", group: "Testimonials"}, {id: "testcol2text", label: "Quote Name 2", group: "Testimonials"}, {id: "testcol2tit", label: "Quote Title 2", group: "Testimonials"}, {id: "testcol3title", label: "Quote 3", group: "Testimonials"}, {id: "testcol3text", label: "Quote Name 3", group: "Testimonials"}, {id: "testcol3tit", label: "Quote Title 3", group: "Testimonials"},
-      {id: "port", label: "Portfolio Item", group: "Portfolio"},
-      {id: "contacttext", label: "Contact Text", group: "Contact"}, {id: "address", label: "Contact Address", group: "Contact"}, {id: "phone", label: "Contact Phone", group: "Contact"}, {id: "email", label: "Contact Email", group: "Contact"},
-    ];
+</div>
 
-    const fieldsDiv = document.getElementById('fields');
-    FIELDS.forEach(f => {
-      fieldsDiv.insertAdjacentHTML('beforeend', `<label>${f.label}</label><input id="${f.id}" placeholder="${f.group}">`);
-    });
+<script>
+  // Theme toggle
+  (function(){
+    const t = document.querySelector('[data-theme-toggle]');
+    const r = document.documentElement;
+    let d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    r.setAttribute('data-theme', d);
+    function setIcon(mode) {
+      t.innerHTML = mode === 'dark'
+        ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+        : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+      t.setAttribute('aria-label', 'Switch to ' + (mode === 'dark' ? 'light' : 'dark') + ' mode');
+    }
+    setIcon(d);
+    t.addEventListener('click', () => { d = d === 'dark' ? 'light' : 'dark'; r.setAttribute('data-theme', d); setIcon(d); });
+  })();
 
-    document.getElementById('gen').onclick = () => {
-      const d = {};
-      FIELDS.forEach(f => d[f.id] = document.getElementById(f.id).value.trim());
+  // Tab switching
+  function switchTab(name) {
+    document.querySelectorAll('.section-pill').forEach(p => p.classList.toggle('active', p.dataset.tab === name));
+    document.querySelectorAll('.section-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + name));
+  }
 
-      // Link Verifier
-      if (d.link) {
-        const urlPattern = /^(https?:\/\/|tel:|mailto:|\/)/;
-        if (!urlPattern.test(d.link)) {
-          alert("Please enter a valid link (e.g., https://google.com, tel:5551234, or /contact)");
-          document.getElementById('link').focus();
-          return;
-        }
+  // Generate
+  const FIELDS = ['hero','sub','link','buttontext','main','maintext','col1','col1text','col2','col2text','col3','col3text','test','testtext','testcol1title','testcol1text','testcol1tit','testcol2title','testcol2text','testcol2tit','testcol3title','testcol3text','testcol3tit','port','contacttext','address','phone','email'];
+
+  document.getElementById('gen').addEventListener('click', generate);
+
+  function generate() {
+    const d = {};
+    FIELDS.forEach(id => { d[id] = (document.getElementById(id)?.value || '').trim(); });
+
+    const linkErr = document.getElementById('link-error');
+    const linkInput = document.getElementById('link');
+    if (d.link) {
+      if (!/^(https?:\/\/|tel:|mailto:|\/)/. test(d.link)) {
+        linkInput.classList.add('error'); linkErr.classList.add('visible');
+        switchTab('hero'); linkInput.focus(); return;
       }
+    }
+    linkInput.classList.remove('error'); linkErr.classList.remove('visible');
 
-      // Using alignwide for the container
-      let html = `<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} --><div class="wp-block-group alignwide">`;
+    let html = `<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} --><div class="wp-block-group alignwide">`;
 
-      if(d.hero) html += `<!-- wp:group {"metadata":{"name":"Section"},"align":"full","className":"ext-hero-section is-style-ext-preset\u002d\u002dgroup\u002d\u002dnatural-1\u002d\u002dsection ext-animate\u002d\u002don","style":{"spacing":{"padding":{"top":"0","bottom":"0","left":"0","right":"0"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"background","layout":{"inherit":true,"type":"constrained"}} -->
+    if(d.hero) html += `<!-- wp:group {"metadata":{"name":"Section"},"align":"full","className":"ext-hero-section is-style-ext-preset\u002d\u002dgroup\u002d\u002dnatural-1\u002d\u002dsection ext-animate\u002d\u002don","style":{"spacing":{"padding":{"top":"0","bottom":"0","left":"0","right":"0"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"background","layout":{"inherit":true,"type":"constrained"}} -->
 <div class="wp-block-group alignfull ext-hero-section is-style-ext-preset--group--natural-1--section ext-animate--on has-background-background-color has-background" style="margin-top:0;margin-bottom:0;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0"><!-- wp:columns {"align":"full","className":"ext-animate\u002d\u002don","style":{"spacing":{"blockGap":{"top":"0","left":"0"}}}} -->
 <div class="wp-block-columns alignfull ext-animate--on"><!-- wp:column {"verticalAlignment":"center","className":"ext-animate\u002d\u002don"} -->
 <div class="wp-block-column is-vertically-aligned-center ext-animate--on"><!-- wp:group {"className":"ext-animate\u002d\u002don","style":{"spacing":{"padding":{"top":"var:preset|spacing|30","right":"var:preset|spacing|30","bottom":"var:preset|spacing|30","left":"var:preset|spacing|30"}}},"layout":{"type":"constrained","justifyContent":"right","contentSize":"608px"}} -->
 <div class="wp-block-group ext-animate--on" style="padding-top:var(--wp--preset--spacing--30);padding-right:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--30);padding-left:var(--wp--preset--spacing--30)"><!-- wp:heading {"level":1,"className":"ext-animate\u002d\u002don"} -->
 <h1 class="wp-block-heading ext-animate--on">${d.hero}</h1>
 <!-- /wp:heading -->
-
 <!-- wp:paragraph {"className":"ext-animate\u002d\u002don","style":{"spacing":{"margin":{"top":"24px"}}}} -->
 <p class="ext-animate--on" style="margin-top:24px">${d.sub}</p>
 <!-- /wp:paragraph -->
-
 <!-- wp:buttons {"className":"ext-animate\u002d\u002don","style":{"spacing":{"blockGap":"1rem","margin":{"top":"var:preset|spacing|40"}}}} -->
 <div class="wp-block-buttons ext-animate--on" style="margin-top:var(--wp--preset--spacing--40)"><!-- wp:button {"className":"ext-animate\u002d\u002don is-style-ext-preset\u002d\u002dbutton\u002d\u002dnatural-1\u002d\u002dbutton-1"} -->
 <div class="wp-block-button ext-animate--on is-style-ext-preset--button--natural-1--button-1"><a class="wp-block-button__link wp-element-button" href="${d.link}">${d.buttontext}</a></div>
@@ -78,85 +567,66 @@
 <!-- /wp:buttons --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column -->
-
 <!-- wp:column {"verticalAlignment":"top","className":"ext-animate\u002d\u002don"} -->
 <div class="wp-block-column is-vertically-aligned-top ext-animate--on"><!-- wp:cover {"url":"https://images.unsplash.com/photo-1463343232537-7171a89c83f7?fit=crop\u0026amp;crop=entropy%2Cfaces\u0026amp;auto=format%2Ccompress\u0026amp;w=1280","dimRatio":0,"minHeight":70,"minHeightUnit":"vh","isDark":false,"className":"extendify-image-import ext-animate\u002d\u002don"} -->
-<div class="wp-block-cover is-light extendify-image-import ext-animate--on" style="min-height:70vh"><img class="wp-block-cover__image-background" alt="" src="https://images.unsplash.com/photo-1463343232537-7171a89c83f7?fit=crop&amp;crop=entropy%2Cfaces&amp;auto=format%2Ccompress&amp;w=1280" data-object-fit="cover"/><span aria-hidden="true" class="wp-block-cover__background has-background-dim-0 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:spacer {"height":"380px","className":"ext-animate\u002d\u002don"} -->
-<div style="height:380px" aria-hidden="true" class="wp-block-spacer ext-animate--on"></div>
-<!-- /wp:spacer --></div></div>
+<div class="wp-block-cover is-light extendify-image-import ext-animate--on" style="min-height:70vh"><img class="wp-block-cover__image-background" alt="" src="https://images.unsplash.com/photo-1463343232537-7171a89c83f7?fit=crop&amp;crop=entropy%2Cfaces&amp;auto=format%2Ccompress&amp;w=1280" data-object-fit="cover"/><span aria-hidden="true" class="wp-block-cover__background has-background-dim-0 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:spacer {"height":"380px"} --><div style="height:380px" aria-hidden="true" class="wp-block-spacer"></div><!-- /wp:spacer --></div></div>
 <!-- /wp:cover --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></div>
 <!-- /wp:group -->`;
 
-      if(d.main) html += `<!-- wp:group {"metadata":{"name":"Section"},"align":"full","className":"is-style-ext-preset\u002d\u002dgroup\u002d\u002dnatural-1\u002d\u002dsection ext-animate\u002d\u002don","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"background","layout":{"inherit":true,"type":"constrained"}} -->
-<div class="wp-block-group alignfull is-style-ext-preset--group--natural-1--section ext-animate--on has-background-background-color has-background" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)"><!-- wp:heading {"textAlign":"center","className":"ext-animate\u002d\u002don"} -->
-<h2 class="wp-block-heading has-text-align-center ext-animate--on">${d.main}</h2>
-<!-- /wp:heading -->
+    if (d.main) html += `<!-- wp:group {"align":"full","className":"is-style-ext-preset--group--natural-1--section ext-animate--on","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"},"margin":{"top":"0","bottom":"0"}},"backgroundColor":"background"},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull is-style-ext-preset--group--natural-1--section ext-animate--on has-background-background-color has-background" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)">
+  <!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
+  <div class="wp-block-group alignwide">
+    <!-- wp:heading {"textAlign":"center","className":"ext-animate--on"} -->
+    <h2 class="wp-block-heading has-text-align-center ext-animate--on">${d.main}</h2>
+    <!-- /wp:heading -->
 
-<!-- wp:paragraph {"align":"center","className":"ext-animate\u002d\u002don","style":{"spacing":{"margin":{"top":"1.5rem"}}}} -->
-<p class="has-text-align-center ext-animate--on" style="margin-top:1.5rem">${d.maintext}</p>
-<!-- /wp:paragraph --></div>
+    ${d.maintext ? `<!-- wp:paragraph {"align":"center","className":"ext-animate--on","style":{"spacing":{"margin":{"top":"1.5rem"}}}} -->
+    <p class="has-text-align-center ext-animate--on" style="margin-top:1.5rem">${d.maintext}</p>
+    <!-- /wp:paragraph -->` : ``}
+  </div>
+  <!-- /wp:group -->
+</div>
 <!-- /wp:group -->`;
 
-      if(d.col1 || d.col2 || d.col3) html += `<!-- wp:columns {"align":"wide","className":"ext-animate\u002d\u002don","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|40","left":"var:preset|spacing|40"}}}} -->
+    if(d.col1 || d.col2 || d.col3) html += `
+<!-- wp:columns {"align":"wide","className":"ext-animate\u002d\u002don","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|40","left":"var:preset|spacing|40"}}}} -->
 <div class="wp-block-columns alignwide ext-animate--on"><!-- wp:column {"className":"ext-animate\u002d\u002don"} -->
 <div class="wp-block-column ext-animate--on"><!-- wp:group {"metadata":{"name":"Card"},"className":"is-style-ext-preset\u002d\u002dgroup\u002d\u002dnatural-1\u002d\u002ditem-card-1\u002d\u002dalign-center ext-animate\u002d\u002don","layout":{"type":"constrained"}} -->
 <div class="wp-block-group is-style-ext-preset--group--natural-1--item-card-1--align-center ext-animate--on"><!-- wp:image {"aspectRatio":"4/3","scale":"cover","className":"extendify-image-import ext-animate\u002d\u002don"} -->
 <figure class="wp-block-image extendify-image-import ext-animate--on"><img src="https://images.unsplash.com/photo-1663720409030-db1596ba30a0?fit=crop&amp;crop=entropy%2Cfaces&amp;auto=format%2Ccompress&amp;w=1280" alt="" style="aspect-ratio:4/3;object-fit:cover"/></figure>
 <!-- /wp:image -->
-
 <!-- wp:group {"metadata":{"name":"Content"},"className":"is-style-default ext-animate\u002d\u002don","layout":{"type":"constrained"}} -->
 <div class="wp-block-group is-style-default ext-animate--on"><!-- wp:heading {"textAlign":"center","level":3,"className":"ext-animate\u002d\u002don"} -->
 <h3 class="wp-block-heading has-text-align-center ext-animate--on">${d.col1}</h3>
 <!-- /wp:heading -->
-
-<!-- wp:paragraph {"align":"center","className":"ext-animate\u002d\u002don"} -->
-<p class="has-text-align-center ext-animate--on">${d.col1text}</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group --></div>
-<!-- /wp:group --></div>
-<!-- /wp:column -->
-
+<!-- wp:paragraph {"align":"center","className":"ext-animate\u002d\u002don"} --><p class="has-text-align-center ext-animate--on">${d.col1text}</p><!-- /wp:paragraph --></div><!-- /wp:group --></div><!-- /wp:group --></div><!-- /wp:column -->
 <!-- wp:column {"className":"ext-animate\u002d\u002don"} -->
 <div class="wp-block-column ext-animate--on"><!-- wp:group {"metadata":{"name":"Card"},"className":"is-style-ext-preset\u002d\u002dgroup\u002d\u002dnatural-1\u002d\u002ditem-card-1\u002d\u002dalign-center ext-animate\u002d\u002don","layout":{"type":"constrained"}} -->
 <div class="wp-block-group is-style-ext-preset--group--natural-1--item-card-1--align-center ext-animate--on"><!-- wp:image {"aspectRatio":"4/3","scale":"cover","className":"extendify-image-import ext-animate\u002d\u002don"} -->
-<figure class="wp-block-image extendify-image-import ext-animate--on"><img src="https://images.unsplash.com/photo-1658225595905-7bd75d10a265?fit=crop&amp;crop=entropy%2Cfaces&amp;auto=format%2Ccompress&amp;w=1280" alt="" style="aspect-ratio:4/3;object-fit:cover"/></figure>
+<figure class="wp-block-image extendify-image-import ext-animate--on"><img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?fit=crop&amp;crop=entropy%2Cfaces&amp;auto=format%2Ccompress&amp;w=1280" alt="" style="aspect-ratio:4/3;object-fit:cover"/></figure>
 <!-- /wp:image -->
-
 <!-- wp:group {"metadata":{"name":"Content"},"className":"is-style-default ext-animate\u002d\u002don","layout":{"type":"constrained"}} -->
 <div class="wp-block-group is-style-default ext-animate--on"><!-- wp:heading {"textAlign":"center","level":3,"className":"ext-animate\u002d\u002don"} -->
 <h3 class="wp-block-heading has-text-align-center ext-animate--on">${d.col2}</h3>
 <!-- /wp:heading -->
-
-<!-- wp:paragraph {"align":"center","className":"ext-animate\u002d\u002don"} -->
-<p class="has-text-align-center ext-animate--on">${d.col2text}</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group --></div>
-<!-- /wp:group --></div>
-<!-- /wp:column -->
-
+<!-- wp:paragraph {"align":"center","className":"ext-animate\u002d\u002don"} --><p class="has-text-align-center ext-animate--on">${d.col2text}</p><!-- /wp:paragraph --></div><!-- /wp:group --></div><!-- /wp:group --></div><!-- /wp:column -->
 <!-- wp:column {"className":"ext-animate\u002d\u002don"} -->
 <div class="wp-block-column ext-animate--on"><!-- wp:group {"metadata":{"name":"Card"},"className":"is-style-ext-preset\u002d\u002dgroup\u002d\u002dnatural-1\u002d\u002ditem-card-1\u002d\u002dalign-center ext-animate\u002d\u002don","layout":{"type":"constrained"}} -->
 <div class="wp-block-group is-style-ext-preset--group--natural-1--item-card-1--align-center ext-animate--on"><!-- wp:image {"aspectRatio":"4/3","scale":"cover","className":"extendify-image-import ext-animate\u002d\u002don"} -->
 <figure class="wp-block-image extendify-image-import ext-animate--on"><img src="https://images.unsplash.com/photo-1689852500881-e80588efaed6?fit=crop&amp;crop=entropy%2Cfaces&amp;auto=format%2Ccompress&amp;w=1280" alt="" style="aspect-ratio:4/3;object-fit:cover"/></figure>
 <!-- /wp:image -->
-
 <!-- wp:group {"metadata":{"name":"Content"},"className":"is-style-default ext-animate\u002d\u002don","layout":{"type":"constrained"}} -->
 <div class="wp-block-group is-style-default ext-animate--on"><!-- wp:heading {"textAlign":"center","level":3,"className":"ext-animate\u002d\u002don"} -->
 <h3 class="wp-block-heading has-text-align-center ext-animate--on">${d.col3}</h3>
 <!-- /wp:heading -->
-
-<!-- wp:paragraph {"align":"center","className":"ext-animate\u002d\u002don"} -->
-<p class="has-text-align-center ext-animate--on">${d.col3text}</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group --></div>
-<!-- /wp:group --></div>
-<!-- /wp:column --></div>
+<!-- wp:paragraph {"align":"center","className":"ext-animate\u002d\u002don"} --><p class="has-text-align-center ext-animate--on">${d.col3text}</p><!-- /wp:paragraph --></div><!-- /wp:group --></div><!-- /wp:group --></div><!-- /wp:column --></div>
 <!-- /wp:columns -->`;
 
-      if(d.test) html += `<!-- wp:group {"metadata":{"name":"Section"},"align":"full","className":"is-style-ext-preset\u002d\u002dgroup\u002d\u002dnatural-1\u002d\u002dsection","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"},"margin":{"top":"0","bottom":"0"},"blockGap":"var:preset|spacing|55"}},"backgroundColor":"background","layout":{"inherit":true,"type":"constrained"}} -->
-<div class="wp-block-group alignfull is-style-ext-preset--group--natural-1--section has-background-background-color has-background" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)"><!-- wp:group {"metadata":{"name":"Section Intro"},"align":"wide","className":"ext-is-logical-start","style":{"spacing":{"blockGap":"1.5rem"}},"layout":{"type":"constrained","contentSize":"768px","justifyContent":"left"}} -->
+    if(d.test) html += `<!-- wp:group {"metadata":{"name":"Section"},"align":"full","className":"is-style-ext-preset\u002d\u002dgroup\u002d\u002dnatural-1\u002d\u002dsection","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"},"margin":{"top":"0","bottom":"0"},"blockGap":"var:preset|spacing|20"}},"backgroundColor":"background","layout":{"inherit":true,"type":"constrained"}} -->
+<div class="wp-block-group alignfull is-style-ext-preset--group--natural-1--section has-background-background-color has-background" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--20)"><!-- wp:group {"metadata":{"name":"Section Intro"},"align":"wide","className":"ext-is-logical-start","style":{"spacing":{"blockGap":"1.5rem"}},"layout":{"type":"constrained","contentSize":"768px","justifyContent":"left"}} -->
 <div class="wp-block-group alignwide ext-is-logical-start"><!-- wp:heading {"className":"ext-animate\u002d\u002don"} -->
 <h2 class="wp-block-heading ext-animate--on">${d.test}</h2>
 <!-- /wp:heading -->
@@ -265,9 +735,12 @@
 <!-- /wp:columns --></div>
 <!-- /wp:group -->`;
 
-      if(d.port) html += `<!-- wp:image {"align":"wide","sizeSlug":"large"} --><figure class="wp-block-image alignwide size-large"><img src="https://picsum.photos/800/600" alt="Portfolio" /></figure><!-- /wp:image -->`;
+    if(d.port) html += `
+<!-- wp:group {"metadata":{"name":"Portfolio"},"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"background","layout":{"inherit":true,"type":"constrained"}} -->
+<div class="wp-block-group alignfull has-background-background-color has-background" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)"><!-- wp:heading {"textAlign":"center"} -->
+<h2 class="wp-block-heading has-text-align-center">${d.port}</h2><!-- /wp:heading --></div><!-- /wp:group -->`;
 
-      if(d.phone) html += `<!-- wp:group {"align":"wide","backgroundColor":"light-gray"} --><div class="wp-block-group alignwide has-light-gray-background-color has-background"><!-- wp:group {"metadata":{"name":"Section"},"align":"full","className":"is-style-ext-preset\u002d\u002dgroup\u002d\u002dnatural-1\u002d\u002dsection","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"background","layout":{"inherit":true,"type":"constrained"}} -->
+    if(d.phone) html += `<!-- wp:group {"align":"wide","backgroundColor":"light-gray"} --><div class="wp-block-group alignwide has-light-gray-background-color has-background"><!-- wp:group {"metadata":{"name":"Section"},"align":"full","className":"is-style-ext-preset\u002d\u002dgroup\u002d\u002dnatural-1\u002d\u002dsection","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"background","layout":{"inherit":true,"type":"constrained"}} -->
 <div class="wp-block-group alignfull is-style-ext-preset--group--natural-1--section has-background-background-color has-background" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)"><!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|40","left":"var:preset|spacing|40"}}}} -->
 <div class="wp-block-columns alignwide"><!-- wp:column {"verticalAlignment":"center","className":"ext-animate\u002d\u002don"} -->
 <div class="wp-block-column is-vertically-aligned-center ext-animate--on"><!-- wp:image {"aspectRatio":"4/3","scale":"cover","className":"is-style-ext-preset\u002d\u002dimage\u002d\u002dnatural-1\u002d\u002dimage-1\u002d\u002dcontent-left extendify-image-import"} -->
@@ -306,7 +779,7 @@
 
 <!-- wp:column {"verticalAlignment":"center","width":"","style":{"spacing":{"blockGap":"0"}}} -->
 <div class="wp-block-column is-vertically-aligned-center"><!-- wp:paragraph {"style":{"typography":{"fontStyle":"normal","fontWeight":"500"}},"fontSize":"medium"} -->
-<p class="has-medium-font-size" style="font-style:normal;font-weight:500">${d.phone}  &nbsp;￼</p>
+<p class="has-medium-font-size" style="font-style:normal;font-weight:500">${d.phone}</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns -->
@@ -330,9 +803,47 @@
 <!-- /wp:columns --></div>
 <!-- /wp:group -->  </div><!-- /wp:group -->`;
 
-      html += `</div><!-- /wp:group -->`;
-      document.getElementById('output').value = html;
+    html += `\n</div>\n<!-- /wp:group -->`;
+
+    const codeEl = document.getElementById('output-code');
+    const emptyEl = document.getElementById('output-empty');
+    const badge   = document.getElementById('output-badge');
+    codeEl.textContent = html;
+    codeEl.style.display = 'block';
+    emptyEl.style.display = 'none';
+    badge.textContent = 'Ready to copy';
+    badge.classList.add('ready');
+  }
+
+  function copyCode() {
+    const code = document.getElementById('output-code').textContent;
+    if (!code) return;
+    const btn = document.getElementById('copy-btn');
+    const success = () => {
+      btn.classList.add('copied');
+      btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M2.5 8.5l3.5 3.5 7-8" stroke-linecap="round" stroke-linejoin="round"/></svg> Copied!';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M10 5V3.5A1.5 1.5 0 0 0 8.5 2h-5A1.5 1.5 0 0 0 2 3.5v5A1.5 1.5 0 0 0 3.5 10H5" stroke-linecap="round"/></svg> Copy';
+      }, 2000);
     };
-  </script>
+    navigator.clipboard.writeText(code).then(success).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = code; ta.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      success();
+    });
+  }
+
+  function clearOutput() {
+    const codeEl = document.getElementById('output-code');
+    const emptyEl = document.getElementById('output-empty');
+    const badge   = document.getElementById('output-badge');
+    codeEl.textContent = ''; codeEl.style.display = 'none';
+    emptyEl.style.display = 'flex';
+    badge.textContent = 'Waiting for input'; badge.classList.remove('ready');
+  }
+</script>
 </body>
 </html>
