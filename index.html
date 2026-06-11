@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WP Landing Page Builder</title>
+  <title>WP Landing Page Builder & Block Generator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -18,28 +18,28 @@
       --space-4: 1rem;    --space-5: 1.25rem; --space-6: 1.5rem;
       --space-8: 2rem;
 
-      --color-bg:               #f7f6f2;
+      --color-bg:               #f5f4ef;
       --color-surface:          #ffffff;
-      --color-surface-2:        #f9f8f5;
-      --color-surface-offset:   #f1f0ec;
-      --color-divider:          #e4e2dc;
-      --color-border:           #d4d1ca;
-      --color-text:             #1e1c17;
-      --color-text-muted:       #6b6963;
-      --color-text-faint:       #a8a6a0;
-      --color-primary:          #01696f;
-      --color-primary-hover:    #0c4e54;
-      --color-primary-active:   #0f3638;
-      --color-primary-highlight:#d0dedd;
-      --color-error:            #c0392b;
-      --color-success:          #1a7a3c;
-      --color-success-bg:       #f0faf4;
+      --color-surface-2:        #faf9f6;
+      --color-surface-offset:   #f1efe9;
+      --color-divider:          #e5e2da;
+      --color-border:           #d3cfc4;
+      --color-text:             #1d1b16;
+      --color-text-muted:       #69665d;
+      --color-text-faint:       #a7a398;
+      --color-primary:          #026a71;
+      --color-primary-hover:    #0a4f54;
+      --color-primary-active:   #0d373a;
+      --color-primary-highlight:#d4e6e5;
+      --color-error:            #be3a2c;
+      --color-success:          #1b7a3d;
+      --color-success-bg:       #f1faf4;
 
-      --radius-sm: 0.375rem; --radius-md: 0.5rem;
-      --radius-lg: 0.75rem;  --radius-full: 9999px;
+      --radius-sm: 0.375rem; --radius-md: 0.6rem;
+      --radius-lg: 0.85rem;  --radius-full: 9999px;
 
-      --shadow-sm: 0 1px 2px oklch(0.2 0.01 80 / 0.06);
-      --shadow-md: 0 4px 12px oklch(0.2 0.01 80 / 0.08);
+      --shadow-sm: 0 1px 2px rgba(29, 27, 22, 0.05);
+      --shadow-md: 0 4px 14px rgba(29, 27, 22, 0.08);
 
       --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
       --font-body: 'Inter', 'Helvetica Neue', sans-serif;
@@ -47,24 +47,24 @@
     }
 
     [data-theme="dark"] {
-      --color-bg: #141311; --color-surface: #1c1b18; --color-surface-2: #211f1c;
-      --color-surface-offset: #1a1917; --color-divider: #2c2a27; --color-border: #3a3835;
-      --color-text: #e8e6e2; --color-text-muted: #888580; --color-text-faint: #575450;
-      --color-primary: #4fa8b2; --color-primary-hover: #3a909a; --color-primary-active: #2a7480;
-      --color-primary-highlight: #1e3a3d;
-      --color-error: #f87171; --color-success: #6ee7a0; --color-success-bg: #1a2d22;
-      --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.25); --shadow-md: 0 4px 12px oklch(0 0 0 / 0.35);
+      --color-bg: #131210; --color-surface: #1b1a17; --color-surface-2: #21201c;
+      --color-surface-offset: #1a1916; --color-divider: #2b2924; --color-border: #3b3933;
+      --color-text: #e7e5e0; --color-text-muted: #87847e; --color-text-faint: #56534e;
+      --color-primary: #4eb0bc; --color-primary-hover: #3a97a3; --color-primary-active: #2a7a85;
+      --color-primary-highlight: #1d3c3f;
+      --color-error: #f87171; --color-success: #4ade80; --color-success-bg: #13271b;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3); --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
     }
 
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme]) {
-        --color-bg: #141311; --color-surface: #1c1b18; --color-surface-2: #211f1c;
-        --color-surface-offset: #1a1917; --color-divider: #2c2a27; --color-border: #3a3835;
-        --color-text: #e8e6e2; --color-text-muted: #888580; --color-text-faint: #575450;
-        --color-primary: #4fa8b2; --color-primary-hover: #3a909a; --color-primary-active: #2a7480;
-        --color-primary-highlight: #1e3a3d;
-        --color-error: #f87171; --color-success: #6ee7a0; --color-success-bg: #1a2d22;
-        --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.25); --shadow-md: 0 4px 12px oklch(0 0 0 / 0.35);
+        --color-bg: #131210; --color-surface: #1b1a17; --color-surface-2: #21201c;
+        --color-surface-offset: #1a1916; --color-divider: #2b2924; --color-border: #3b3933;
+        --color-text: #e7e5e0; --color-text-muted: #87847e; --color-text-faint: #56534e;
+        --color-primary: #4eb0bc; --color-primary-hover: #3a97a3; --color-primary-active: #2a7a85;
+        --color-primary-highlight: #1d3c3f;
+        --color-error: #f87171; --color-success: #4ade80; --color-success-bg: #13271b;
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3); --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
       }
     }
 
@@ -82,11 +82,8 @@
     button, input, textarea, select { font: inherit; color: inherit; }
     button { cursor: pointer; background: none; border: none; }
     :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; border-radius: var(--radius-sm); }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-    }
 
-    /* Layout */
+    /* Layout Structure */
     .app-shell { display: grid; grid-template-rows: auto 1fr; min-height: 100dvh; }
 
     .topbar {
@@ -99,65 +96,127 @@
     }
     .topbar-left { display: flex; align-items: center; gap: var(--space-3); }
     .logo { display: flex; align-items: center; gap: var(--space-2); text-decoration: none; color: var(--color-text); }
-    .logo-text { font-size: var(--text-sm); font-weight: 600; letter-spacing: -0.01em; }
+    .logo-text { font-size: var(--text-base); font-weight: 700; letter-spacing: -0.02em; }
     .logo-badge {
-      font-size: 10px; font-weight: 500; letter-spacing: 0.05em;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.05em;
       color: var(--color-primary); background: var(--color-primary-highlight);
-      padding: 2px 6px; border-radius: var(--radius-full); text-transform: uppercase;
+      padding: 2px 8px; border-radius: var(--radius-full); text-transform: uppercase;
     }
     .theme-toggle {
       display: flex; align-items: center; justify-content: center;
-      width: 34px; height: 34px; border-radius: var(--radius-md);
+      width: 36px; height: 36px; border-radius: var(--radius-md);
       color: var(--color-text-muted);
       transition: background var(--transition), color var(--transition);
     }
     .theme-toggle:hover { background: var(--color-surface-offset); color: var(--color-text); }
 
     .workspace {
-      display: grid; grid-template-columns: 380px 1fr;
-      overflow: hidden; height: calc(100dvh - 53px);
+      display: grid; grid-template-columns: 440px 1fr;
+      overflow: hidden; height: calc(100dvh - 58px);
     }
 
-    /* Left panel */
+    /* Left panel: Modular Accordion Builder */
     .form-panel {
       display: flex; flex-direction: column;
       background: var(--color-surface);
       border-right: 1px solid var(--color-divider);
       overflow: hidden;
     }
-    .section-nav {
-      display: flex; gap: var(--space-1); flex-wrap: wrap;
-      padding: var(--space-3) var(--space-4) 0;
+    .sidebar-header {
+      padding: var(--space-4) var(--space-5);
       border-bottom: 1px solid var(--color-divider);
-      background: var(--color-surface);
+      background: var(--color-surface-2);
     }
-    .section-pill {
-      padding: var(--space-1) var(--space-3);
-      border-radius: var(--radius-full) var(--radius-full) 0 0;
-      font-size: var(--text-xs); font-weight: 500;
-      color: var(--color-text-muted); cursor: pointer;
-      border: 1px solid transparent; border-bottom: none;
-      transition: all var(--transition);
-      position: relative; bottom: -1px; background: transparent; white-space: nowrap;
-    }
-    .section-pill:hover { color: var(--color-text); background: var(--color-surface-offset); }
-    .section-pill.active {
-      color: var(--color-text); background: var(--color-surface);
-      border-color: var(--color-divider); border-bottom-color: var(--color-surface); font-weight: 600;
-    }
-    .section-panel { display: none; }
-    .section-panel.active { display: block; }
+    .sidebar-header h2 { font-size: var(--text-base); font-weight: 700; color: var(--color-text); }
+    .sidebar-header p { font-size: var(--text-xs); color: var(--color-text-muted); }
 
     .form-scroll {
-      flex: 1; overflow-y: auto; padding: var(--space-5) var(--space-5) var(--space-3);
+      flex: 1; overflow-y: auto; padding: var(--space-4);
     }
-    .form-scroll::-webkit-scrollbar { width: 5px; }
+    .form-scroll::-webkit-scrollbar { width: 6px; }
     .form-scroll::-webkit-scrollbar-track { background: transparent; }
     .form-scroll::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: var(--radius-full); }
 
+    /* Accordion Cards */
+    .accordion-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-divider);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-3);
+      overflow: hidden;
+      transition: border-color var(--transition), box-shadow var(--transition), opacity var(--transition);
+    }
+    .accordion-card:hover {
+      border-color: var(--color-border);
+      box-shadow: var(--shadow-sm);
+    }
+    .accordion-card.disabled {
+      opacity: 0.55;
+    }
+    .accordion-card.disabled .card-body {
+      pointer-events: none;
+    }
+
+    .card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-surface-2);
+      cursor: pointer;
+      user-select: none;
+    }
+    .card-header-left {
+      display: flex; align-items: center; gap: var(--space-2);
+      flex: 1; min-width: 0;
+    }
+    .card-drag-controls {
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .btn-order {
+      font-size: 8px; width: 16px; height: 14px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-text-faint); border-radius: var(--radius-sm);
+      border: 1px solid var(--color-divider); background: var(--color-surface);
+      line-height: 1;
+    }
+    .btn-order:hover { color: var(--color-text); border-color: var(--color-text-muted); }
+    
+    .card-title-group { display: flex; flex-direction: column; min-width: 0; }
+    .card-title { font-weight: 600; font-size: var(--text-sm); color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card-subtitle { font-size: 10px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .card-actions { display: flex; align-items: center; gap: var(--space-3); }
+    
+    /* Toggle Switch */
+    .switch-toggle { position: relative; display: inline-block; width: 34px; height: 18px; }
+    .switch-toggle input { opacity: 0; width: 0; height: 0; }
+    .switch-slider {
+      position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+      background-color: var(--color-text-faint); transition: .2s; border-radius: var(--radius-full);
+    }
+    .switch-slider:before {
+      position: absolute; content: ""; height: 14px; width: 14px; left: 2px; bottom: 2px;
+      background-color: white; transition: .2s; border-radius: 50%;
+    }
+    .switch-toggle input:checked + .switch-slider { background-color: var(--color-primary); }
+    .switch-toggle input:checked + .switch-slider:before { transform: translateX(16px); }
+
+    .btn-expand {
+      display: flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px; border-radius: var(--radius-sm);
+      color: var(--color-text-muted); transition: transform var(--transition);
+    }
+    .accordion-card.expanded .btn-expand { transform: rotate(180deg); }
+
+    .card-body {
+      display: none; padding: var(--space-4) var(--space-5);
+      border-top: 1px solid var(--color-divider);
+    }
+    .accordion-card.expanded .card-body { display: block; }
+
+    /* Forms Elements */
     .field-row { margin-bottom: var(--space-3); }
     .field-label {
-      display: block; font-size: var(--text-xs); font-weight: 500;
+      display: block; font-size: var(--text-xs); font-weight: 600;
       color: var(--color-text-muted); margin-bottom: var(--space-1);
     }
     .field-input {
@@ -173,47 +232,46 @@
       background: var(--color-surface);
     }
     .field-input::placeholder { color: var(--color-text-faint); }
-    .field-input.error { border-color: var(--color-error); }
+    
+    .field-input.invalid { border-color: var(--color-error); }
     .field-error { display: none; font-size: var(--text-xs); color: var(--color-error); margin-top: var(--space-1); }
     .field-error.visible { display: block; }
+
     .field-hint { font-size: var(--text-xs); color: var(--color-text-faint); margin-top: var(--space-1); }
     .field-2col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
-    .field-divider { height: 1px; background: var(--color-divider); margin: var(--space-3) 0; }
+    .field-divider { height: 1px; background: var(--color-divider); margin: var(--space-4) 0; }
     .field-group-label {
-      font-size: var(--text-xs); font-weight: 600; color: var(--color-text);
-      margin-bottom: var(--space-2); margin-top: var(--space-1);
+      font-size: var(--text-xs); font-weight: 700; color: var(--color-primary);
+      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-2); margin-top: var(--space-1);
     }
 
-    .form-footer {
-      padding: var(--space-4) var(--space-5);
-      border-top: 1px solid var(--color-divider);
-      background: var(--color-surface);
-    }
-    .btn-generate {
-      display: flex; align-items: center; justify-content: center; gap: var(--space-2);
-      width: 100%; padding: var(--space-3) var(--space-4);
-      background: var(--color-primary); color: white;
-      border-radius: var(--radius-md); font-size: var(--text-sm); font-weight: 600;
-      transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
-      box-shadow: var(--shadow-sm);
-    }
-    .btn-generate:hover { background: var(--color-primary-hover); box-shadow: var(--shadow-md); transform: translateY(-1px); }
-    .btn-generate:active { background: var(--color-primary-active); transform: translateY(0); }
-
-    /* Right panel */
+    /* Right panel: Displays Code & Sandbox Live Visualizer */
     .output-panel { display: flex; flex-direction: column; background: var(--color-bg); overflow: hidden; }
+    
     .output-toolbar {
       display: flex; align-items: center; justify-content: space-between;
       padding: var(--space-3) var(--space-5);
       background: var(--color-surface); border-bottom: 1px solid var(--color-divider);
     }
-    .output-toolbar-left { display: flex; align-items: center; gap: var(--space-3); }
-    .output-label { font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-text-muted); }
-    .output-badge {
-      font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: var(--radius-full);
-      background: var(--color-surface-offset); color: var(--color-text-faint); border: 1px solid var(--color-border);
+    .output-toolbar-left { display: flex; align-items: center; gap: var(--space-4); }
+    
+    .view-tabs { display: flex; gap: var(--space-1); border-bottom: 2px solid transparent; }
+    .tab-btn {
+      padding: var(--space-1) var(--space-3); font-size: var(--text-xs); font-weight: 600;
+      color: var(--color-text-muted); border-bottom: 2px solid transparent; margin-bottom: -1px;
+      transition: all var(--transition);
     }
-    .output-badge.ready { background: var(--color-success-bg); color: var(--color-success); border-color: transparent; }
+    .tab-btn:hover { color: var(--color-text); }
+    .tab-btn.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+
+    .device-controls { display: flex; gap: 2px; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 2px; background: var(--color-surface-2); }
+    .btn-device {
+      width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+      color: var(--color-text-muted); border-radius: var(--radius-sm); transition: all var(--transition);
+    }
+    .btn-device:hover { color: var(--color-text); background: var(--color-surface-offset); }
+    .btn-device.active { color: var(--color-primary); background: var(--color-primary-highlight); }
+
     .output-actions { display: flex; align-items: center; gap: var(--space-2); }
     .btn-action {
       display: flex; align-items: center; gap: var(--space-1);
@@ -226,17 +284,31 @@
     .btn-action:hover { background: var(--color-surface-offset); color: var(--color-text); border-color: var(--color-text-faint); }
     .btn-action.copied { background: var(--color-success-bg); color: var(--color-success); border-color: transparent; }
 
-    .output-area { flex: 1; overflow-y: auto; padding: var(--space-5); }
+    .output-area { flex: 1; overflow-y: auto; padding: var(--space-5); position: relative; }
     .output-area::-webkit-scrollbar { width: 5px; }
     .output-area::-webkit-scrollbar-track { background: transparent; }
     .output-area::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: var(--radius-full); }
 
+    /* Visual sandbox simulation */
+    .sandbox-container {
+      display: flex; justify-content: center; align-items: flex-start;
+      height: 100%; width: 100%; transition: width 0.3s ease;
+    }
+    .preview-iframe {
+      width: 100%; height: 100%; min-height: 550px;
+      border: 1px solid var(--color-divider); border-radius: var(--radius-lg);
+      background: white; box-shadow: var(--shadow-md);
+      transition: width var(--transition);
+    }
+
+    /* Output Raw Code Box */
     .output-code {
-      font-family: var(--font-mono); font-size: 12px; line-height: 1.7;
+      display: none; font-family: var(--font-mono); font-size: 11px; line-height: 1.6;
       color: var(--color-text); white-space: pre-wrap; word-break: break-all;
       background: var(--color-surface); border: 1px solid var(--color-divider);
       border-radius: var(--radius-lg); padding: var(--space-5); min-height: 100%;
     }
+    
     .output-empty {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       text-align: center; height: 100%; min-height: 400px;
@@ -246,9 +318,9 @@
     .output-empty h3 { font-size: var(--text-base); color: var(--color-text-muted); font-weight: 500; }
     .output-empty p { font-size: var(--text-xs); max-width: 28ch; }
 
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       .workspace { grid-template-columns: 1fr; grid-template-rows: auto 1fr; height: auto; }
-      .output-panel { min-height: 400px; }
+      .output-panel { min-height: 550px; }
       .logo-badge { display: none; }
     }
   </style>
@@ -264,9 +336,9 @@
           <path d="M6 11h3.5l2.5 8 2.5-8h3l2.5 8 2.5-8H26" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M8 20.5h16" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
         </svg>
-        <span class="logo-text">LP Builder</span>
+        <span class="logo-text">BlockForge</span>
       </a>
-      <span class="logo-badge">Gutenberg</span>
+      <span class="logo-badge">Core Blocks v2</span>
     </div>
     <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -277,212 +349,462 @@
 
   <div class="workspace">
 
-    <!-- Left: Form -->
+    <!-- Left: Form Editor panel with drag ordering accordion cards -->
     <aside class="form-panel">
-      <nav class="section-nav" aria-label="Page sections">
-        <button class="section-pill active" data-tab="hero"         onclick="switchTab('hero')">Hero</button>
-        <button class="section-pill"        data-tab="main"         onclick="switchTab('main')">Main</button>
-        <button class="section-pill"        data-tab="columns"      onclick="switchTab('columns')">Services</button>
-        <button class="section-pill"        data-tab="testimonials" onclick="switchTab('testimonials')">Testimonials</button>
-        <button class="section-pill"        data-tab="portfolio"    onclick="switchTab('portfolio')">Portfolio</button>
-        <button class="section-pill"        data-tab="contact"      onclick="switchTab('contact')">Contact</button>
-      </nav>
+      <div class="sidebar-header">
+        <h2>Page Structure</h2>
+        <p>Enable/disable, expand, or reorder modular sections below.</p>
+      </div>
 
       <div class="form-scroll">
+        <div id="accordion-container">
 
-        <!-- HERO -->
-        <div class="section-panel active" id="tab-hero">
-          <div class="field-row" style="margin-top:var(--space-4)">
-            <label class="field-label" for="hero">Hero Title</label>
-            <input class="field-input" type="text" id="hero" placeholder="e.g. Transform Your Business Today" autocomplete="off"/>
-          </div>
-          <div class="field-row">
-            <label class="field-label" for="sub">Hero Subtitle</label>
-            <input class="field-input" type="text" id="sub" placeholder="Supporting tagline or description" autocomplete="off"/>
-          </div>
-          <div class="field-row">
-            <label class="field-label" for="buttontext">Button Text</label>
-            <input class="field-input" type="text" id="buttontext" placeholder="e.g. Get Started" autocomplete="off"/>
-          </div>
-          <div class="field-row">
-            <label class="field-label" for="link">Button Link</label>
-            <input class="field-input" type="text" id="link" placeholder="https:// or /page-slug" autocomplete="off"/>
-            <p class="field-hint">Accepts full URLs, relative paths, or tel:/mailto:</p>
-            <p class="field-error" id="link-error">Enter a valid link (e.g. https://example.com or /contact)</p>
-          </div>
-        </div>
-
-        <!-- MAIN -->
-        <div class="section-panel" id="tab-main">
-          <div class="field-row" style="margin-top:var(--space-4)">
-            <label class="field-label" for="main">Section Title</label>
-            <input class="field-input" type="text" id="main" placeholder="e.g. About Our Services" autocomplete="off"/>
-          </div>
-          <div class="field-row">
-            <label class="field-label" for="maintext">Section Text</label>
-            <input class="field-input" type="text" id="maintext" placeholder="A short paragraph describing this section" autocomplete="off"/>
-          </div>
-        </div>
-
-        <!-- Services -->
-        <div class="section-panel" id="tab-columns">
-          <p class="field-hint" style="margin-top:var(--space-4);margin-bottom:var(--space-3)">Leave all three empty to omit this section.</p>
-
-          <p class="field-group-label">Main Title</p>
-          <div class="field-row">
-            <label class="field-label" for="col1">Main Title</label>
-            <input class="field-input" type="text" id="service" placeholder="Column 1 title" autocomplete="off"/>
-          </div>
-          <div class="field-divider"></div>
-
-          <p class="field-group-label">Column 1</p>
-          <div class="field-row">
-            <label class="field-label" for="col1">Title</label>
-            <input class="field-input" type="text" id="col1" placeholder="Column 1 title" autocomplete="off"/>
-          </div>
-          <div class="field-row">
-            <label class="field-label" for="col1text">Text</label>
-            <input class="field-input" type="text" id="col1text" placeholder="Column 1 description" autocomplete="off"/>
-          </div>
-          <div class="field-divider"></div>
-
-          <p class="field-group-label">Column 2</p>
-          <div class="field-row">
-            <label class="field-label" for="col2">Title</label>
-            <input class="field-input" type="text" id="col2" placeholder="Column 2 title" autocomplete="off"/>
-          </div>
-          <div class="field-row">
-            <label class="field-label" for="col2text">Text</label>
-            <input class="field-input" type="text" id="col2text" placeholder="Column 2 description" autocomplete="off"/>
-          </div>
-          <div class="field-divider"></div>
-
-          <p class="field-group-label">Column 3</p>
-          <div class="field-row">
-            <label class="field-label" for="col3">Title</label>
-            <input class="field-input" type="text" id="col3" placeholder="Column 3 title" autocomplete="off"/>
-          </div>
-          <div class="field-row">
-            <label class="field-label" for="col3text">Text</label>
-            <input class="field-input" type="text" id="col3text" placeholder="Column 3 description" autocomplete="off"/>
-          </div>
-        </div>
-
-        <!-- TESTIMONIALS -->
-        <div class="section-panel" id="tab-testimonials">
-          <p class="field-group-label">Quote 1</p>
-          <div class="field-row">
-            <label class="field-label" for="testcol1title">Quote</label>
-            <input class="field-input" type="text" id="testcol1title" placeholder="The quote text" autocomplete="off"/>
-          </div>
-          <div class="field-2col">
-            <div class="field-row">
-              <label class="field-label" for="testcol1text">Name</label>
-              <input class="field-input" type="text" id="testcol1text" placeholder="Jane Doe" autocomplete="off"/>
+          <!-- CARD 1: HERO -->
+          <div class="accordion-card expanded" data-section-id="hero">
+            <div class="card-header" onclick="toggleAccordion(this)">
+              <div class="card-header-left">
+                <div class="card-drag-controls">
+                  <button class="btn-order" onclick="moveUp(this, event)" title="Move Up">▲</button>
+                  <button class="btn-order" onclick="moveDown(this, event)" title="Move Down">▼</button>
+                </div>
+                <div class="card-title-group">
+                  <span class="card-title">Hero Banner</span>
+                  <span class="card-subtitle">Header Space</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <label class="switch-toggle" title="Toggle active state" onclick="event.stopPropagation()">
+                  <input type="checkbox" id="hero-active" checked onchange="toggleSectionActive(this)">
+                  <span class="switch-slider"></span>
+                </label>
+                <button class="btn-expand" title="Expand Section Options">
+                  <svg width="12" height="12" viewBox="0 0 24 24" stroke-width="2.5" fill="none" stroke="currentColor"><path d="M19 9l-7 7-7-7"/></svg>
+                </button>
+              </div>
             </div>
-            <div class="field-row">
-              <label class="field-label" for="testcol1tit">Title</label>
-              <input class="field-input" type="text" id="testcol1tit" placeholder="CEO, Acme Inc." autocomplete="off"/>
+            <div class="card-body">
+              <div class="field-row">
+                <label class="field-label" for="hero_title">Hero Title</label>
+                <input class="field-input" type="text" id="hero_title" value="Transform Your Business Today" placeholder="Main Heading" autocomplete="off"/>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="hero_sub">Hero Subtitle</label>
+                <input class="field-input" type="text" id="hero_sub" value="Deploy pixel-perfect native Gutenberg pages without the bloat of visual builders." placeholder="Sub-tagline or paragraph" autocomplete="off"/>
+              </div>
+              <div class="field-2col">
+                <div class="field-row">
+                  <label class="field-label" for="hero_btn_text">Button Text</label>
+                  <input class="field-input" type="text" id="hero_btn_text" value="Get Started" placeholder="e.g. Try for Free" autocomplete="off"/>
+                </div>
+                <div class="field-row">
+                  <label class="field-label" for="hero_btn_link">Button Link</label>
+                  <input class="field-input" type="text" id="hero_btn_link" value="https://wordpress.org" placeholder="/page-slug" autocomplete="off"/>
+                </div>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="hero_img">Hero Image URL</label>
+                <input class="field-input" type="text" id="hero_img" value="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" placeholder="https://..." autocomplete="off"/>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="hero_align">Layout Alignment</label>
+                <select class="field-input" id="hero_align">
+                  <option value="right">Text Left, Image Right</option>
+                  <option value="left">Image Left, Text Right</option>
+                </select>
+              </div>
             </div>
           </div>
-          <div class="field-divider"></div>
 
-          <p class="field-group-label">Quote 2</p>
-          <div class="field-row">
-            <label class="field-label" for="testcol2title">Quote</label>
-            <input class="field-input" type="text" id="testcol2title" placeholder="The quote text" autocomplete="off"/>
-          </div>
-          <div class="field-2col">
-            <div class="field-row">
-              <label class="field-label" for="testcol2text">Name</label>
-              <input class="field-input" type="text" id="testcol2text" placeholder="John Smith" autocomplete="off"/>
+          <!-- CARD 2: MAIN TEXT -->
+          <div class="accordion-card" data-section-id="main">
+            <div class="card-header" onclick="toggleAccordion(this)">
+              <div class="card-header-left">
+                <div class="card-drag-controls">
+                  <button class="btn-order" onclick="moveUp(this, event)" title="Move Up">▲</button>
+                  <button class="btn-order" onclick="moveDown(this, event)" title="Move Down">▼</button>
+                </div>
+                <div class="card-title-group">
+                  <span class="card-title">Story / Intro</span>
+                  <span class="card-subtitle">Rich Text Intro</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <label class="switch-toggle" title="Toggle active state" onclick="event.stopPropagation()">
+                  <input type="checkbox" id="main-active" checked onchange="toggleSectionActive(this)">
+                  <span class="switch-slider"></span>
+                </label>
+                <button class="btn-expand" title="Expand Section Options">
+                  <svg width="12" height="12" viewBox="0 0 24 24" stroke-width="2.5" fill="none" stroke="currentColor"><path d="M19 9l-7 7-7-7"/></svg>
+                </button>
+              </div>
             </div>
-            <div class="field-row">
-              <label class="field-label" for="testcol2tit">Title</label>
-              <input class="field-input" type="text" id="testcol2tit" placeholder="Director, Corp." autocomplete="off"/>
-            </div>
-          </div>
-          <div class="field-divider"></div>
-
-          
-        </div>
-
-        <!-- PORTFOLIO -->
-        <div class="section-panel" id="tab-portfolio">
-          <div class="field-row" style="margin-top:var(--space-4)">
-            <label class="field-label" for="port">Portfolio Section Title</label>
-            <input class="field-input" type="text" id="port" placeholder="e.g. Our Work" autocomplete="off"/>
-          </div>
-        </div>
-
-        <!-- CONTACT -->
-        <div class="section-panel" id="tab-contact">
-          <div class="field-row" style="margin-top:var(--space-4)">
-            <label class="field-label" for="contacttext">Section Text</label>
-            <input class="field-input" type="text" id="contacttext" placeholder="e.g. We'd love to hear from you" autocomplete="off"/>
-          </div>
-          <div class="field-row">
-            <label class="field-label" for="address">Address</label>
-            <input class="field-input" type="text" id="address" placeholder="123 Main St, City, State 12345" autocomplete="off"/>
-          </div>
-          <div class="field-2col">
-            <div class="field-row">
-              <label class="field-label" for="phone">Phone</label>
-              <input class="field-input" type="text" id="phone" placeholder="(555) 000-0000" autocomplete="off"/>
-            </div>
-            <div class="field-row">
-              <label class="field-label" for="email">Email</label>
-              <input class="field-input" type="email" id="email" placeholder="hello@example.com" autocomplete="off"/>
+            <div class="card-body">
+              <div class="field-row">
+                <label class="field-label" for="main_title">Section Title</label>
+                <input class="field-input" type="text" id="main_title" value="Modern, Bloat-Free Core Templates" placeholder="e.g. About Our Approach" autocomplete="off"/>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="main_text">Introductory Paragraph</label>
+                <textarea class="field-input" id="main_text" rows="3" placeholder="A short description..." autocomplete="off">Every component generated here relies purely on high-performance WordPress Core Blocks. No extra JS engines, no custom premium block plugins, and absolute support for full-site style sheets.</textarea>
+              </div>
             </div>
           </div>
-        </div>
 
+          <!-- CARD 3: SERVICES -->
+          <div class="accordion-card" data-section-id="services">
+            <div class="card-header" onclick="toggleAccordion(this)">
+              <div class="card-header-left">
+                <div class="card-drag-controls">
+                  <button class="btn-order" onclick="moveUp(this, event)" title="Move Up">▲</button>
+                  <button class="btn-order" onclick="moveDown(this, event)" title="Move Down">▼</button>
+                </div>
+                <div class="card-title-group">
+                  <span class="card-title">Services Showcase</span>
+                  <span class="card-subtitle">3 Column Features</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <label class="switch-toggle" title="Toggle active state" onclick="event.stopPropagation()">
+                  <input type="checkbox" id="services-active" checked onchange="toggleSectionActive(this)">
+                  <span class="switch-slider"></span>
+                </label>
+                <button class="btn-expand" title="Expand Section Options">
+                  <svg width="12" height="12" viewBox="0 0 24 24" stroke-width="2.5" fill="none" stroke="currentColor"><path d="M19 9l-7 7-7-7"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="field-row">
+                <label class="field-label" for="service_title">Section Title</label>
+                <input class="field-input" type="text" id="service_title" value="How We Help You Grow" placeholder="Section Header" autocomplete="off"/>
+              </div>
+              <div class="field-divider"></div>
+
+              <p class="field-group-label">Service 1</p>
+              <div class="field-row">
+                <label class="field-label" for="service1_title">Title</label>
+                <input class="field-input" type="text" id="service1_title" value="FSE-Friendly Design" placeholder="Service One" autocomplete="off"/>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="service1_text">Text</label>
+                <input class="field-input" type="text" id="service1_text" value="Native support for Twenty Twenty-Four style panels and theme editors." placeholder="Short descriptive sentence" autocomplete="off"/>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="service1_img">Image URL</label>
+                <input class="field-input" type="text" id="service1_img" value="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" autocomplete="off"/>
+              </div>
+              <div class="field-divider"></div>
+
+              <p class="field-group-label">Service 2</p>
+              <div class="field-row">
+                <label class="field-label" for="service2_title">Title</label>
+                <input class="field-input" type="text" id="service2_title" value="SEO Optimized Structure" placeholder="Service Two" autocomplete="off"/>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="service2_text">Text</label>
+                <input class="field-input" type="text" id="service2_text" value="Lightweight semantics with nested h3 structures, maximizing page indexing scores." placeholder="Short descriptive sentence" autocomplete="off"/>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="service2_img">Image URL</label>
+                <input class="field-input" type="text" id="service2_img" value="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=600&q=80" autocomplete="off"/>
+              </div>
+              <div class="field-divider"></div>
+
+              <p class="field-group-label">Service 3</p>
+              <div class="field-row">
+                <label class="field-label" for="service3_title">Title</label>
+                <input class="field-input" type="text" id="service3_title" value="Lightning Page Speeds" placeholder="Service Three" autocomplete="off"/>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="service3_text">Text</label>
+                <input class="field-input" type="text" id="service3_text" value="Zero static CSS generation. Pure core properties make your server run faster." placeholder="Short descriptive sentence" autocomplete="off"/>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="service3_img">Image URL</label>
+                <input class="field-input" type="text" id="service3_img" value="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=600&q=80" autocomplete="off"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 4: TESTIMONIALS -->
+          <div class="accordion-card" data-section-id="testimonials">
+            <div class="card-header" onclick="toggleAccordion(this)">
+              <div class="card-header-left">
+                <div class="card-drag-controls">
+                  <button class="btn-order" onclick="moveUp(this, event)" title="Move Up">▲</button>
+                  <button class="btn-order" onclick="moveDown(this, event)" title="Move Down">▼</button>
+                </div>
+                <div class="card-title-group">
+                  <span class="card-title">Client Feedback</span>
+                  <span class="card-subtitle">3-Column Grid Quotes</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <label class="switch-toggle" title="Toggle active state" onclick="event.stopPropagation()">
+                  <input type="checkbox" id="testimonials-active" checked onchange="toggleSectionActive(this)">
+                  <span class="switch-slider"></span>
+                </label>
+                <button class="btn-expand" title="Expand Section Options">
+                  <svg width="12" height="12" viewBox="0 0 24 24" stroke-width="2.5" fill="none" stroke="currentColor"><path d="M19 9l-7 7-7-7"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="field-row">
+                <label class="field-label" for="testimonial_sec_title">Section Title</label>
+                <input class="field-input" type="text" id="testimonial_sec_title" value="Client Success Stories" placeholder="Testimonials Section Header" autocomplete="off"/>
+              </div>
+              <div class="field-divider"></div>
+
+              <p class="field-group-label">Testimonial 1</p>
+              <div class="field-row">
+                <label class="field-label" for="t1_quote">Quote</label>
+                <input class="field-input" type="text" id="t1_quote" value="The generated blocks matched our layout beautifully. Our site loading speeds rose over 40%." placeholder="What did they say?" autocomplete="off"/>
+              </div>
+              <div class="field-2col">
+                <div class="field-row">
+                  <label class="field-label" for="t1_name">Author Name</label>
+                  <input class="field-input" type="text" id="t1_name" value="Jane Doe" placeholder="e.g. John Smith" autocomplete="off"/>
+                </div>
+                <div class="field-row">
+                  <label class="field-label" for="t1_role">Author Role</label>
+                  <input class="field-input" type="text" id="t1_role" value="VP of Tech, Acme Corp" placeholder="CEO" autocomplete="off"/>
+                </div>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="t1_img">Author Avatar Image</label>
+                <input class="field-input" type="text" id="t1_img" value="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80" autocomplete="off"/>
+              </div>
+              <div class="field-divider"></div>
+
+              <p class="field-group-label">Testimonial 2</p>
+              <div class="field-row">
+                <label class="field-label" for="t2_quote">Quote</label>
+                <input class="field-input" type="text" id="t2_quote" value="No subscription block platforms needed. Easy clean layouts mapped smoothly to core styling." placeholder="What did they say?" autocomplete="off"/>
+              </div>
+              <div class="field-2col">
+                <div class="field-row">
+                  <label class="field-label" for="t2_name">Author Name</label>
+                  <input class="field-input" type="text" id="t2_name" value="Michael Foster" placeholder="Author Name" autocomplete="off"/>
+                </div>
+                <div class="field-row">
+                  <label class="field-label" for="t2_role">Author Role</label>
+                  <input class="field-input" type="text" id="t2_role" value="Lead Designer, Studio X" placeholder="Designer" autocomplete="off"/>
+                </div>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="t2_img">Author Avatar Image</label>
+                <input class="field-input" type="text" id="t2_img" value="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&h=150&q=80" autocomplete="off"/>
+              </div>
+              <div class="field-divider"></div>
+
+              <p class="field-group-label">Testimonial 3</p>
+              <div class="field-row">
+                <label class="field-label" for="t3_quote">Quote</label>
+                <input class="field-input" type="text" id="t3_quote" value="Gutenberg block generation done cleanly. Extremely portable and effortless to customize." placeholder="What did they say?" autocomplete="off"/>
+              </div>
+              <div class="field-2col">
+                <div class="field-row">
+                  <label class="field-label" for="t3_name">Author Name</label>
+                  <input class="field-input" type="text" id="t3_name" value="Elena Rostova" placeholder="Author Name" autocomplete="off"/>
+                </div>
+                <div class="field-row">
+                  <label class="field-label" for="t3_role">Author Role</label>
+                  <input class="field-input" type="text" id="t3_role" value="Operations Dir, Global Tech" placeholder="Project lead" autocomplete="off"/>
+                </div>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="t3_img">Author Avatar Image</label>
+                <input class="field-input" type="text" id="t3_img" value="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&h=150&q=80" autocomplete="off"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 5: PORTFOLIO -->
+          <div class="accordion-card" data-section-id="portfolio">
+            <div class="card-header" onclick="toggleAccordion(this)">
+              <div class="card-header-left">
+                <div class="card-drag-controls">
+                  <button class="btn-order" onclick="moveUp(this, event)" title="Move Up">▲</button>
+                  <button class="btn-order" onclick="moveDown(this, event)" title="Move Down">▼</button>
+                </div>
+                <div class="card-title-group">
+                  <span class="card-title">Portfolio showcase</span>
+                  <span class="card-subtitle">Grid Gallery Layout</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <label class="switch-toggle" title="Toggle active state" onclick="event.stopPropagation()">
+                  <input type="checkbox" id="portfolio-active" checked onchange="toggleSectionActive(this)">
+                  <span class="switch-slider"></span>
+                </label>
+                <button class="btn-expand" title="Expand Section Options">
+                  <svg width="12" height="12" viewBox="0 0 24 24" stroke-width="2.5" fill="none" stroke="currentColor"><path d="M19 9l-7 7-7-7"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="field-row">
+                <label class="field-label" for="portfolio_title">Section Title</label>
+                <input class="field-input" type="text" id="portfolio_title" value="Our Portfolio Work" placeholder="Section Header" autocomplete="off"/>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="port1_img">Grid Image 1</label>
+                <input class="field-input" type="text" id="port1_img" value="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=600&q=80" autocomplete="off"/>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="port2_img">Grid Image 2</label>
+                <input class="field-input" type="text" id="port2_img" value="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=600&q=80" autocomplete="off"/>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="port3_img">Grid Image 3</label>
+                <input class="field-input" type="text" id="port3_img" value="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=600&q=80" autocomplete="off"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 6: CALL TO ACTION -->
+          <div class="accordion-card" data-section-id="cta">
+            <div class="card-header" onclick="toggleAccordion(this)">
+              <div class="card-header-left">
+                <div class="card-drag-controls">
+                  <button class="btn-order" onclick="moveUp(this, event)" title="Move Up">▲</button>
+                  <button class="btn-order" onclick="moveDown(this, event)" title="Move Down">▼</button>
+                </div>
+                <div class="card-title-group">
+                  <span class="card-title">Call To Action Banner</span>
+                  <span class="card-subtitle">Visual CTA Block</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <label class="switch-toggle" title="Toggle active state" onclick="event.stopPropagation()">
+                  <input type="checkbox" id="cta-active" checked onchange="toggleSectionActive(this)">
+                  <span class="switch-slider"></span>
+                </label>
+                <button class="btn-expand" title="Expand Section Options">
+                  <svg width="12" height="12" viewBox="0 0 24 24" stroke-width="2.5" fill="none" stroke="currentColor"><path d="M19 9l-7 7-7-7"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="field-row">
+                <label class="field-label" for="cta_title">CTA Heading</label>
+                <input class="field-input" type="text" id="cta_title" value="Ready to Scale Your Page Creation?" placeholder="Banner Heading" autocomplete="off"/>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="cta_sub">CTA Paragraph Description</label>
+                <input class="field-input" type="text" id="cta_sub" value="Create high converting block layouts directly on your WordPress workspace." placeholder="Description line" autocomplete="off"/>
+              </div>
+              <div class="field-2col">
+                <div class="field-row">
+                  <label class="field-label" for="cta_btn_text">CTA Button Text</label>
+                  <input class="field-input" type="text" id="cta_btn_text" value="Copy Template Code" placeholder="Link copy string" autocomplete="off"/>
+                </div>
+                <div class="field-row">
+                  <label class="field-label" for="cta_btn_link">CTA Button Link</label>
+                  <input class="field-input" type="text" id="cta_btn_link" value="#copy-panel" placeholder="Target destination URL" autocomplete="off"/>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 7: CONTACT -->
+          <div class="accordion-card" data-section-id="contact">
+            <div class="card-header" onclick="toggleAccordion(this)">
+              <div class="card-header-left">
+                <div class="card-drag-controls">
+                  <button class="btn-order" onclick="moveUp(this, event)" title="Move Up">▲</button>
+                  <button class="btn-order" onclick="moveDown(this, event)" title="Move Down">▼</button>
+                </div>
+                <div class="card-title-group">
+                  <span class="card-title">Contact & Location</span>
+                  <span class="card-subtitle">Footer Contact Card</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <label class="switch-toggle" title="Toggle active state" onclick="event.stopPropagation()">
+                  <input type="checkbox" id="contact-active" checked onchange="toggleSectionActive(this)">
+                  <span class="switch-slider"></span>
+                </label>
+                <button class="btn-expand" title="Expand Section Options">
+                  <svg width="12" height="12" viewBox="0 0 24 24" stroke-width="2.5" fill="none" stroke="currentColor"><path d="M19 9l-7 7-7-7"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="field-row">
+                <label class="field-label" for="contact_text">Contact Title Text</label>
+                <input class="field-input" type="text" id="contact_text" value="Let's Start Working Together" placeholder="Let's build together" autocomplete="off"/>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="contact_address">Physical Address</label>
+                <input class="field-input" type="text" id="contact_address" value="120 Third Avenue, Suite 400, Seattle, WA 98101" placeholder="Corporate street location" autocomplete="off"/>
+              </div>
+              <div class="field-2col">
+                <div class="field-row">
+                  <label class="field-label" for="contact_phone">Phone</label>
+                  <input class="field-input" type="text" id="contact_phone" value="(206) 555-0192" placeholder="(555) 000-0000" autocomplete="off"/>
+                </div>
+                <div class="field-row">
+                  <label class="field-label" for="contact_email">Email Link</label>
+                  <input class="field-input" type="email" id="contact_email" value="hello@yourdomain.com" placeholder="support@domain.com" autocomplete="off"/>
+                </div>
+              </div>
+              <div class="field-row">
+                <label class="field-label" for="contact_img">Map/Banner Illustration</label>
+                <input class="field-input" type="text" id="contact_img" value="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?auto=format&fit=crop&w=600&q=80" autocomplete="off"/>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /Accordion container -->
       </div><!-- /form-scroll -->
 
-      <div class="form-footer">
-        <button class="btn-generate" id="gen">
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-            <path d="M2 8h12M8 2l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          Generate Gutenberg Code
-        </button>
-      </div>
     </aside>
 
-    <!-- Right: Output -->
+    <!-- Right Panel: Dynamic Workspace Preview & Code Console -->
     <main class="output-panel">
       <div class="output-toolbar">
         <div class="output-toolbar-left">
-          <span class="output-label">Output</span>
-          <span class="output-badge" id="output-badge">Waiting for input</span>
+          <div class="view-tabs">
+            <button class="tab-btn active" onclick="switchOutputTab('preview')">Live Sandbox Preview</button>
+            <button class="tab-btn" onclick="switchOutputTab('code')">Gutenberg Block Code</button>
+          </div>
+          <span class="logo-badge" id="output-badge">Ready</span>
+
+          <!-- Resolution Toggle controls for Sandbox Simulation -->
+          <div class="device-controls" id="preview-devices-bar">
+            <button class="btn-device active" onclick="setPreviewSize('desktop', this)" title="Desktop View">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            </button>
+            <button class="btn-device" onclick="setPreviewSize('tablet', this)" title="Tablet View">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+            </button>
+            <button class="btn-device" onclick="setPreviewSize('mobile', this)" title="Mobile View">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+            </button>
+          </div>
         </div>
+
         <div class="output-actions">
-          <button class="btn-action" id="clear-btn" onclick="clearOutput()" aria-label="Clear output">
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75">
-              <path d="M2 4h12M6 4V2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V4M5 4l.5 9.5h5L11 4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Clear
-          </button>
-          <button class="btn-action" id="copy-btn" onclick="copyCode()" aria-label="Copy to clipboard">
+          <button class="btn-action" id="copy-btn" onclick="copyCode()" aria-label="Copy code to clipboard">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75">
               <rect x="5" y="5" width="9" height="9" rx="1.5"/>
               <path d="M10 5V3.5A1.5 1.5 0 0 0 8.5 2h-5A1.5 1.5 0 0 0 2 3.5v5A1.5 1.5 0 0 0 3.5 10H5" stroke-linecap="round"/>
             </svg>
-            Copy
+            Copy Blocks
           </button>
         </div>
       </div>
 
-      <div class="output-area" id="output-area">
-        <div class="output-empty" id="output-empty">
-          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <rect x="8" y="4" width="32" height="40" rx="3"/>
-            <path d="M16 16h16M16 22h16M16 28h10"/>
-          </svg>
-          <h3>No code generated yet</h3>
-          <p>Fill in the fields and click Generate</p>
+      <div class="output-area">
+        <!-- Visual sandbox inside frame environment -->
+        <div class="sandbox-container" id="iframe-container">
+          <iframe id="preview-iframe" class="preview-iframe" title="Gutenberg block style layout preview sandbox"></iframe>
         </div>
-        <pre class="output-code" id="output-code" style="display:none" aria-live="polite"></pre>
+
+        <!-- Clean Formatted Code output text -->
+        <pre class="output-code" id="output-code" aria-live="polite"></pre>
       </div>
     </main>
 
@@ -490,7 +812,7 @@
 </div>
 
 <script>
-  // Theme toggle
+  // Dark/Light layout coordinates
   (function(){
     const t = document.querySelector('[data-theme-toggle]');
     const r = document.documentElement;
@@ -506,240 +828,730 @@
     t.addEventListener('click', () => { d = d === 'dark' ? 'light' : 'dark'; r.setAttribute('data-theme', d); setIcon(d); });
   })();
 
-  // Tab switching
-  function switchTab(name) {
-    document.querySelectorAll('.section-pill').forEach(p => p.classList.toggle('active', p.dataset.tab === name));
-    document.querySelectorAll('.section-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + name));
+  // Accordion Logic
+  function toggleAccordion(header) {
+    const card = header.closest('.accordion-card');
+    card.classList.toggle('expanded');
   }
 
-  // Generate
-  const FIELDS = ['hero','sub','link','buttontext','main','maintext','service','col1','col1text','col2','col2text','col3','col3text','testcol1title','testcol1text','testcol1tit','testcol2title','testcol2text','testcol2tit','testcol3title','testcol3text','testcol3tit','port','contacttext','address','phone','email'];
-
-  document.getElementById('gen').addEventListener('click', generate);
-
-  function generate() {
-    const d = {};
-    FIELDS.forEach(id => { d[id] = (document.getElementById(id)?.value || '').trim(); });
-
-    const linkErr = document.getElementById('link-error');
-    const linkInput = document.getElementById('link');
-    if (d.link) {
-      if (!/^(https?:\/\/|tel:|mailto:|\/)/. test(d.link)) {
-        linkInput.classList.add('error'); linkErr.classList.add('visible');
-        switchTab('hero'); linkInput.focus(); return;
-      }
+  // Set active section state
+  function toggleSectionActive(checkbox) {
+    const card = checkbox.closest('.accordion-card');
+    if (checkbox.checked) {
+      card.classList.remove('disabled');
+    } else {
+      card.classList.add('disabled');
     }
-    linkInput.classList.remove('error'); linkErr.classList.remove('visible');
+    generate();
+  }
 
-    let html = `<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} --><div class="wp-block-group alignwide">`;
+  // Dynamic Card DOM manipulation (Reordering section nodes)
+  function moveUp(btn, event) {
+    event.stopPropagation();
+    const card = btn.closest('.accordion-card');
+    const container = document.getElementById('accordion-container');
+    const prev = card.previousElementSibling;
+    if (prev && prev.classList.contains('accordion-card')) {
+      container.insertBefore(card, prev);
+      generate();
+    }
+  }
 
-    if(d.hero) html += `<!-- wp:group {"metadata":{"categories":["featured"],"patternName":"twentytwentyfive/banner-intro-image","name":"Short heading and paragraph and image on the left"},"align":"wide","className":"is-style-default","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignwide is-style-default" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50)"><!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|50","left":"var:preset|spacing|50"}}}} -->
-<div class="wp-block-columns alignwide"><!-- wp:column {"verticalAlignment":"center","width":"56%","className":"is-style-default"} -->
-<div class="wp-block-column is-vertically-aligned-center is-style-default" style="flex-basis:56%"><!-- wp:gallery {"linkTo":"none","sizeSlug":"full","align":"center"} -->
-<figure class="wp-block-gallery aligncenter has-nested-images columns-default is-cropped"><!-- wp:image {"id":8,"scale":"cover","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="https://images.unsplash.com/photo-1472898965229-f9b06b9c9bbe" alt="" class="wp-image-8" style="object-fit:cover"/></figure>
-<!-- /wp:image --></figure>
-<!-- /wp:gallery --></div>
-<!-- /wp:column -->
+  function moveDown(btn, event) {
+    event.stopPropagation();
+    const card = btn.closest('.accordion-card');
+    const container = document.getElementById('accordion-container');
+    const next = card.nextElementSibling;
+    if (next && next.classList.contains('accordion-card')) {
+      container.insertBefore(next, card);
+      generate();
+    }
+  }
 
-<!-- wp:column {"verticalAlignment":"center","style":{"spacing":{"blockGap":"var:preset|spacing|40"}}} -->
-<div class="wp-block-column is-vertically-aligned-center"><!-- wp:heading -->
-<h2 class="wp-block-heading">${d.hero}</h2>
+  // Right Side tab panel switcher
+  let currentOutputTab = 'preview';
+  function switchOutputTab(tab) {
+    currentOutputTab = tab;
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    tabBtns.forEach(btn => {
+      if (btn.getAttribute('onclick').includes(tab)) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    const iframeCont = document.getElementById('iframe-container');
+    const codeArea = document.getElementById('output-code');
+    const devBar = document.getElementById('preview-devices-bar');
+
+    if (tab === 'preview') {
+      iframeCont.style.display = 'flex';
+      codeArea.style.display = 'none';
+      devBar.style.display = 'flex';
+    } else {
+      iframeCont.style.display = 'none';
+      codeArea.style.display = 'block';
+      devBar.style.display = 'none';
+    }
+  }
+
+  // Visual Viewport sizing toggles
+  function setPreviewSize(size, btnElement) {
+    const iframe = document.getElementById('preview-iframe');
+    document.querySelectorAll('.btn-device').forEach(btn => btn.classList.remove('active'));
+    btnElement.classList.add('active');
+
+    if (size === 'mobile') {
+      iframe.style.width = '375px';
+    } else if (size === 'tablet') {
+      iframe.style.width = '768px';
+    } else {
+      iframe.style.width = '100%';
+    }
+  }
+
+  // Deep Validation logic for target URLs
+  function validateURL(value) {
+    if (!value) return true;
+    return /^(https?:\/\/|tel:|mailto:|\/|#)/i.test(value);
+  }
+
+  // Debouncing for instant real-time live typing updates
+  function debounce(func, timeout = 120) {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
+  }
+
+  // ----------------------------------------------------
+  // NATIVE UNIVERSAL GUTENBERG CORE BLOCK GENERATOR CODE
+  // ----------------------------------------------------
+  
+  function generateHero(d) {
+    const title = d.hero_title || "Transform Your Business Today";
+    const sub = d.hero_sub || "";
+    const btnText = d.hero_btn_text || "Get Started";
+    const btnLink = d.hero_btn_link || "#";
+    const imgUrl = d.hero_img || "";
+    const align = d.hero_align || "right";
+
+    const textContentBlock = `<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph {"className":"hero-badge"} -->
+<p class="hero-badge">Native Core Blocks</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":1} -->
+<h1 class="wp-block-heading">${title}</h1>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>${d.sub}</p>
+<p>${sub}</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:buttons -->
 <div class="wp-block-buttons"><!-- wp:button -->
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="${d.link}">${d.buttontext}</a></div>
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="${btnLink}">${btnText}</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
-<!-- /wp:column --></div>
+<!-- /wp:column -->`;
+
+    const mediaBlock = `<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image {"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="${imgUrl}" alt="Hero Visualization"/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:column -->`;
+
+    return `<!-- wp:group {"align":"wide","className":"hero-section"} -->
+<div class="wp-block-group alignwide hero-section"><!-- wp:columns -->
+<div class="wp-block-columns">
+${align === 'left' ? mediaBlock + '\n' + textContentBlock : textContentBlock + '\n' + mediaBlock}
+</div>
 <!-- /wp:columns --></div>
 <!-- /wp:group -->`;
+  }
 
-    if (d.main) html += `<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignwide"><!-- wp:heading {"align":"wide","style":{"typography":{"textAlign":"center"}}} -->
-<h2 class="wp-block-heading has-text-align-center alignwide">${d.main}</h2>
+  function generateMainText(d) {
+    const title = d.main_title || "Modern Block Standards";
+    const text = d.main_text || "";
+    return `<!-- wp:group {"align":"wide","className":"intro-section"} -->
+<div class="wp-block-group alignwide intro-section"><!-- wp:heading {"textAlign":"center"} -->
+<h2 class="wp-block-heading has-text-align-center">${title}</h2>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"align":"wide"} -->
-<p class="alignwide">${d.maintext}<br></p>
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">${text}</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->`;
+  }
 
-    if(d.col1 || d.col2 || d.col3) html += `
-<!-- wp:group {"metadata":{"categories":["call-to-action","banner","services"],"patternName":"twentytwentyfive/services-3-col","name":"Services, 3 columns"},"align":"wide","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"},"blockGap":"var:preset|spacing|50","margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignwide" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50)"><!-- wp:heading {"align":"wide","style":{"typography":{"textAlign":"center"}}} -->
-<h2 class="wp-block-heading has-text-align-center alignwide">${d.service}</h2>
-<!-- /wp:heading -->
+  function generateServices(d) {
+    const sectionTitle = d.service_title || "Services";
+    const services = [
+      { t: d.service1_title, tx: d.service1_text, img: d.service1_img },
+      { t: d.service2_title, tx: d.service2_text, img: d.service2_img },
+      { t: d.service3_title, tx: d.service3_text, img: d.service3_img }
+    ];
 
-<!-- wp:columns {"align":"wide"} -->
-<div class="wp-block-columns alignwide"><!-- wp:column -->
-<div class="wp-block-column"><!-- wp:image {"aspectRatio":"4/3","scale":"cover","sizeSlug":"full","style":{"spacing":{"margin":{"bottom":"24px"}}}} -->
-<figure class="wp-block-image size-full" style="margin-bottom:24px"><img src="https://images.unsplash.com/photo-1521791136064-7986c2920216" alt="Image for service" style="aspect-ratio:4/3;object-fit:cover"/></figure>
+    let columnBlocks = '';
+    services.forEach(s => {
+      columnBlocks += `<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:group {"className":"service-card"} -->
+<div class="wp-block-group service-card"><!-- wp:image {"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="${s.img}" alt="${s.t}"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">${d.col1}</h3>
+<h3 class="wp-block-heading">${s.t}</h3>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"fontSize":"medium"} -->
-<p class="has-medium-font-size">${d.col1text}</p>
+<!-- wp:paragraph -->
+<p>${s.tx}</p>
 <!-- /wp:paragraph --></div>
-<!-- /wp:column -->
+<!-- /wp:group --></div>
+<!-- /wp:column -->\n`;
+    });
 
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:image {"aspectRatio":"4/3","scale":"cover","sizeSlug":"full","style":{"spacing":{"margin":{"bottom":"24px"}}}} -->
-<figure class="wp-block-image size-full" style="margin-bottom:24px"><img src="https://images.unsplash.com/photo-1556745753-b2904692b3cd" alt="Image for service" style="aspect-ratio:4/3;object-fit:cover"/></figure>
-<!-- /wp:image -->
-
-<!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">${d.col2}</h3>
+    return `<!-- wp:group {"align":"wide","className":"services-section"} -->
+<div class="wp-block-group alignwide services-section"><!-- wp:heading {"textAlign":"center"} -->
+<h2 class="wp-block-heading has-text-align-center">${sectionTitle}</h2>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"fontSize":"medium"} -->
-<p class="has-medium-font-size">${d.col2text}</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:column -->
-
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:image {"aspectRatio":"4/3","scale":"cover","sizeSlug":"full","style":{"spacing":{"margin":{"bottom":"24px"}}}} -->
-<figure class="wp-block-image size-full" style="margin-bottom:24px"><img src="https://images.unsplash.com/photo-1525182008055-f88b95ff7980" alt="Image for service" style="aspect-ratio:4/3;object-fit:cover"/></figure>
-<!-- /wp:image -->
-
-<!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">${d.col3}</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"fontSize":"medium"} -->
-<p class="has-medium-font-size">${d.col3text}</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:column --></div>
+<!-- wp:columns -->
+<div class="wp-block-columns">
+${columnBlocks}</div>
 <!-- /wp:columns --></div>
 <!-- /wp:group -->`;
+  }
 
-    if(d.testcol1title || d.testcol2title) html += `<!-- wp:group {"metadata":{"categories":["testimonials"],"patternName":"twentytwentyfive/testimonials-2-col","name":"2 columns with avatar"},"align":"wide","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignwide" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|60","left":"var:preset|spacing|50"}}}} -->
-<div class="wp-block-columns alignwide"><!-- wp:column -->
-<div class="wp-block-column"><!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"var:preset|spacing|40","left":"var:preset|spacing|40"}}}} -->
-<div class="wp-block-columns"><!-- wp:column {"width":"64px"} -->
-<div class="wp-block-column" style="flex-basis:64px"><!-- wp:image {"width":"64px","aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none","className":"is-style-rounded"} -->
-<figure class="wp-block-image size-large is-resized is-style-rounded"><img src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f" alt="Picture of a person" style="aspect-ratio:1;object-fit:cover;width:64px"/></figure>
-<!-- /wp:image --></div>
-<!-- /wp:column -->
+  function generateTestimonials(d) {
+    const secTitle = d.testimonial_sec_title || "Success Stories";
+    const authors = [
+      { q: d.t1_quote, n: d.t1_name, r: d.t1_role, img: d.t1_img },
+      { q: d.t2_quote, n: d.t2_name, r: d.t2_role, img: d.t2_img },
+      { q: d.t3_quote, n: d.t3_name, r: d.t3_role, img: d.t3_img }
+    ];
 
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:quote {"className":"is-style-plain","style":{"typography":{"fontStyle":"normal","fontWeight":"400"},"spacing":{"blockGap":"var:preset|spacing|40"}},"fontSize":"x-large"} -->
-<blockquote class="wp-block-quote is-style-plain has-x-large-font-size" style="font-style:normal;font-weight:400"><!-- wp:paragraph {"style":{"typography":{"lineHeight":"1.1"}}} -->
-<p style="line-height:1.1">${d.testcol1title}</p>
-<!-- /wp:paragraph --><cite>${d.testcol1text} <br><sub>${d.testcol1tit}</sub></cite></blockquote>
-<!-- /wp:quote --></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns --></div>
-<!-- /wp:column -->
-
-<!-- wp:column {"width":""} -->
-<div class="wp-block-column"><!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"var:preset|spacing|40","left":"var:preset|spacing|40"}}}} -->
-<div class="wp-block-columns"><!-- wp:column {"width":"64px"} -->
-<div class="wp-block-column" style="flex-basis:64px"><!-- wp:image {"width":"64px","aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none","className":"is-style-rounded"} -->
-<figure class="wp-block-image size-large is-resized is-style-rounded"><img src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f" alt="Picture of a person" style="aspect-ratio:1;object-fit:cover;width:64px"/></figure>
-<!-- /wp:image --></div>
-<!-- /wp:column -->
-
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:quote {"className":"is-style-plain","style":{"typography":{"fontStyle":"normal","fontWeight":"400"},"spacing":{"blockGap":"var:preset|spacing|40"}},"fontSize":"x-large"} -->
-<blockquote class="wp-block-quote is-style-plain has-x-large-font-size" style="font-style:normal;font-weight:400"><!-- wp:paragraph {"style":{"typography":{"lineHeight":"1.1"}}} -->
-<p style="line-height:1.1">${d.testcol2title}</p>
-<!-- /wp:paragraph --><cite>${d.testcol2text} <br><sub>${d.testcol2tit}</sub></cite></blockquote>
-<!-- /wp:quote --></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns --></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns --></div>
-<!-- /wp:group -->`;
-
-    if(d.port) html += `
-<!-- wp:group {"metadata":{"name":"Portfolio"},"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"background","layout":{"inherit":true,"type":"constrained"}} -->
-<div class="wp-block-group alignfull has-background-background-color has-background" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)"><!-- wp:heading {"textAlign":"center"} -->
-<h2 class="wp-block-heading has-text-align-center">${d.port}</h2><!-- /wp:heading --></div><!-- /wp:group -->`;
-
-    if(d.phone) html += `<!-- wp:group {"align":"wide","backgroundColor":"light-gray"} --><div class="wp-block-group alignwide has-light-gray-background-color has-background"><!-- wp:group {"metadata":{"name":"Section"},"align":"full","className":"is-style-ext-preset\u002d\u002dgroup\u002d\u002dnatural-1\u002d\u002dsection","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"background","layout":{"inherit":true,"type":"constrained"}} -->
-<div class="wp-block-group alignfull is-style-ext-preset--group--natural-1--section has-background-background-color has-background" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)"><!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|40","left":"var:preset|spacing|40"}}}} -->
-<div class="wp-block-columns alignwide"><!-- wp:column {"verticalAlignment":"center","className":"ext-animate\u002d\u002don"} -->
-<div class="wp-block-column is-vertically-aligned-center ext-animate--on"><!-- wp:image {"aspectRatio":"4/3","scale":"cover","className":"is-style-ext-preset\u002d\u002dimage\u002d\u002dnatural-1\u002d\u002dimage-1\u002d\u002dcontent-left extendify-image-import"} -->
-<figure class="wp-block-image is-style-ext-preset--image--natural-1--image-1--content-left extendify-image-import"><img src="https://images.unsplash.com/photo-1488456682038-659fb6e7ddf7?fit=crop&amp;crop=entropy%2Cfaces&amp;auto=format%2Ccompress&amp;w=1280" alt="" style="aspect-ratio:4/3;object-fit:cover"/></figure>
-<!-- /wp:image --></div>
-<!-- /wp:column -->
-
-<!-- wp:column {"verticalAlignment":"stretch","className":"ext-animate\u002d\u002don"} -->
-<div class="wp-block-column is-vertically-aligned-stretch ext-animate--on"><!-- wp:group {"metadata":{"name":"Card"},"align":"wide","className":"is-style-ext-preset\u002d\u002dgroup\u002d\u002dnatural-1\u002d\u002ditem-card-1\u002d\u002dalign-start","style":{"dimensions":{"minHeight":"100%"},"spacing":{"padding":{"top":"0","bottom":"0","left":"0","right":"0"}}},"backgroundColor":"tertiary","layout":{"type":"flex","flexWrap":"nowrap"}} -->
-<div class="wp-block-group alignwide is-style-ext-preset--group--natural-1--item-card-1--align-start has-tertiary-background-color has-background" style="min-height:100%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0"><!-- wp:group {"metadata":{"name":"Section Header","categories":["section"],"patternName":"core/block/2330"},"align":"wide","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50","left":"var:preset|spacing|50","right":"var:preset|spacing|50"},"blockGap":"1.5rem"}},"layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignwide" style="padding-top:var(--wp--preset--spacing--50);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50);padding-left:var(--wp--preset--spacing--50)"><!-- wp:paragraph {"style":{"typography":{"fontSize":"18px"}}} -->
-<p style="font-size:18px">${d.contacttext}.</p>
+    let itemsBlock = '';
+    authors.forEach(a => {
+      itemsBlock += `<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:group {"className":"testimonial-card"} -->
+<div class="wp-block-group testimonial-card"><!-- wp:paragraph {"className":"testimonial-quote"} -->
+<p class="testimonial-quote">“${a.q}”</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:columns {"isStackedOnMobile":false,"style":{"spacing":{"blockGap":{"left":"12px"}}}} -->
-<div class="wp-block-columns is-not-stacked-on-mobile"><!-- wp:column {"width":"24px","style":{"spacing":{"padding":{"top":"2px"}}}} -->
-<div class="wp-block-column" style="padding-top:2px;flex-basis:24px"><!-- wp:image {"sizeSlug":"large","className":"extendify-image-import","style":{"color":{"duotone":"var:preset|duotone|primary-foreground"}}} -->
-<figure class="wp-block-image size-large extendify-image-import"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0yMDAsMjI0SDE1MC41NEEyNjYuNTYsMjY2LjU2LDAsMCwwLDE3NCwyMDAuMjVjMjcuNDUtMzEuNTcsNDItNjQuODUsNDItOTYuMjVhODgsODgsMCwwLDAtMTc2LDBjMCwzMS40LDE0LjUxLDY0LjY4LDQyLDk2LjI1QTI2Ni41NiwyNjYuNTYsMCwwLDAsMTA1LjQ2LDIyNEg1NmE4LDgsMCwwLDAsMCwxNkgyMDBhOCw4LDAsMCwwLDAtMTZaTTU2LDEwNGE3Miw3MiwwLDAsMSwxNDQsMGMwLDU3LjIzLTU1LjQ3LDEwNS03MiwxMThDMTExLjQ3LDIwOSw1NiwxNjEuMjMsNTYsMTA0Wm0xMTIsMGE0MCw0MCwwLDEsMC00MCw0MEE0MCw0MCwwLDAsMCwxNjgsMTA0Wm0tNjQsMGEyNCwyNCwwLDEsMSwyNCwyNEEyNCwyNCwwLDAsMSwxMDQsMTA0WiI+PC9wYXRoPjwvc3ZnPg==" alt=""/></figure>
+<!-- wp:columns {"className":"testimonial-meta-cols"} -->
+<div class="wp-block-columns testimonial-meta-cols"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image {"sizeSlug":"thumbnail","linkDestination":"none"} -->
+<figure class="wp-block-image size-thumbnail"><img src="${a.img}" alt="${a.n}"/></figure>
 <!-- /wp:image --></div>
 <!-- /wp:column -->
 
-<!-- wp:column {"width":"","style":{"spacing":{"blockGap":"0"}}} -->
-<div class="wp-block-column"><!-- wp:paragraph {"style":{"typography":{"fontStyle":"normal","fontWeight":"500"}},"fontSize":"medium"} -->
-<p class="has-medium-font-size" style="font-style:normal;font-weight:500">${d.address}</p>
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph {"className":"testimonial-author-name"} -->
+<p class="testimonial-author-name"><strong>${a.n}</strong></p>
 <!-- /wp:paragraph -->
-<!-- /wp:paragraph --></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns -->
 
-<!-- wp:columns {"verticalAlignment":"center","isStackedOnMobile":false,"style":{"spacing":{"blockGap":{"left":"12px"}}}} -->
-<div class="wp-block-columns are-vertically-aligned-center is-not-stacked-on-mobile"><!-- wp:column {"verticalAlignment":"center","width":"24px"} -->
-<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:24px"><!-- wp:image {"sizeSlug":"large","className":"extendify-image-import","style":{"color":{"duotone":"var:preset|duotone|primary-foreground"}}} -->
-<figure class="wp-block-image size-large extendify-image-import"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0yMjIuMzcsMTU4LjQ2bC00Ny4xMS0yMS4xMS0uMTMtLjA2YTE2LDE2LDAsMCwwLTE1LjE3LDEuNCw4LjEyLDguMTIsMCwwLDAtLjc1LjU2TDEzNC44NywxNjBjLTE1LjQyLTcuNDktMzEuMzQtMjMuMjktMzguODMtMzguNTFsMjAuNzgtMjQuNzFjLjItLjI1LjM5LS41LjU3LS43N2ExNiwxNiwwLDAsMCwxLjMyLTE1LjA2bDAtLjEyTDk3LjU0LDMzLjY0YTE2LDE2LDAsMCwwLTE2LjYyLTkuNTJBNTYuMjYsNTYuMjYsMCwwLDAsMzIsODBjMCw3OS40LDY0LjYsMTQ0LDE0NCwxNDRhNTYuMjYsNTYuMjYsMCwwLDAsNTUuODgtNDguOTJBMTYsMTYsMCwwLDAsMjIyLjM3LDE1OC40NlpNMTc2LDIwOEExMjguMTQsMTI4LjE0LDAsMCwxLDQ4LDgwLDQwLjIsNDAuMiwwLDAsMSw4Mi44Nyw0MGEuNjEuNjEsMCwwLDAsMCwuMTJsMjEsNDdMODMuMiwxMTEuODZhNi4xMyw2LjEzLDAsMCwwLS41Ny43NywxNiwxNiwwLDAsMC0xLDE1LjdjOS4wNiwxOC41MywyNy43MywzNy4wNiw0Ni40Niw0Ni4xMWExNiwxNiwwLDAsMCwxNS43NS0xLjE0LDguNDQsOC40NCwwLDAsMCwuNzQtLjU2TDE2OC44OSwxNTJsNDcsMjEuMDVoMHMuMDgsMCwuMTEsMEE0MC4yMSw0MC4yMSwwLDAsMSwxNzYsMjA4WiI+PC9wYXRoPjwvc3ZnPg==" alt=""/></figure>
-<!-- /wp:image --></div>
-<!-- /wp:column -->
-
-<!-- wp:column {"verticalAlignment":"center","width":"","style":{"spacing":{"blockGap":"0"}}} -->
-<div class="wp-block-column is-vertically-aligned-center"><!-- wp:paragraph {"style":{"typography":{"fontStyle":"normal","fontWeight":"500"}},"fontSize":"medium"} -->
-<p class="has-medium-font-size" style="font-style:normal;font-weight:500">${d.phone}</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns -->
-
-<!-- wp:columns {"verticalAlignment":"center","isStackedOnMobile":false,"style":{"spacing":{"blockGap":{"left":"12px"}}}} -->
-<div class="wp-block-columns are-vertically-aligned-center is-not-stacked-on-mobile"><!-- wp:column {"verticalAlignment":"center","width":"24px"} -->
-<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:24px"><!-- wp:image {"sizeSlug":"large","className":"extendify-image-import","style":{"color":{"duotone":"var:preset|duotone|primary-foreground"}}} -->
-<figure class="wp-block-image size-large extendify-image-import"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0yMjQsNDhIMzJhOCw4LDAsMCwwLTgsOFYxOTJhMTYsMTYsMCwwLDAsMTYsMTZIMjE2YTE2LDE2LDAsMCwwLDE2LTE2VjU2QTgsOCwwLDAsMCwyMjQsNDhaTTIwMy40Myw2NCwxMjgsMTMzLjE1LDUyLjU3LDY0Wk0yMTYsMTkySDQwVjc0LjE5bDgyLjU5LDc1LjcxYTgsOCwwLDAsMCwxMC44MiwwTDIxNiw3NC4xOVYxOTJaIj48L3BhdGg+PC9zdmc+" alt=""/></figure>
-<!-- /wp:image --></div>
-<!-- /wp:column -->
-
-<!-- wp:column {"verticalAlignment":"center","width":"","style":{"spacing":{"blockGap":"0"}}} -->
-<div class="wp-block-column is-vertically-aligned-center"><!-- wp:paragraph {"style":{"typography":{"fontStyle":"normal","fontWeight":"500"}},"fontSize":"medium"} -->
-<p class="has-medium-font-size" style="font-style:normal;font-weight:500">${d.email}</p>
+<!-- wp:paragraph {"className":"testimonial-author-role"} -->
+<p class="testimonial-author-role">${a.r}</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></div>
 <!-- /wp:group --></div>
-<!-- /wp:group --></div>
+<!-- /wp:column -->\n`;
+    });
+
+    return `<!-- wp:group {"align":"wide","className":"testimonials-section"} -->
+<div class="wp-block-group alignwide testimonials-section"><!-- wp:heading {"textAlign":"center"} -->
+<h2 class="wp-block-heading has-text-align-center">${secTitle}</h2>
+<!-- /wp:heading -->
+
+<!-- wp:columns -->
+<div class="wp-block-columns">
+${itemsBlock}</div>
+<!-- /wp:columns --></div>
+<!-- /wp:group -->`;
+  }
+
+  function generatePortfolio(d) {
+    const title = d.portfolio_title || "Our Works";
+    return `<!-- wp:group {"align":"wide","className":"portfolio-section"} -->
+<div class="wp-block-group alignwide portfolio-section"><!-- wp:heading {"textAlign":"center"} -->
+<h2 class="wp-block-heading has-text-align-center">${title}</h2>
+<!-- /wp:heading -->
+
+<!-- wp:columns -->
+<div class="wp-block-columns">
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image {"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="${d.port1_img}" alt="Work Portfolio item 1"/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image {"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="${d.port2_img}" alt="Work Portfolio item 2"/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image {"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="${d.port3_img}" alt="Work Portfolio item 3"/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:column -->
+</div>
+<!-- /wp:columns --></div>
+<!-- /wp:group -->`;
+  }
+
+  function generateCTA(d) {
+    const title = d.cta_title || "Call to Action";
+    const sub = d.cta_sub || "";
+    const btnText = d.cta_btn_text || "Click Here";
+    const btnLink = d.cta_btn_link || "#";
+
+    return `<!-- wp:group {"align":"full","className":"cta-section"} -->
+<div class="wp-block-group alignfull cta-section"><!-- wp:heading {"textAlign":"center"} -->
+<h2 class="wp-block-heading has-text-align-center">${title}</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">${sub}</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="${btnLink}">${btnText}</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons --></div>
+<!-- /wp:group -->`;
+  }
+
+  function generateContact(d) {
+    const text = d.contact_text || "Reach out to us";
+    const address = d.contact_address || "";
+    const phone = d.contact_phone || "";
+    const email = d.contact_email || "";
+    const img = d.contact_img || "";
+
+    return `<!-- wp:group {"align":"wide","className":"contact-section"} -->
+<div class="wp-block-group alignwide contact-section"><!-- wp:columns -->
+<div class="wp-block-columns"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image {"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="${img}" alt="Contact Visual Representation"/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:heading -->
+<h2 class="wp-block-heading">${text}</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>📍 <strong>Address:</strong> ${address}</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>📞 <strong>Phone:</strong> <a href="tel:${phone}">${phone}</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>✉️ <strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+<!-- /wp:paragraph --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></div>
-<!-- /wp:group -->  </div><!-- /wp:group -->`;
+<!-- /wp:group -->`;
+  }
+
+  // Master generator orchestrator
+  function generate() {
+    const cards = document.querySelectorAll('.accordion-card');
+    
+    // Check validation on links but warn inline gracefully without stopping compilation
+    let globalValid = true;
+    document.querySelectorAll('input').forEach(input => {
+      if (input.id.includes('link') || input.type === 'email') {
+        const isVal = validateURL(input.value.trim());
+        const errSpan = input.nextElementSibling;
+        if (!isVal) {
+          input.classList.add('invalid');
+          if (errSpan && errSpan.classList.contains('field-error')) {
+            errSpan.classList.add('visible');
+          }
+        } else {
+          input.classList.remove('invalid');
+          if (errSpan && errSpan.classList.contains('field-error')) {
+            errSpan.classList.remove('visible');
+          }
+        }
+      }
+    });
+
+    // Custom CSS layout system packed directly as a Custom HTML block
+    // This allows WordPress to load equal heights, uniform image dimensions, and elegant shadows
+    // dynamically inside the block editor and the frontend stylesheet!
+    const inlineCSSBlock = `<!-- wp:html -->
+<style>
+  /* Standard structural columns layout styles */
+  .wp-block-columns {
+    display: flex !important;
+    align-items: stretch !important; /* Force columns to be exactly equal height */
+  }
+  .wp-block-column {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+  }
+  .wp-block-column > .wp-block-group,
+  .wp-block-column > div {
+    flex: 1 1 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+  }
+
+  /* Service Card elements styling */
+  .service-card {
+    background: #ffffff !important;
+    border: 1px solid #e5e2da !important;
+    border-radius: 12px !important;
+    padding: 2rem !important;
+    box-shadow: 0 4px 12px rgba(29, 27, 22, 0.02) !important;
+    transition: transform 180ms ease, box-shadow 180ms ease !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .service-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 12px 24px rgba(29, 27, 22, 0.05) !important;
+  }
+  .service-card img {
+    aspect-ratio: 16/10 !important;
+    height: 220px !important; /* Forces all service images to be identical */
+    width: 100% !important;
+    object-fit: cover !important;
+    border-radius: 8px !important;
+  }
+
+  /* Testimonials Card elements styling */
+  .testimonial-card {
+    background: #ffffff !important;
+    border: 1px solid #e5e2da !important;
+    border-radius: 12px !important;
+    padding: 2.5rem !important;
+    box-shadow: 0 4px 12px rgba(29, 27, 22, 0.02) !important;
+    justify-content: space-between !important; /* Align details at absolute bottom */
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .testimonial-quote {
+    font-size: 1.05rem !important;
+    font-style: italic !important;
+    line-height: 1.6 !important;
+    color: #1d1b16 !important;
+    margin-bottom: 2rem !important;
+    flex-grow: 1 !important;
+  }
+  .testimonial-meta-cols {
+    align-items: center !important;
+    gap: 1rem !important;
+    margin-top: auto !important;
+    margin-bottom: 0 !important;
+  }
+  .testimonial-meta-cols .wp-block-column:first-child {
+    flex: 0 0 48px !important;
+    min-width: auto !important;
+  }
+  .testimonial-meta-cols img {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 9999px !important;
+    object-fit: cover !important;
+    aspect-ratio: 1/1 !important;
+  }
+  .testimonial-author-name {
+    margin-bottom: 0.1rem !important;
+    font-size: 0.95rem !important;
+    color: #1d1b16 !important;
+  }
+  .testimonial-author-role {
+    font-size: 0.85rem !important;
+    margin-bottom: 0 !important;
+    color: #69665d !important;
+  }
+
+  /* Portfolio squares grid */
+  .portfolio-section img {
+    aspect-ratio: 1/1 !important;
+    height: 320px !important; /* Square bounds to keep any layout from sticking out */
+    width: 100% !important;
+    object-fit: cover !important;
+    border-radius: 12px !important;
+  }
+
+  /* Hero Banner Image */
+  .hero-section img {
+    aspect-ratio: 16/10 !important;
+    height: 380px !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    border-radius: 12px !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.06) !important;
+  }
+
+  /* Contact Image */
+  .contact-section img {
+    aspect-ratio: 16/10 !important;
+    height: 380px !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    border-radius: 12px !important;
+  }
+
+  /* Category Badges */
+  .hero-badge {
+    display: inline-block !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    color: #026a71 !important;
+    background: #d4e6e5 !important;
+    padding: 6px 14px !important;
+    border-radius: 9999px !important;
+    margin-bottom: 1.5rem !important;
+  }
+</style>
+<!-- /wp:html -->\n\n`;
+
+    let html = inlineCSSBlock + `<!-- wp:group {"align":"full","layout":{"type":"constrained"}} -->\n<div class="wp-block-group alignfull">`;
+
+    // Process every single card in its literal current DOM order!
+    cards.forEach(card => {
+      const sectionId = card.dataset.sectionId;
+      const isActive = card.querySelector('.switch-toggle input').checked;
+      
+      if (!isActive) return;
+
+      const d = {};
+      card.querySelectorAll('input, textarea, select').forEach(el => {
+        if (el.type !== 'checkbox') {
+          d[el.id] = el.value.trim();
+        }
+      });
+
+      if (sectionId === 'hero') html += generateHero(d);
+      if (sectionId === 'main') html += generateMainText(d);
+      if (sectionId === 'services') html += generateServices(d);
+      if (sectionId === 'testimonials') html += generateTestimonials(d);
+      if (sectionId === 'portfolio') html += generatePortfolio(d);
+      if (sectionId === 'cta') html += generateCTA(d);
+      if (sectionId === 'contact') html += generateContact(d);
+    });
 
     html += `\n</div>\n<!-- /wp:group -->`;
 
+    // Render Raw Code Output
     const codeEl = document.getElementById('output-code');
-    const emptyEl = document.getElementById('output-empty');
-    const badge   = document.getElementById('output-badge');
     codeEl.textContent = html;
-    codeEl.style.display = 'block';
-    emptyEl.style.display = 'none';
-    badge.textContent = 'Ready to copy';
-    badge.classList.add('ready');
+
+    // Direct Browser rendering mock injection inside Sandbox Iframe
+    injectIframe(html);
+  }
+
+  function injectIframe(htmlCode) {
+    const iframe = document.getElementById('preview-iframe');
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+    const previewCSS = `
+      :root {
+        --color-primary: #026a71;
+        --color-primary-hover: #0a4f54;
+        --color-primary-highlight: #d4e6e5;
+        --color-text: #1d1b16;
+        --color-text-muted: #69665d;
+        --color-bg-light: #faf9f6;
+        --color-divider: #e5e2da;
+        --radius-md: 8px;
+        --radius-lg: 12px;
+        --radius-full: 9999px;
+      }
+      * { box-sizing: border-box; }
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--color-text);
+        background-color: #ffffff;
+        margin: 0; padding: 0;
+      }
+      
+      /* Standard alignment classes */
+      .alignwide { max-width: 1200px; margin-left: auto; margin-right: auto; padding-left: 2rem; padding-right: 2rem; }
+      .alignfull { width: 100%; margin-left: auto; margin-right: auto; }
+
+      /* Spacing between group sections */
+      .wp-block-group { padding: 5rem 2rem; position: relative; }
+      
+      /* Standard Typography */
+      h1, h2, h3, h4 { margin-top: 0; line-height: 1.2; color: var(--color-text); font-weight: 700; }
+      h1 { font-size: clamp(2.25rem, 4vw, 3.5rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+      h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+      h3 { font-size: clamp(1.25rem, 2vw, 1.45rem); font-weight: 600; margin-bottom: 0.75rem; }
+      p { margin-top: 0; margin-bottom: 1.25rem; color: var(--color-text-muted); font-size: 1rem; }
+      a { color: var(--color-primary); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+
+      /* Core Button styling */
+      .wp-block-buttons {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-top: 1.5rem;
+      }
+      .wp-block-buttons[style*="justify-content:center"] {
+        justify-content: center;
+      }
+      .wp-block-button__link {
+        display: inline-block;
+        background-color: var(--color-primary);
+        color: #ffffff !important;
+        padding: 0.85rem 2rem;
+        text-decoration: none !important;
+        font-weight: 600;
+        font-size: 0.95rem;
+        border-radius: var(--radius-md);
+        transition: background-color 150ms ease, transform 100ms ease;
+      }
+      .wp-block-button__link:hover {
+        background-color: var(--color-primary-hover);
+      }
+
+      /* Base layout styling */
+      .hero-section {
+        background-color: #ffffff;
+        padding-top: 6rem;
+        padding-bottom: 6rem;
+      }
+      .hero-section .wp-block-columns {
+        align-items: center;
+        gap: 4rem;
+      }
+      .hero-section p {
+        font-size: 1.15rem;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+      }
+
+      .intro-section {
+        background-color: var(--color-bg-light);
+        text-align: center;
+        border-top: 1px solid var(--color-divider);
+        border-bottom: 1px solid var(--color-divider);
+      }
+      .intro-section p {
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 1.2rem;
+        line-height: 1.7;
+      }
+
+      .services-section {
+        background-color: #ffffff;
+      }
+      .services-section h2 {
+        margin-bottom: 3.5rem;
+      }
+      .services-section .wp-block-columns {
+        gap: 2.5rem;
+      }
+
+      .testimonials-section {
+        background-color: var(--color-bg-light);
+        border-top: 1px solid var(--color-divider);
+        border-bottom: 1px solid var(--color-divider);
+      }
+      .testimonials-section h2 {
+        margin-bottom: 3.5rem;
+      }
+
+      .portfolio-section {
+        background-color: #ffffff;
+      }
+      .portfolio-section h2 {
+        margin-bottom: 3.5rem;
+      }
+
+      .cta-section {
+        background-color: #1d1b16;
+        color: #ffffff !important;
+        text-align: center;
+        padding-top: 6.5rem;
+        padding-bottom: 6.5rem;
+      }
+      .cta-section h2 {
+        color: #ffffff;
+      }
+      .cta-section p {
+        color: #a7a398;
+        font-size: 1.15rem;
+        max-width: 650px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 2rem;
+      }
+      .cta-section .wp-block-button__link {
+        background-color: #ffffff;
+        color: #1d1b16 !important;
+      }
+      .cta-section .wp-block-button__link:hover {
+        background-color: #faf9f6;
+      }
+
+      .contact-section {
+        background-color: #ffffff;
+      }
+      .contact-section .wp-block-columns {
+        align-items: center;
+        gap: 4rem;
+      }
+      .contact-section h2 {
+        margin-bottom: 1.5rem;
+      }
+      .contact-section p {
+        margin-bottom: 1rem;
+        font-size: 1.05rem;
+      }
+
+      @media (max-width: 768px) {
+        .wp-block-columns { flex-direction: column; gap: 2rem; }
+        .wp-block-group { padding: 4rem 1.25rem; }
+        .hero-section, .contact-section { padding-top: 4rem; padding-bottom: 4rem; }
+        .hero-section .wp-block-columns, .contact-section .wp-block-columns { gap: 2rem; }
+        .service-card, .testimonial-card { padding: 1.5rem; }
+      }
+    `;
+
+    // Direct browser rendering: standard HTML comments are ignored as expected
+    iframeDoc.open();
+    iframeDoc.write(`
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <style>${previewCSS}</style>
+        </head>
+        <body>
+          ${htmlCode}
+        </body>
+      </html>
+    `);
+    iframeDoc.close();
   }
 
   function copyCode() {
@@ -751,7 +1563,7 @@
       btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M2.5 8.5l3.5 3.5 7-8" stroke-linecap="round" stroke-linejoin="round"/></svg> Copied!';
       setTimeout(() => {
         btn.classList.remove('copied');
-        btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M10 5V3.5A1.5 1.5 0 0 0 8.5 2h-5A1.5 1.5 0 0 0 2 3.5v5A1.5 1.5 0 0 0 3.5 10H5" stroke-linecap="round"/></svg> Copy';
+        btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M10 5V3.5A1.5 1.5 0 0 0 8.5 2h-5A1.5 1.5 0 0 0 2 3.5v5A1.5 1.5 0 0 0 3.5 10H5" stroke-linecap="round"/></svg> Copy Blocks';
       }, 2000);
     };
     navigator.clipboard.writeText(code).then(success).catch(() => {
@@ -763,14 +1575,13 @@
     });
   }
 
-  function clearOutput() {
-    const codeEl = document.getElementById('output-code');
-    const emptyEl = document.getElementById('output-empty');
-    const badge   = document.getElementById('output-badge');
-    codeEl.textContent = ''; codeEl.style.display = 'none';
-    emptyEl.style.display = 'flex';
-    badge.textContent = 'Waiting for input'; badge.classList.remove('ready');
-  }
+  // Attach dynamic real-time input listeners to all inputs in the form
+  const scrollContainer = document.querySelector('.form-scroll');
+  scrollContainer.addEventListener('input', debounce(generate, 150));
+  scrollContainer.addEventListener('change', generate);
+
+  // Run initial state load
+  generate();
 </script>
 </body>
 </html>
