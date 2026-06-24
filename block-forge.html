@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlockForge - Gutenberg Landing Page Generator</title>
+    <!-- Tailwind CSS for Workspace UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab-btn { transition: all 0.2s ease; }
+        .tab-btn.active { border-bottom-color: #4f46e5; color: #4f46e5; background-color: rgba(79, 70, 229, 0.05); }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-slate-950 border-b border-slate-800 py-4 px-6 flex flex-col sm:flex-row justify-between items-center shadow-md gap-4 shrink-0">
+        <div class="flex items-center space-x-2">
+            <span class="text-2xl font-black tracking-tight text-indigo-500">BlockForge</span>
+            <span class="bg-indigo-950 border border-indigo-800 text-indigo-400 text-xs font-semibold px-2.5 py-0.5 rounded-full">v2.3 Core</span>
+        </div>
+        <p class="text-xs text-slate-400">Zero-Validation-Error Gutenberg Generator</p>
+    </header>
+
+    <!-- Scrollable Workspace Container -->
+    <div class="flex-1 overflow-y-auto space-y-0">
+
+        <!-- 1. SECTIONS / CUSTOMIZER CONTROLS (Full-Width Band) -->
+        <section class="w-full bg-slate-950 border-b border-slate-800">
+            <!-- Tab Navigation Header -->
+            <div class="border-b border-slate-800 bg-slate-950/50">
+                <div class="max-w-7xl mx-auto flex overflow-x-auto">
+                    <button onclick="switchTab('branding', this)" class="tab-btn active px-6 py-4 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap">1. Branding</button>
+                    <button onclick="switchTab('hero', this)" class="tab-btn px-6 py-4 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap">2. Hero</button>
+                    <button onclick="switchTab('services', this)" class="tab-btn px-6 py-4 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap">3. Services</button>
+                    <button onclick="switchTab('about', this)" class="tab-btn px-6 py-4 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap">4. About</button>
+                    <button onclick="switchTab('testimonial', this)" class="tab-btn px-6 py-4 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap">5. Testimonial</button>
+                    <button onclick="switchTab('contact', this)" class="tab-btn px-6 py-4 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap">6. Contact</button>
+                </div>
+            </div>
+
+            <!-- Tab Content Inputs -->
+            <div class="max-w-7xl mx-auto p-6 text-slate-300">
+                
+                <!-- BRANDING -->
+                <div id="tab-branding" class="tab-content active space-y-4">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="space-y-2">
+                            <h2 class="text-lg font-bold text-white uppercase tracking-wider">Default Color Settings</h2>
+                            <p class="text-sm text-slate-400">These basic presets maintain strict visual compatibility and high readability standards without visual design breakages.</p>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Primary Color</label>
+                                <div class="flex">
+                                    <input type="color" id="primaryColor" value="#2563eb" oninput="updateGenerator()" class="w-10 h-10 border border-slate-700 bg-slate-800 rounded-l cursor-pointer">
+                                    <input type="text" id="primaryColorHex" value="#2563eb" oninput="syncColorInput('primaryColor', this.value)" class="w-full bg-slate-900 border border-slate-700 border-l-0 rounded-r px-2 text-sm text-slate-100">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Secondary Color</label>
+                                <div class="flex">
+                                    <input type="color" id="secondaryColor" value="#0d9488" oninput="updateGenerator()" class="w-10 h-10 border border-slate-700 bg-slate-800 rounded-l cursor-pointer">
+                                    <input type="text" id="secondaryColorHex" value="#0d9488" oninput="syncColorInput('secondaryColor', this.value)" class="w-full bg-slate-900 border border-slate-700 border-l-0 rounded-r px-2 text-sm text-slate-100">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Background Color</label>
+                                <div class="flex">
+                                    <input type="color" id="backgroundColor" value="#ffffff" oninput="updateGenerator()" class="w-10 h-10 border border-slate-700 bg-slate-800 rounded-l cursor-pointer">
+                                    <input type="text" id="backgroundColorHex" value="#ffffff" oninput="syncColorInput('backgroundColor', this.value)" class="w-full bg-slate-900 border border-slate-700 border-l-0 rounded-r px-2 text-sm text-slate-100">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Typography Color</label>
+                                <div class="flex">
+                                    <input type="color" id="textColor" value="#1e293b" oninput="updateGenerator()" class="w-10 h-10 border border-slate-700 bg-slate-800 rounded-l cursor-pointer">
+                                    <input type="text" id="textColorHex" value="#1e293b" oninput="syncColorInput('textColor', this.value)" class="w-full bg-slate-900 border border-slate-700 border-l-0 rounded-r px-2 text-sm text-slate-100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HERO -->
+                <div id="tab-hero" class="tab-content space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Background Image URL</label>
+                                <input type="text" id="heroBgImg" value="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=80" oninput="updateGenerator()" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Accent Badge</label>
+                                <input type="text" id="heroBadge" value="NEXT-GEN INTERFACE DESIGN" oninput="updateGenerator()" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100">
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Main Heading</label>
+                                <input type="text" id="heroTitle" value="High-Performance Landing Layouts" oninput="updateGenerator()" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Subheading Description</label>
+                                <textarea id="heroSubtitle" oninput="updateGenerator()" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100">Generate structured, high-conversion block code. Fully optimized for instant deployments across FSE and classic templates.</textarea>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Button Text</label>
+                                    <input type="text" id="heroBtnText" value="Explore BlockForge" oninput="updateGenerator()" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Button URL</label>
+                                    <input type="text" id="heroBtnUrl" value="#" oninput="updateGenerator()" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SERVICES -->
+                <div id="tab-services" class="tab-content space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-slate-900/50 p-4 border border-slate-800 rounded-lg space-y-3">
+                            <span class="text-xs font-bold text-indigo-400 uppercase block">Column 1</span>
+                            <input type="text" id="f1Title" value="Lightweight Performance" oninput="updateGenerator()" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-100">
+                            <textarea id="f1Desc" oninput="updateGenerator()" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-100">No heavy external stylesheets or frameworks. Designed with clean fallback code structures.</textarea>
+                            <input type="text" id="f1Image" value="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" oninput="updateGenerator()" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-xs text-slate-300">
+                        </div>
+                        <div class="bg-slate-900/50 p-4 border border-slate-800 rounded-lg space-y-3">
+                            <span class="text-xs font-bold text-indigo-400 uppercase block">Column 2</span>
+                            <input type="text" id="f2Title" value="Intuitive Blocks" oninput="updateGenerator()" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-100">
+                            <textarea id="f2Desc" oninput="updateGenerator()" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-100">Each element is converted to standard layout containers that map smoothly in Gutenberg.</textarea>
+                            <input type="text" id="f2Image" value="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=600&q=80" oninput="updateGenerator()" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-xs text-slate-300">
+                        </div>
+                        <div class="bg-slate-900/50 p-4 border border-slate-800 rounded-lg space-y-3">
+                            <span class="text-xs font-bold text-indigo-400 uppercase block">Column 3</span>
+                            <input type="text" id="f3Title" value="Theme Agnostic Setup" oninput="updateGenerator()" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-100">
+                            <textarea id="f3Desc" oninput="updateGenerator()" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-100">Safe execution across classic formats, hybrid installations, or child-theme stylesheets.</textarea>
+                            <input type="text" id="f3Image" value="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" oninput="updateGenerator()" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-xs text-slate-300">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ABOUT -->
+                <div id="tab-about" class="tab-content space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Section Badge</label>
+                                <input type="text" id="aboutBadge" value="OUR CORE MISSION" oninput="updateGenerator()" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Section Title</label>
+                                <input type="text" id="aboutHeading" value="Clean formatting built for modern web systems." oninput="updateGenerator()" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100">
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Narrative Paragraph 1</label>
+                                <textarea id="aboutBody1" oninput="updateGenerator()" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100">We prioritize structural load times over heavy third-party plug-ins. By writing to core elements natively, we protect performance metrics without sacrificing design quality.</textarea>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Narrative Paragraph 2</label>
+                                <textarea id="aboutBody2" oninput="updateGenerator()" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100">BlockForge exports semantic markup structures styled to scale automatically. Your designs will render as expected across different web viewports.</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TESTIMONIAL -->
+                <div id="tab-testimonial" class="tab-content space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Quote Description</label>
+                            <textarea id="testiText" oninput="updateGenerator()" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100">"This layout solution cleaned up the alignment discrepancies we faced when migrating layout files across multi-tenant client sites. Highly recommended."</textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Attribution / Source</label>
+                            <input type="text" id="testiAuthor" value="Douglas Reynolds, VP of Digital Technology" oninput="updateGenerator()" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTACT -->
+                <div id="tab-contact" class="tab-content space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Contact Heading</label>
+                                <input type="text" id="contactTitle" value="Get in touch with us." oninput="updateGenerator()" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Underline Subtext</label>
+                                <textarea id="contactSub" oninput="updateGenerator()" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100">Connect with our support team to optimize your landing page configurations.</textarea>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Display Email</label>
+                                <input type="text" id="contactEmail" value="support@blockforge.test" oninput="updateGenerator()" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Location Details</label>
+                                <input type="text" id="contactLoc" value="Austin, TX" oninput="updateGenerator()" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 2. LIVE PREVIEW (Full-Width Band with Copy Button at the Top) -->
+        <section class="w-full bg-slate-900 border-b border-slate-800 flex flex-col">
+            <!-- Preview Controls & Copy Bar -->
+            <div class="bg-slate-950/70 border-b border-slate-800 px-6 py-3 flex flex-col lg:flex-row items-center justify-between gap-4">
+                <div class="flex items-center space-x-2">
+                    <span class="text-xs uppercase font-bold text-slate-400 tracking-wider">Preview Device:</span>
+                    <button onclick="setViewport('desktop')" id="btn-vp-desktop" class="vp-btn bg-indigo-600 px-3 py-1 rounded text-xs font-bold text-white transition">Desktop (100%)</button>
+                    <button onclick="setViewport('tablet')" id="btn-vp-tablet" class="vp-btn bg-slate-800 hover:bg-slate-700 px-3 py-1 rounded text-xs font-bold text-slate-300 transition">Tablet (768px)</button>
+                    <button onclick="setViewport('mobile')" id="btn-vp-mobile" class="vp-btn bg-slate-800 hover:bg-slate-700 px-3 py-1 rounded text-xs font-bold text-slate-300 transition">Mobile (375px)</button>
+                </div>
+                
+                <!-- Moved Copy Block Code Button to Top of Preview Window -->
+                <div class="flex items-center space-x-3 w-full lg:w-auto justify-end">
+                    <button onclick="copyToClipboard()" class="w-full lg:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-6 rounded text-xs shadow-lg transition flex items-center justify-center space-x-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                        <span>Copy Block Code</span>
+                    </button>
+                    <span id="copyFeedback" class="text-xs text-emerald-400 font-semibold opacity-0 transition-opacity duration-300 whitespace-nowrap">Copied!</span>
+                </div>
+            </div>
+
+            <!-- Preview Display Frame -->
+            <div class="p-6 flex justify-center items-center bg-slate-900 min-h-[450px]">
+                <iframe id="previewFrame" class="w-full h-[550px] bg-white border border-slate-700 rounded-lg shadow-2xl transition-all duration-300"></iframe>
+            </div>
+        </section>
+
+        <!-- 3. CODE GENERATED SECTION (Full-Width Band) -->
+        <section class="w-full bg-slate-950 flex flex-col">
+            <!-- Code Bar Header -->
+            <div class="bg-slate-900/50 px-6 py-3 flex flex-col sm:flex-row justify-between items-center border-b border-slate-800 gap-4">
+                <div class="flex items-center space-x-2">
+                    <span class="text-xs uppercase font-bold text-slate-400 tracking-wider">Copy Gutenberg Output Panel</span>
+                    <span class="bg-indigo-950/50 text-indigo-400 border border-indigo-900 text-[10px] font-mono font-bold px-2 py-0.5 rounded">100% Theme Safe</span>
+                </div>
+                <div class="text-xs text-slate-400">Pasted code translates to clean visual sections inside Gutenberg.</div>
+            </div>
+
+            <!-- Code Output Display -->
+            <div class="p-6">
+                <textarea id="gutenbergOutput" readonly class="w-full h-[250px] p-4 bg-slate-950 border border-slate-800 text-indigo-300 rounded-lg font-mono text-xs resize-y outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 select-all"></textarea>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Generator Script Engine -->
+    <script>
+        function switchTab(tabId, btn) {
+            // Find all tabs content and remove active state
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('active');
+                el.classList.add('text-slate-400');
+                el.style.backgroundColor = 'transparent';
+                el.style.borderBottomColor = 'transparent';
+            });
+            
+            // Set active state to selection
+            document.getElementById('tab-' + tabId).classList.add('active');
+            btn.classList.add('active');
+            btn.classList.remove('text-slate-400');
+
+            // Scroll preview to current selection smoothly
+            setTimeout(() => {
+                scrollPreviewToSection(tabId);
+            }, 150);
+        }
+
+        function scrollPreviewToSection(tabId) {
+            const iframe = document.getElementById('previewFrame');
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            if (tabId === 'branding') {
+                iframe.contentWindow.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                const targetId = 'bf-' + tabId;
+                const element = doc.getElementById(targetId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        }
+
+        function setViewport(device) {
+            const iframe = document.getElementById('previewFrame');
+            const buttons = document.querySelectorAll('.vp-btn');
+            
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-indigo-600', 'text-white');
+                btn.classList.add('bg-slate-800', 'text-slate-300');
+            });
+            
+            const activeBtn = document.getElementById('btn-vp-' + device);
+            activeBtn.classList.remove('bg-slate-800', 'text-slate-300');
+            activeBtn.classList.add('bg-indigo-600', 'text-white');
+            
+            if (device === 'mobile') {
+                iframe.style.width = '375px';
+            } else if (device === 'tablet') {
+                iframe.style.width = '768px';
+            } else {
+                iframe.style.width = '100%';
+            }
+        }
+
+        function syncColorInput(id, value) {
+            if (value.startsWith('#') && value.length === 7) {
+                document.getElementById(id).value = value;
+                updateGenerator();
+            }
+        }
+
+        function updateColorHexValue(id) {
+            const val = document.getElementById(id).value;
+            document.getElementById(id + 'Hex').value = val;
+            return val;
+        }
+
+        function updateGenerator() {
+            // Colors
+            const primary = updateColorHexValue('primaryColor');
+            const secondary = updateColorHexValue('secondaryColor');
+            const bg = updateColorHexValue('backgroundColor');
+            const text = updateColorHexValue('textColor');
+
+            // Data inputs
+            const heroBg = document.getElementById('heroBgImg').value;
+            const heroBadge = document.getElementById('heroBadge').value;
+            const heroTitle = document.getElementById('heroTitle').value;
+            const heroSubtitle = document.getElementById('heroSubtitle').value;
+            const heroBtnText = document.getElementById('heroBtnText').value;
+            const heroBtnUrl = document.getElementById('heroBtnUrl').value;
+
+            const f1Title = document.getElementById('f1Title').value;
+            const f1Desc = document.getElementById('f1Desc').value;
+            const f1Image = document.getElementById('f1Image').value;
+
+            const f2Title = document.getElementById('f2Title').value;
+            const f2Desc = document.getElementById('f2Desc').value;
+            const f2Image = document.getElementById('f2Image').value;
+
+            const f3Title = document.getElementById('f3Title').value;
+            const f3Desc = document.getElementById('f3Desc').value;
+            const f3Image = document.getElementById('f3Image').value;
+
+            const aboutBadge = document.getElementById('aboutBadge').value;
+            const aboutHeading = document.getElementById('aboutHeading').value;
+            const aboutBody1 = document.getElementById('aboutBody1').value;
+            const aboutBody2 = document.getElementById('aboutBody2').value;
+
+            const testiText = document.getElementById('testiText').value;
+            const testiAuthor = document.getElementById('testiAuthor').value;
+
+            const contactTitle = document.getElementById('contactTitle').value;
+            const contactSub = document.getElementById('contactSub').value;
+            const contactEmail = document.getElementById('contactEmail').value;
+            const contactLoc = document.getElementById('contactLoc').value;
+
+            // Generate Error-Free Gutenberg Custom HTML Blocks
+            const blockCode = `<!-- wp:html -->
+<div id="bf-hero" class="alignfull" style="background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), url('${heroBg}'); background-size: cover; background-position: center; color:#ffffff; padding-top:100px; padding-bottom:100px; padding-left:24px; padding-right:24px; text-align:center; width:100vw; margin-left:calc(50% - 50vw); box-sizing: border-box;">
+    <p style="font-size:0.85rem; font-weight:bold; letter-spacing:2px; color:${secondary}; text-transform:uppercase; margin-bottom:16px; margin-top:0; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;">${heroBadge}</p>
+    <h1 style="font-size:3rem; line-height:1.2; margin-top:0; margin-bottom:24px; font-weight:800; letter-spacing:-1px; color:#ffffff; max-width:850px; margin-left:auto; margin-right:auto; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;">${heroTitle}</h1>
+    <p style="font-size:1.15rem; margin-top:0; margin-bottom:32px; color:#cbd5e1; max-width:650px; margin-left:auto; margin-right:auto; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif; line-height:1.6;">${heroSubtitle}</p>
+    <div style="display:flex; justify-content:center; gap:16px;">
+        <a href="${heroBtnUrl}" style="background-color:${primary}; color:#ffffff; border-radius:6px; padding:14px 28px; text-decoration:none; font-weight:bold; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif; display:inline-block; font-size:0.95rem; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);">${heroBtnText}</a>
+    </div>
+</div>
+<!-- /wp:html -->
+
+<!-- wp:html -->
+<div id="bf-services" class="alignfull" style="background-color:${bg}; color:${text}; padding-top:80px; padding-bottom:80px; padding-left:24px; padding-right:24px; width:100vw; margin-left:calc(50% - 50vw); box-sizing: border-box;">
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:32px; max-width:1100px; margin-left:auto; margin-right:auto;">
+        <div style="display:flex; flex-direction:column; background-color:rgba(0,0,0,0.02); border:1px solid rgba(0,0,0,0.05); border-radius:8px; padding:20px; overflow:hidden;">
+            <div style="margin: -20px -20px 20px -20px;"><img src="${f1Image}" alt="${f1Title}" style="width:100%; height:180px; object-fit:cover;" /></div>
+            <h3 style="font-size:1.3rem; color:${primary}; margin-top:0; margin-bottom:10px; font-weight:700; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;">${f1Title}</h3>
+            <p style="color:${text}; opacity:0.85; line-height:1.6; font-size:0.9rem; margin:0; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;">${f1Desc}</p>
+        </div>
+        <div style="display:flex; flex-direction:column; background-color:rgba(0,0,0,0.02); border:1px solid rgba(0,0,0,0.05); border-radius:8px; padding:20px; overflow:hidden;">
+            <div style="margin: -20px -20px 20px -20px;"><img src="${f2Image}" alt="${f2Title}" style="width:100%; height:180px; object-fit:cover;" /></div>
+            <h3 style="font-size:1.3rem; color:${primary}; margin-top:0; margin-bottom:10px; font-weight:700; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;">${f2Title}</h3>
+            <p style="color:${text}; opacity:0.85; line-height:1.6; font-size:0.9rem; margin:0; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;">${f2Desc}</p>
+        </div>
+        <div style="display:flex; flex-direction:column; background-color:rgba(0,0,0,0.02); border:1px solid rgba(0,0,0,0.05); border-radius:8px; padding:20px; overflow:hidden;">
+            <div style="margin: -20px -20px 20px -20px;"><img src="${f3Image}" alt="${f3Title}" style="width:100%; height:180px; object-fit:cover;" /></div>
+            <h3 style="font-size:1.3rem; color:${primary}; margin-top:0; margin-bottom:10px; font-weight:700; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;">${f3Title}</h3>
+            <p style="color:${text}; opacity:0.85; line-height:1.6; font-size:0.9rem; margin:0; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;">${f3Desc}</p>
+        </div>
+    </div>
+</div>
+<!-- /wp:html -->
+
+<!-- wp:html -->
+<div id="bf-about" class="alignfull" style="background-color:rgba(0,0,0,0.01); color:${text}; padding-top:80px; padding-bottom:80px; padding-left:24px; padding-right:24px; border-top:1px solid rgba(0,0,0,0.05); border-bottom:1px solid rgba(0,0,0,0.05); width:100vw; margin-left:calc(50% - 50vw); box-sizing: border-box;">
+    <div style="display:flex; flex-wrap:wrap; gap:40px; max-width:1100px; margin-left:auto; margin-right:auto;">
+        <div style="flex:1; min-width:280px;">
+            <p style="font-size:0.8rem; font-weight:bold; letter-spacing:2px; color:${secondary}; text-transform:uppercase; margin-top:0; margin-bottom:12px; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;">${aboutBadge}</p>
+            <h2 style="font-size:2.25rem; font-weight:800; line-height:1.2; letter-spacing:-0.5px; margin-top:0; margin-bottom:16px; color:${text}; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;">${aboutHeading}</h2>
+        </div>
+        <div style="flex:1.5; min-width:300px; display:flex; flex-direction:column; gap:20px;">
+            <p style="color:${text}; opacity:0.85; line-height:1.7; font-size:1.05rem; margin:0; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;">${aboutBody1}</p>
+            <p style="color:${text}; opacity:0.75; line-height:1.7; font-size:0.95rem; margin:0; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;">${aboutBody2}</p>
+        </div>
+    </div>
+</div>
+<!-- /wp:html -->
+
+<!-- wp:html -->
+<div id="bf-testimonial" class="alignfull" style="background-color:${bg}; color:${text}; padding-top:80px; padding-bottom:80px; padding-left:24px; padding-right:24px; text-align:center; width:100vw; margin-left:calc(50% - 50vw); box-sizing: border-box;">
+    <p style="font-size:1.4rem; font-style:italic; line-height:1.6; margin-top:0; margin-bottom:24px; max-width:800px; margin-left:auto; margin-right:auto; color:${text}; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif; opacity:0.9;">"${testiText}"</p>
+    <p style="font-size:0.85rem; font-weight:bold; color:${primary}; text-transform:uppercase; letter-spacing:2px; margin:0; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;">— ${testiAuthor}</p>
+</div>
+<!-- /wp:html -->
+
+<!-- wp:html -->
+<div id="bf-contact" class="alignfull" style="background-color:#1e293b; color:#ffffff; padding-top:80px; padding-bottom:80px; padding-left:24px; padding-right:24px; border-top:1px solid rgba(255,255,255,0.08); width:100vw; margin-left:calc(50% - 50vw); box-sizing: border-box;">
+    <div style="display:flex; flex-wrap:wrap; gap:40px; max-width:1100px; margin-left:auto; margin-right:auto;">
+        <div style="flex:1; min-width:280px; display:flex; flex-direction:column; justify-content:center;">
+            <h2 style="font-size:2.25rem; font-weight:800; line-height:1.2; letter-spacing:-0.5px; margin-top:0; margin-bottom:16px; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif; color:#ffffff;">${contactTitle}</h2>
+            <p style="color:#cbd5e1; line-height:1.7; font-size:1.05rem; margin-top:0; margin-bottom:24px; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;">${contactSub}</p>
+            
+            <div style="display:flex; flex-direction:column; gap:12px; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif; font-size:0.9rem;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="background-color:${primary}; width:6px; height:6px; border-radius:50%; display:inline-block;"></span>
+                    <strong style="color:#ffffff;">Email:</strong> <span style="color:#cbd5e1;">${contactEmail}</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="background-color:${secondary}; width:6px; height:6px; border-radius:50%; display:inline-block;"></span>
+                    <strong style="color:#ffffff;">Office:</strong> <span style="color:#cbd5e1;">${contactLoc}</span>
+                </div>
+            </div>
+        </div>
+        <div style="flex:1; min-width:280px; background-color:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:24px;">
+            <form onsubmit="return false;" style="display:flex; flex-direction:column; gap:12px; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;">
+                <div>
+                    <label style="display:block; font-size:0.7rem; font-weight:bold; text-transform:uppercase; color:#cbd5e1; margin-bottom:4px;">Your Name</label>
+                    <input type="text" placeholder="John Doe" style="width:100%; background-color:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.15); border-radius:4px; padding:10px; font-size:0.85rem; color:#ffffff; outline:none; box-sizing: border-box;" />
+                </div>
+                <div>
+                    <label style="display:block; font-size:0.7rem; font-weight:bold; text-transform:uppercase; color:#cbd5e1; margin-bottom:4px;">Email Address</label>
+                    <input type="email" placeholder="john@example.com" style="width:100%; background-color:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.15); border-radius:4px; padding:10px; font-size:0.85rem; color:#ffffff; outline:none; box-sizing: border-box;" />
+                </div>
+                <div>
+                    <label style="display:block; font-size:0.7rem; font-weight:bold; text-transform:uppercase; color:#cbd5e1; margin-bottom:4px;">Message</label>
+                    <textarea rows="2" placeholder="How can we help?" style="width:100%; background-color:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.15); border-radius:4px; padding:10px; font-size:0.85rem; color:#ffffff; resize:none; outline:none; box-sizing: border-box;"></textarea>
+                </div>
+                <button type="submit" style="background-color:${primary}; color:#ffffff; border-radius:4px; padding:10px 20px; font-weight:bold; cursor:pointer; border:none; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">Send Message</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /wp:html -->`;
+
+            // Display Block Code Output
+            document.getElementById('gutenbergOutput').value = blockCode;
+
+            // Strip out Gutenberg comments to parse in the isolated frame preview
+            const strippedCodeForPreview = blockCode.replace(/<!--[\s\S]*?-->/g, "");
+            
+            // Build Document Structure Dynamically Inside the Sandbox Frame Container
+            const iframe = document.getElementById('previewFrame');
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            doc.open();
+            doc.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <style>
+                        html {
+                            scroll-behavior: smooth;
+                        }
+                        body { 
+                            margin: 0; 
+                            padding: 0; 
+                            background-color: ${bg}; 
+                            color: ${text}; 
+                            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; 
+                            overflow-x: hidden;
+                        }
+                        * { box-sizing: border-box; }
+                        /* CSS resets for visual rendering */
+                        .alignfull {
+                            width: 100% !important;
+                            max-width: 100% !important;
+                            margin-left: 0 !important;
+                            margin-right: 0 !important;
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${strippedCodeForPreview}
+                </body>
+                </html>
+            `);
+            doc.close();
+        }
+
+        function copyToClipboard() {
+            const textarea = document.getElementById('gutenbergOutput');
+            textarea.select();
+            document.execCommand('copy');
+            
+            const feedback = document.getElementById('copyFeedback');
+            feedback.style.opacity = '1';
+            setTimeout(() => {
+                feedback.style.opacity = '0';
+            }, 3000);
+        }
+
+        // Initialize script logic automatically on load
+        window.onload = function() {
+            updateGenerator();
+        };
+    </script>
+</body>
+</html>
