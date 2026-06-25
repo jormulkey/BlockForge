@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WP Landing Page Builder & Block Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300..700&family=JetBrains+Mono:wght=400;500&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="light"] {
+      --text-xs:   clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm:   clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg:   clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+
+      --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
+      --space-4: 1rem;    --space-5: 1.25rem; --space-6: 1.5rem;
+      --space-8: 2rem;
+
+      --color-bg:               #f5f4ef;
+      --color-surface:          #ffffff;
+      --color-surface-2:        #faf9f6;
+      --color-surface-offset:   #f1efe9;
+      --color-divider:          #e5e2da;
+      --color-border:           #d3cfc4;
+      --color-text:             #1d1b16;
+      --color-text-muted:       #69665d;
+      --color-text-faint:       #a7a398;
+      --color-primary:          #026a71;
+      --color-primary-hover:    #0a4f54;
+      --color-primary-active:   #0d373a;
+      --color-primary-highlight:#d4e6e5;
+      --color-error:            #be3a2c;
+      --color-success:          #1b7a3d;
+      --color-success-bg:       #f1faf4;
+
+      --radius-sm: 0.375rem; --radius-md: 0.6rem;
+      --radius-lg: 0.85rem;  --radius-full: 9999px;
+
+      --shadow-sm: 0 1px 2px rgba(29, 27, 22, 0.05);
+      --shadow-md: 0 4px 14px rgba(29, 27, 22, 0.08);
+
+      --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+      --font-body: 'Inter', 'Helvetica Neue', sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+
+    [data-theme="dark"] {
+      --color-bg: #131210; --color-surface: #1b1a17; --color-surface-2: #21201c;
+      --color-surface-offset: #1a1916; --color-divider: #2b2924; --color-border: #3b3933;
+      --color-text: #e7e5e0; --color-text-muted: #87847e; --color-text-faint: #56534e;
+      --color-primary: #4eb0bc; --color-primary-hover: #3a97a3; --color-primary-active: #2a7a85;
+      --color-primary-highlight: #1d3c3f;
+      --color-error: #f87171; --color-success: #4ade80; --color-success-bg: #13271b;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3); --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
+        --color-bg: #131210; --color-surface: #1b1a17; --color-surface-2: #21201c;
+        --color-surface-offset: #1a1916; --color-divider: #2b2924; --color-border: #3b3933;
+        --color-text: #e7e5e0; --color-text-muted: #87847e; --color-text-faint: #56534e;
+        --color-primary: #4eb0bc; --color-primary-hover: #3a97a3; --color-primary-active: #2a7a85;
+        --color-primary-highlight: #1d3c3f;
+        --color-error: #f87171; --color-success: #4ade80; --color-success-bg: #13271b;
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3); --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      -webkit-text-size-adjust: none; text-size-adjust: none;
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    body {
+      min-height: 100dvh; font-family: var(--font-body);
+      font-size: var(--text-sm); color: var(--color-text);
+      background: var(--color-bg); line-height: 1.6;
+      overflow-y: auto;
+    }
+    button, input, textarea, select { font: inherit; color: inherit; }
+    button { cursor: pointer; background: none; border: none; }
+    :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; border-radius: var(--radius-sm); }
+
+    /* Layout Structure */
+    .app-shell { display: grid; grid-template-rows: auto 1fr; min-height: 100dvh; }
+
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-3) var(--space-6);
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-divider);
+      box-shadow: var(--shadow-sm);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .topbar-left { display: flex; align-items: center; gap: var(--space-3); }
+    .topbar-right { display: flex; align-items: center; gap: var(--space-3); }
+    .logo { display: flex; align-items: center; gap: var(--space-2); text-decoration: none; color: var(--color-text); }
+    .logo-text { font-size: var(--text-base); font-weight: 700; letter-spacing: -0.02em; }
+    .logo-badge {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.05em;
+      color: var(--color-primary); background: var(--color-primary-highlight);
+      padding: 2px 8px; border-radius: var(--radius-full); text-transform: uppercase;
+    }
+    .theme-toggle {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: var(--radius-md);
+      color: var(--color-text-muted);
+      transition: background var(--transition), color var(--transition);
+    }
+    .theme-toggle:hover { background: var(--color-surface-offset); color: var(--color-text); }
+
+    /* Vertical stacked workspace */
+    .workspace {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--space-6) var(--space-4);
+      width: 100%;
+    }
+
+    /* Forms Elements */
+    .field-input {
+      width: 100%; padding: var(--space-2) var(--space-3);
+      background: var(--color-surface-2); border: 1px solid var(--color-border);
+      border-radius: var(--radius-md); font-size: var(--text-sm); color: var(--color-text);
+      transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+    }
+    .field-input:hover { border-color: var(--color-text-faint); }
+    .field-input:focus {
+      outline: none; border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px oklch(from var(--color-primary) l c h / 0.15);
+      background: var(--color-surface);
+    }
+
+    /* Full-width output preview and visual container */
+    .output-panel {
+      display: flex; flex-direction: column;
+      background: var(--color-surface);
+      border: 1px solid var(--color-divider);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      min-height: 750px;
+      width: 100%;
+    }
+    
+    .output-toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-3) var(--space-5);
+      background: var(--color-surface-2); border-bottom: 1px solid var(--color-divider);
+      flex-wrap: wrap; gap: var(--space-3);
+    }
+    .output-toolbar-left { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
+    
+    .view-tabs { display: flex; gap: var(--space-1); border-bottom: 2px solid transparent; }
+    .tab-btn {
+      padding: var(--space-1) var(--space-3); font-size: var(--text-xs); font-weight: 600;
+      color: var(--color-text-muted); border-bottom: 2px solid transparent; margin-bottom: -1px;
+      transition: all var(--transition);
+    }
+    .tab-btn:hover { color: var(--color-text); }
+    .tab-btn.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+
+    .device-controls { display: flex; gap: 2px; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 2px; background: var(--color-surface); }
+    .btn-device {
+      width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+      color: var(--color-text-muted); border-radius: var(--radius-sm); transition: all var(--transition);
+    }
+    .btn-device:hover { color: var(--color-text); background: var(--color-surface-offset); }
+    .btn-device.active { color: var(--color-primary); background: var(--color-primary-highlight); }
+
+    .btn-action {
+      display: flex; align-items: center; gap: var(--space-1);
+      padding: var(--space-1) var(--space-3); height: 32px;
+      border-radius: var(--radius-md); font-size: var(--text-xs); font-weight: 500;
+      border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text-muted);
+      transition: all var(--transition); white-space: nowrap;
+    }
+    .btn-action svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .btn-action:hover { background: var(--color-surface-offset); color: var(--color-text); border-color: var(--color-text-faint); }
+    .btn-action.copied { background: var(--color-success-bg); color: var(--color-success); border-color: transparent; }
+
+    /* Manage Sections Dropdown System */
+    .dropdown-container { position: relative; display: inline-block; }
+    .dropdown-menu {
+      display: none; position: absolute; top: calc(100% + 4px); left: 0; 
+      background: var(--color-surface); border: 1px solid var(--color-border); 
+      border-radius: var(--radius-md); box-shadow: var(--shadow-md); 
+      padding: var(--space-3) var(--space-4); z-index: 1000; min-width: 320px;
+    }
+    .dropdown-item {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--space-4); padding: var(--space-2) 0;
+      border-bottom: 1px solid var(--color-divider);
+    }
+    .dropdown-item:last-child { border-bottom: none; }
+    .dropdown-item-title { font-weight: 600; font-size: var(--text-xs); color: var(--color-text); flex: 1; }
+    
+    .dropdown-item-controls { display: flex; align-items: center; gap: 4px; }
+    .btn-dropdown-ctrl {
+      width: 26px; height: 26px; border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
+      font-size: 11px; background: var(--color-surface-2); color: var(--color-text-muted);
+      transition: all var(--transition);
+    }
+    .btn-dropdown-ctrl:hover:not(:disabled) {
+      background: var(--color-primary-highlight); color: var(--color-primary); border-color: var(--color-primary);
+    }
+    .btn-dropdown-ctrl:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    /* Switch Toggle inside Section manager */
+    .switch-toggle { position: relative; display: inline-block; width: 34px; height: 18px; }
+    .switch-toggle input { opacity: 0; width: 0; height: 0; }
+    .switch-slider {
+      position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+      background-color: var(--color-text-faint); transition: .2s; border-radius: var(--radius-full);
+    }
+    .switch-slider:before {
+      position: absolute; content: ""; height: 14px; width: 14px; left: 2px; bottom: 2px;
+      background-color: white; transition: .2s; border-radius: 50%;
+    }
+    .switch-toggle input:checked + .switch-slider { background-color: var(--color-primary); }
+    .switch-toggle input:checked + .switch-slider:before { transform: translateX(16px); }
+
+    .preset-control { display: flex; align-items: center; gap: var(--space-2); }
+    .output-area { flex: 1; overflow: hidden; padding: var(--space-5); position: relative; display: flex; flex-direction: column; }
+
+    /* Visual sandbox simulation */
+    .sandbox-container {
+      display: flex; justify-content: center; align-items: stretch;
+      flex: 1; width: 100%; transition: width 0.3s ease; min-height: 600px;
+    }
+    .preview-iframe {
+      width: 100%; height: 100%; min-height: 600px;
+      border: 1px solid var(--color-divider); border-radius: var(--radius-lg);
+      background: white; box-shadow: var(--shadow-sm);
+      transition: width var(--transition);
+    }
+
+    /* Output Raw Code Box */
+    .output-code {
+      display: none; font-family: var(--font-mono); font-size: 11px; line-height: 1.6;
+      color: var(--color-text); white-space: pre-wrap; word-break: break-all;
+      background: var(--color-surface-2); border: 1px solid var(--color-divider);
+      border-radius: var(--radius-lg); padding: var(--space-5); flex: 1; overflow: auto;
+    }
+
+    /* Modal dialog stylesheet layout coordinates */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(19, 18, 16, 0.5); backdrop-filter: blur(4px);
+      display: none; align-items: center; justify-content: center;
+      z-index: 1000; padding: var(--space-4); opacity: 0;
+      transition: opacity 200ms ease;
+    }
+    .modal-overlay.active { display: flex; opacity: 1; }
+    .modal-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      max-width: 680px; width: 100%;
+      max-height: 85vh; overflow-y: auto;
+      box-shadow: var(--shadow-md);
+      display: flex; flex-direction: column;
+      transform: translateY(15px); transition: transform 200ms ease;
+    }
+    .modal-overlay.active .modal-card { transform: translateY(0); }
+
+    .modal-header {
+      padding: var(--space-4) var(--space-5);
+      border-bottom: 1px solid var(--color-divider);
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--color-surface-2);
+    }
+    .modal-header h3 { font-size: var(--text-base); font-weight: 700; margin: 0; }
+    .btn-close-modal { font-size: 1.5rem; color: var(--color-text-muted); line-height: 1; }
+    .btn-close-modal:hover { color: var(--color-text); }
+
+    .modal-body { padding: var(--space-5); overflow-y: auto; }
+    .modal-body h4 { font-size: var(--text-sm); font-weight: 700; margin-bottom: var(--space-2); margin-top: var(--space-4); color: var(--color-primary); }
+    .modal-body p { margin-bottom: var(--space-3); font-size: var(--text-sm); }
+    
+    .guide-step { display: flex; gap: var(--space-3); margin-bottom: var(--space-4); }
+    .guide-step-num {
+      width: 26px; height: 26px; border-radius: var(--radius-full);
+      background: var(--color-primary-highlight); color: var(--color-primary);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: var(--text-xs); flex-shrink: 0;
+    }
+    .guide-step-content p { margin: 0; font-size: var(--text-xs); color: var(--color-text-muted); }
+    .guide-step-content strong { color: var(--color-text); }
+
+    .modal-note-block {
+      background: var(--color-success-bg);
+      border-left: 4px solid var(--color-success);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-sm);
+      margin-top: var(--space-4);
+    }
+    .modal-note-block p { font-size: var(--text-xs); color: var(--color-text-muted); margin: 0; }
+
+    .modal-footer {
+      padding: var(--space-3) var(--space-5);
+      border-top: 1px solid var(--color-divider);
+      background: var(--color-surface-2);
+      display: flex; justify-content: flex-end;
+    }
+    .btn-primary {
+      background: var(--color-primary); color: white;
+      padding: var(--space-2) var(--space-4); border-radius: var(--radius-md);
+      font-weight: 600; font-size: var(--text-xs); transition: background var(--transition);
+    }
+    .btn-primary:hover { background: var(--color-primary-hover); }
+
+    @media (max-width: 1024px) {
+      .logo-badge { display: none; }
+      .output-toolbar-left { gap: var(--space-2); }
+    }
+  </style>
+</head>
+<body>
+<div class="app-shell">
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <a href="#" class="logo" aria-label="WP Landing Page Builder">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect width="32" height="32" rx="7" fill="var(--color-primary)"/>
+          <path d="M6 11h3.5l2.5 8 2.5-8h3l2.5 8 2.5-8H26" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 20.5h16" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
+        </svg>
+        <span class="logo-text">BlockForge</span>
+      </a>
+      <span class="logo-badge">Local Biz v3</span>
+    </div>
+    
+    <div class="topbar-right">
+      <span style="font-size: var(--text-xs); color: var(--color-text-muted); display: inline-block; padding: 4px var(--space-3); background: var(--color-surface-offset); border-radius: var(--radius-sm); border: 1px solid var(--color-divider);">
+        💡 Double-click any image or button to change URLs. Click text to edit.
+      </span>
+      <button class="btn-action" onclick="openDocModal()" title="View Step-by-Step Instructions">
+        📖 Help Guide
+      </button>
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="workspace">
+
+    <!-- Distraction-Free Visual Workspace Preview & Gutenberg Code Panel -->
+    <main class="output-panel">
+      <div class="output-toolbar">
+        <div class="output-toolbar-left">
+          <div class="view-tabs">
+            <button class="tab-btn active" onclick="switchOutputTab('preview')">Live Sandbox Preview</button>
+            <button class="tab-btn" onclick="switchOutputTab('code')">Gutenberg Block Code</button>
+          </div>
+          
+          <!-- Quick Template Preset Control -->
+          <div class="preset-control">
+            <span style="font-size: var(--text-xs); font-weight: 600; color: var(--color-text-muted);">Template:</span>
+            <select id="preset-selector" class="field-input" style="width: auto; height: 32px; padding: 0 var(--space-2); font-size: var(--text-xs); border-color: var(--color-border);" onchange="applyPreset(this.value)">
+              <option value="roofing">Apex Roofing Specialists (Roofing)</option>
+              <option value="hvac">BreezeAir HVAC & Plumbing (HVAC)</option>
+            </select>
+          </div>
+
+          <!-- Section Visibility Dropdown -->
+          <div class="dropdown-container">
+            <button class="btn-action" onclick="toggleSectionsDropdown(event)" title="Toggle Block Sections Visibility">
+              ⚙️ Manage Sections
+            </button>
+            <div id="sections-dropdown" class="dropdown-menu">
+              <!-- Checkboxes & Reordering arrows rendered dynamically in JS -->
+            </div>
+          </div>
+
+          <!-- Sandbox Resolution Switchers -->
+          <div class="device-controls" id="preview-devices-bar">
+            <button class="btn-device active" onclick="setPreviewSize('desktop', this)" title="Desktop View">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            </button>
+            <button class="btn-device" onclick="setPreviewSize('tablet', this)" title="Tablet View">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+            </button>
+            <button class="btn-device" onclick="setPreviewSize('mobile', this)" title="Mobile View">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="output-actions">
+          <button class="btn-action" id="copy-btn" onclick="copyCode()" aria-label="Copy code to clipboard">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75">
+              <rect x="5" y="5" width="9" height="9" rx="1.5"/>
+              <path d="M10 5V3.5A1.5 1.5 0 0 0 8.5 2h-5A1.5 1.5 0 0 0 2 3.5v5A1.5 1.5 0 0 0 3.5 10H5" stroke-linecap="round"/>
+            </svg>
+            Copy Blocks
+          </button>
+        </div>
+      </div>
+
+      <div class="output-area">
+        <!-- Live Sandbox Container -->
+        <div class="sandbox-container" id="iframe-container">
+          <iframe id="preview-iframe" class="preview-iframe" title="Visual page builder sandbox frame environment"></iframe>
+        </div>
+
+        <!-- Gutenberg Compiled Code Block Content -->
+        <pre class="output-code" id="output-code" aria-live="polite"></pre>
+      </div>
+    </main>
+
+  </div>
+</div>
+
+<!-- INSTRUCTIONS MODAL POPUP -->
+<div class="modal-overlay" id="doc-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3 id="modal-title">Deploying to WordPress</h3>
+      <button class="btn-close-modal" onclick="closeDocModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>This builder generates production-ready block markup compatible with the native WordPress block editor (Gutenberg) without requiring any visual building page plugins.</p>
+      
+      <h4>📋 Step-by-Step Instructions</h4>
+
+      <div class="guide-step">
+        <div class="guide-step-num">⚡</div>
+        <div class="guide-step-content">
+          <p><strong>Visual Editing:</strong> Simply click any text in the preview panel below to type and customize your copy. Double-click images or buttons to change their URLs instantly!</p>
+        </div>
+      </div>
+      
+      <div class="guide-step">
+        <div class="guide-step-num">1</div>
+        <div class="guide-step-content">
+          <p>Click the <strong>"Copy Blocks"</strong> button in the visual builder toolbar to copy the generated clean code directly to your clipboard.</p>
+        </div>
+      </div>
+
+      <div class="guide-step">
+        <div class="guide-step-num">2</div>
+        <div class="guide-step-content">
+          <p>Open or create any Page or Post inside your <strong>WordPress Dashboard</strong>.</p>
+        </div>
+      </div>
+
+      <div class="guide-step">
+        <div class="guide-step-num">3</div>
+        <div class="guide-step-content">
+          <p>Switch your editor to <strong>Code Editor</strong> mode. Click the options menu in the top-right corner of the Gutenberg sidebar (three vertical dots) and choose <strong>Code Editor</strong>.</p>
+          <p style="margin-top: 4px; font-style: italic;">Keyboard shortcut: <code>Ctrl + Shift + Alt + M</code> (Windows) or <code>Cmd + Option + Shift + M</code> (Mac).</p>
+        </div>
+      </div>
+
+      <div class="guide-step">
+        <div class="guide-step-num">4</div>
+        <div class="guide-step-content">
+          <p>Paste the copied block code directly into the editor canvas, and click <strong>Exit Code Editor</strong> in the toolbar to return to visual mode. WordPress will parse your structures immediately into editable Core Blocks!</p>
+        </div>
+      </div>
+
+      <h4>🎨 Setting Theme Colors in WordPress</h4>
+      <p>Since this generator utilizes native WordPress core elements, you can easily alter colors to match your branding once imported:</p>
+      <div class="guide-step">
+        <div class="guide-step-num">A</div>
+        <div class="guide-step-content">
+          <p><strong>Using Global Site Styles:</strong> If using a Block Theme (e.g., Twenty Twenty-Four), open <strong>Appearance > Editor > Styles > Colors</strong> to update global palettes. All buttons and icons will sync automatically.</p>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="guide-step-num">B</div>
+        <div class="guide-step-content">
+          <p><strong>Overriding Block Settings:</strong> While in the visual editor, select any Heading, Group, or Button, locate the <strong>Settings</strong> panel on the right sidebar, click on <strong>Color</strong>, and choose your preferred background or text colors from your active theme palette.</p>
+        </div>
+      </div>
+
+      <h4>🖼️ Uploading & Linking Your Custom Images</h4>
+      <p>To showcase your real projects, trucks, or local team, import your images to the media library first:</p>
+      <div class="guide-step">
+        <div class="guide-step-num">1</div>
+        <div class="guide-step-content">
+          <p>Within your WordPress dashboard, navigate to <strong>Media > Add New Media File</strong> and upload your files.</p>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="guide-step-num">2</div>
+        <div class="guide-step-content">
+          <p>Click on the uploaded image to open its attachment details window, then click the <strong>"Copy URL to clipboard"</strong> button on the lower-right side.</p>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="guide-step-num">3</div>
+        <div class="guide-step-content">
+          <p>Come back to this workspace, <strong>double-click the image</strong> you want to switch in the sandbox, paste the copied link, and confirm.</p>
+        </div>
+      </div>
+
+      <div class="modal-note-block">
+        <p><strong>💡 Clean Code Guarantee:</strong> All pastings automatically strip out background formatting. This ensures your margins, text sizes, and column grid styles remain cleanly inherited no matter where you copy your custom drafts from.</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-primary" onclick="closeDocModal()">Continue Building</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Dark/Light Theme Switching
+  (function(){
+    const t = document.querySelector('[data-theme-toggle]');
+    const r = document.documentElement;
+    let d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    r.setAttribute('data-theme', d);
+    function setIcon(mode) {
+      t.innerHTML = mode === 'dark'
+        ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+        : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+      t.setAttribute('aria-label', 'Switch to ' + (mode === 'dark' ? 'light' : 'dark') + ' mode');
+    }
+    setIcon(d);
+    t.addEventListener('click', () => { d = d === 'dark' ? 'light' : 'dark'; r.setAttribute('data-theme', d); setIcon(d); });
+  })();
+
+  // Parent State Definition
+  let sectionsOrder = ['hero', 'main', 'services', 'testimonials', 'portfolio', 'cta', 'contact'];
+  
+  let sectionData = {
+    hero: {
+      active: true,
+      badge: "Licensed Local Roofers",
+      title: "Protect Your Home With a Lifetime Roof",
+      sub: "Get premium roofing replacements, prompt leak repairs, and expert storm diagnostics from certified home exterior professionals.",
+      btn_text: "Request Free Estimate",
+      btn_link: "#contact",
+      img: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80",
+      align: "right"
+    },
+    main: {
+      active: true,
+      title: "No-Gimmick Quality & Honest Pricing",
+      text: "We believe in honest craft and clear communication. From our initial 21-point structural inspection to final cleanup, our local teams treat your property with respect. No high-pressure sales pitches—just premium materials installed to protect your family for decades."
+    },
+    services: {
+      active: true,
+      title: "Our Local Roofing Solutions",
+      s1_title: "Full Shingle Roof Replacement",
+      s1_text: "Upgrade to storm-proof architectural shingle systems warrantied for up to 50 years against the elements.",
+      s1_img: "https://images.unsplash.com/photo-1635422998818-40b9df4b8fa6?auto=format&fit=crop&w=600&q=80",
+      s2_title: "Emergency Leak Isolation",
+      s2_text: "Stop water in its tracks. Our quick response teams find and patch structural breaches before costs escalate.",
+      s2_img: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=600&q=80",
+      s3_title: "Wind & Hail Damage Repairs",
+      s3_text: "We specialize in navigating insurance reporting. Get exhaustive damage evaluations and direct assistance.",
+      s3_img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80"
+    },
+    testimonials: {
+      active: true,
+      title: "What Your Neighbors Say About Us",
+      t1_quote: "Had a massive storm leak in our attic. They arrived within hours, isolated the damage, and did a superb shingle repair. Highly professional crew!",
+      t1_name: "Robert K.",
+      t1_role: "Springfield Resident",
+      t1_img: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&h=150&q=80",
+      t2_quote: "The cleanest contractors we have ever dealt with. They cleared away every stray nail using a rolling magnet. Our brand new roof looks gorgeous.",
+      t2_name: "Linda M.",
+      t2_role: "Oak Ridge Homeowner",
+      t2_img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80",
+      t3_quote: "Excellent communication from quote to cleanup. No hidden charges. They replaced our entire asphalt roof in less than two full days.",
+      t3_name: "James D.",
+      t3_role: "Property Manager",
+      t3_img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80"
+    },
+    portfolio: {
+      active: true,
+      title: "Our Work in the Community",
+      img1: "https://images.unsplash.com/photo-1635422998818-40b9df4b8fa6?auto=format&fit=crop&w=600&q=80",
+      img2: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80",
+      img3: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=600&q=80"
+    },
+    cta: {
+      active: true,
+      title: "Need an Expert Roof Inspection?",
+      sub: "Don't let a minor attic drip become a major structural expense. Book a completely free roof inspection today.",
+      btn_text: "Schedule Inspection Now",
+      btn_link: "#contact"
+    },
+    contact: {
+      active: true,
+      title: "Get in Touch Today",
+      address: "100 Roofing Way, Suite A, Springfield, IL 62701",
+      phone: "(555) 321-7663",
+      email: "service@apexroofing.com",
+      img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80"
+    }
+  };
+
+  const presets = {
+    roofing: {
+      hero: { active: true, badge: "Licensed Local Roofers", title: "Protect Your Home With a Lifetime Roof", sub: "Get premium roofing replacements, prompt leak repairs, and expert storm diagnostics from certified home exterior professionals.", btn_text: "Request Free Estimate", btn_link: "#contact", img: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80", align: "right" },
+      main: { active: true, title: "No-Gimmick Quality & Honest Pricing", text: "We believe in honest craft and clear communication. From our initial 21-point structural inspection to final cleanup, our local teams treat your property with respect. No high-pressure sales pitches—just premium materials installed to protect your family for decades." },
+      services: { active: true, title: "Our Local Roofing Solutions", s1_title: "Full Shingle Roof Replacement", s1_text: "Upgrade to storm-proof architectural shingle systems warrantied for up to 50 years against the elements.", s1_img: "https://images.unsplash.com/photo-1635422998818-40b9df4b8fa6?auto=format&fit=crop&w=600&q=80", s2_title: "Emergency Leak Isolation", s2_text: "Stop water in its tracks. Our quick response teams find and patch structural breaches before costs escalate.", s2_img: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=600&q=80", s3_title: "Wind & Hail Damage Repairs", s3_text: "We specialize in navigating insurance reporting. Get exhaustive damage evaluations and direct assistance.", s3_img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" },
+      testimonials: { active: true, title: "What Your Neighbors Say About Us", t1_quote: "Had a massive storm leak in our attic. They arrived within hours, isolated the damage, and did a superb shingle repair. Highly professional crew!", t1_name: "Robert K.", t1_role: "Springfield Resident", t1_img: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&h=150&q=80", t2_quote: "The cleanest contractors we have ever dealt with. They cleared away every stray nail using a rolling magnet. Our brand new roof looks gorgeous.", t2_name: "Linda M.", t2_role: "Oak Ridge Homeowner", t2_img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80", t3_quote: "Excellent communication from quote to cleanup. No hidden charges. They replaced our entire asphalt roof in less than two full days.", t3_name: "James D.", t3_role: "Property Manager", t3_img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80" },
+      portfolio: { active: true, title: "Our Work in the Community", img1: "https://images.unsplash.com/photo-1635422998818-40b9df4b8fa6?auto=format&fit=crop&w=600&q=80", img2: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80", img3: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=600&q=80" },
+      cta: { active: true, title: "Need an Expert Roof Inspection?", sub: "Don't let a minor attic drip become a major structural expense. Book a completely free roof inspection today.", btn_text: "Schedule Inspection Now", btn_link: "#contact" },
+      contact: { active: true, title: "Get in Touch Today", address: "100 Roofing Way, Suite A, Springfield, IL 62701", phone: "(555) 321-7663", email: "service@apexroofing.com", img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" }
+    },
+    hvac: {
+      hero: { active: true, badge: "Licensed HVAC Specialists", title: "Stay Comfortable, Breathe Clean Air", sub: "Fast, reliable furnace installation, rapid air conditioning diagnostics, and plumbing solutions tailored to local property owners.", btn_text: "Schedule Repair Service", btn_link: "#contact", img: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=800&q=80", align: "right" },
+      main: { active: true, title: "Rapid Emergency Response Systems", text: "When your heating or cooling system fails, your home quickly becomes unlivable. Our service vans are fully stocked with advanced diagnostic gear and replacement components to repair most central issues on the very first visit." },
+      services: { active: true, title: "Our Home Comfort Services", s1_title: "AC Tune-ups & Diagnostics", s1_text: "Optimize cooling systems, recharge coolants, and restore peak efficiency to survive the peak summer heat.", s1_img: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80", s2_title: "Heating Repair & Overhaul", s2_text: "Comprehensive checks of furnace exchangers, controls, and modern thermostat integrations to ensure safety.", s2_img: "https://images.unsplash.com/photo-1581094288338-2314dddb7ecc?auto=format&fit=crop&w=600&q=80", s3_title: "Emergency Plumbing Care", s3_text: "Rapid solutions for water heater failures, critical line clearings, and leaking structural pipes.", s3_img: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" },
+      testimonials: { active: true, title: "Hear From Our Happy Customers", t1_quote: "Our AC gave out on a 98-degree afternoon. They came out within two hours, quickly identified the blown capacitor, and had our home cool again.", t1_name: "Sarah T.", t1_role: "Suburban Family Homeowner", t1_img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80", t2_quote: "Very polite techs who explained every charge clearly. We saved 20% on our energy bills after they installed our new modern heat pump.", t2_name: "Michael G.", t2_role: "Homeowner", t2_img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80", t3_quote: "Fantastic maintenance program. They clean and service our furnace every autumn and our central air conditioner every spring. Total peace of mind.", t3_name: "Emma W.", t3_role: "Bungalow Owner", t3_img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&h=150&q=80" },
+      portfolio: { active: true, title: "Modern Systems Installed", img1: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80", img2: "https://images.unsplash.com/photo-1581094288338-2314dddb7ecc?auto=format&fit=crop&w=600&q=80", img3: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" },
+      cta: { active: true, title: "Is Your Comfort System Acting Up?", sub: "Call our friendly dispatch center or schedule an experienced technician visit online in seconds.", btn_text: "Schedule Service Appointment", btn_link: "#contact" },
+      contact: { active: true, title: "Contact Your Comfort Team", address: "500 Airway Boulevard, Springfield, IL 62703", phone: "(555) 987-6543", email: "comfort@breezeairhvac.com", img: "https://images.unsplash.com/photo-1581094288338-2314dddb7ecc?auto=format&fit=crop&w=600&q=80" }
+    }
+  };
+
+  // Manage Sections Dropdown Toggle
+  function toggleSectionsDropdown(event) {
+    if (event) event.stopPropagation();
+    const dropdown = document.getElementById('sections-dropdown');
+    const isVisible = dropdown.style.display === 'block';
+    dropdown.style.display = isVisible ? 'none' : 'block';
+  }
+
+  window.addEventListener('click', (e) => {
+    const dropdown = document.getElementById('sections-dropdown');
+    if (dropdown && !e.target.closest('.dropdown-container')) {
+      dropdown.style.display = 'none';
+    }
+    const modal = document.getElementById('doc-modal');
+    if (e.target === modal) closeDocModal();
+  });
+
+  // Render the Section Manager dropdown menu with reordering arrows
+  function renderSectionsDropdown() {
+    const dropdown = document.getElementById('sections-dropdown');
+    dropdown.innerHTML = '';
+    
+    const titleMap = {
+      hero: "Hero Banner",
+      main: "About & Mission",
+      services: "Services Provided",
+      testimonials: "Client Success Stories",
+      portfolio: "Recent Local Jobs",
+      cta: "Call To Action",
+      contact: "Get Free Quote"
+    };
+
+    sectionsOrder.forEach((secId, index) => {
+      const active = sectionData[secId].active;
+      const item = document.createElement('div');
+      item.className = 'dropdown-item';
+      
+      item.innerHTML = `
+        <span class="dropdown-item-title">${titleMap[secId] || secId}</span>
+        <div class="dropdown-item-controls">
+          <button class="btn-dropdown-ctrl" onclick="moveSectionUpFromMenu('${secId}', event)" title="Move Up" ${index === 0 ? 'disabled' : ''}>▲</button>
+          <button class="btn-dropdown-ctrl" onclick="moveSectionDownFromMenu('${secId}', event)" title="Move Down" ${index === sectionsOrder.length - 1 ? 'disabled' : ''}>▼</button>
+          <label class="switch-toggle" style="transform: scale(0.85); margin-left: var(--space-2);">
+            <input type="checkbox" ${active ? 'checked' : ''} onchange="toggleSectionFromMenu('${secId}', this.checked)">
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+      `;
+      dropdown.appendChild(item);
+    });
+  }
+
+  // Intermediary actions keeping the dropdown active during click actions
+  window.moveSectionUpFromMenu = function(secId, event) {
+    if (event) event.stopPropagation();
+    moveSectionUp(secId);
+    renderSectionsDropdown();
+  };
+
+  window.moveSectionDownFromMenu = function(secId, event) {
+    if (event) event.stopPropagation();
+    moveSectionDown(secId);
+    renderSectionsDropdown();
+  };
+
+  function toggleSectionFromMenu(secId, checked) {
+    sectionData[secId].active = checked;
+    generate();
+  }
+
+  function applyPreset(presetKey) {
+    const preset = presets[presetKey];
+    if (!preset) return;
+    sectionData = JSON.parse(JSON.stringify(preset));
+    generate();
+    renderSectionsDropdown();
+  }
+
+  // Pure layout order reassembly array indices swaps
+  function moveSectionUp(secId) {
+    const idx = sectionsOrder.indexOf(secId);
+    if (idx > 0) {
+      const temp = sectionsOrder[idx];
+      sectionsOrder[idx] = sectionsOrder[idx - 1];
+      sectionsOrder[idx - 1] = temp;
+      generate();
+    }
+  }
+
+  // Pure layout order reassembly array indices swaps
+  function moveSectionDown(secId) {
+    const idx = sectionsOrder.indexOf(secId);
+    if (idx !== -1 && idx < sectionsOrder.length - 1) {
+      const temp = sectionsOrder[idx];
+      sectionsOrder[idx] = sectionsOrder[idx + 1];
+      sectionsOrder[idx + 1] = temp;
+      generate();
+    }
+  }
+
+  // Direct visual synchronization script called from inside Iframe body
+  window.updateStateValue = function(section, key, value) {
+    if (sectionData[section]) {
+      sectionData[section][key] = value;
+    }
+    generateCodeOnly();
+  };
+
+  // Right Side tab panel switcher
+  let currentOutputTab = 'preview';
+  function switchOutputTab(tab) {
+    currentOutputTab = tab;
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    tabBtns.forEach(btn => {
+      if (btn.getAttribute('onclick').includes(tab)) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    const iframeCont = document.getElementById('iframe-container');
+    const codeArea = document.getElementById('output-code');
+    const devBar = document.getElementById('preview-devices-bar');
+
+    if (tab === 'preview') {
+      iframeCont.style.display = 'flex';
+      codeArea.style.display = 'none';
+      devBar.style.display = 'flex';
+    } else {
+      iframeCont.style.display = 'none';
+      codeArea.style.display = 'block';
+      devBar.style.display = 'none';
+    }
+  }
+
+  // Visual Viewport sizing toggles
+  function setPreviewSize(size, btnElement) {
+    const iframe = document.getElementById('preview-iframe');
+    document.querySelectorAll('.btn-device').forEach(btn => btn.classList.remove('active'));
+    btnElement.classList.add('active');
+
+    if (size === 'mobile') {
+      iframe.style.width = '375px';
+    } else if (size === 'tablet') {
+      iframe.style.width = '768px';
+    } else {
+      iframe.style.width = '100%';
+    }
+  }
+
+  // Modal Dialog Actions
+  function openDocModal() {
+    document.getElementById('doc-modal').classList.add('active');
+  }
+  function closeDocModal() {
+    document.getElementById('doc-modal').classList.remove('active');
+  }
+
+  // ----------------------------------------------------
+  // NATIVE UNIVERSAL GUTENBERG CORE BLOCK GENERATOR CODE
+  // ----------------------------------------------------
+
+  function generateHero(d, isIframe = false) {
+    const title = d.title || "Transform Your Business";
+    const sub = d.sub || "";
+    const btnText = d.btn_text || "Get Started";
+    const btnLink = d.btn_link || "#";
+    const imgUrl = d.img || "";
+    const align = d.align || "right";
+    const badgeText = d.badge || "Local Specialists";
+
+    const editAttr = (key) => isIframe ? `contenteditable="true" data-section="hero" data-key="${key}"` : '';
+    const dblClickAttr = (type, key, linkKey = '') => isIframe ? `data-dbl-type="${type}" data-section="hero" data-key="${key}" ${linkKey ? `data-link-key="${linkKey}"` : ''}` : '';
+
+    const textContentBlock = `<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph {"className":"hero-badge"} -->
+<p class="hero-badge" ${editAttr('badge')}>${badgeText}</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":1} -->
+<h1 class="wp-block-heading" ${editAttr('title')}>${title}</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p ${editAttr('sub')}>${sub}</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="${btnLink}" ${editAttr('btn_text')} ${dblClickAttr('link', 'btn_text', 'btn_link')}>${btnText}</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons --></div>
+<!-- /wp:column -->`;
+
+    const mediaBlock = `<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image {"url":"${imgUrl}","sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="${imgUrl}" alt="Hero Visualization" ${dblClickAttr('image', 'img')}/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:column -->`;
+
+    return `<!-- wp:group {"align":"wide","className":"hero-section"} -->
+<div class="wp-block-group alignwide hero-section"><!-- wp:columns -->
+<div class="wp-block-columns">
+${align === 'left' ? mediaBlock + '\n' + textContentBlock : textContentBlock + '\n' + mediaBlock}
+</div>
+<!-- /wp:columns --></div>
+<!-- /wp:group -->`;
+  }
+
+  function generateMainText(d, isIframe = false) {
+    const title = d.title || "Modern Block Standards";
+    const text = d.text || "";
+    const editAttr = (key) => isIframe ? `contenteditable="true" data-section="main" data-key="${key}"` : '';
+
+    return `<!-- wp:group {"align":"wide","className":"intro-section"} -->
+<div class="wp-block-group alignwide intro-section"><!-- wp:heading {"textAlign":"center"} -->
+<h2 class="wp-block-heading has-text-align-center" ${editAttr('title')}>${title}</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center" ${editAttr('text')}>${text}</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->`;
+  }
+
+  function generateServices(d, isIframe = false) {
+    const sectionTitle = d.title || "Services";
+    const editAttr = (key) => isIframe ? `contenteditable="true" data-section="services" data-key="${key}"` : '';
+    const dblClickAttr = (type, key) => isIframe ? `data-dbl-type="${type}" data-section="services" data-key="${key}"` : '';
+
+    const services = [
+      { t: d.s1_title, tx: d.s1_text, img: d.s1_img, keyTitle: 's1_title', keyText: 's1_text', keyImg: 's1_img' },
+      { t: d.s2_title, tx: d.s2_text, img: d.s2_img, keyTitle: 's2_title', keyText: 's2_text', keyImg: 's2_img' },
+      { t: d.s3_title, tx: d.s3_text, img: d.s3_img, keyTitle: 's3_title', keyText: 's3_text', keyImg: 's3_img' }
+    ];
+
+    let columnBlocks = '';
+    services.forEach(s => {
+      columnBlocks += `<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:group {"className":"service-card"} -->
+<div class="wp-block-group service-card"><!-- wp:image {"url":"${s.img}","sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="${s.img}" alt="${s.t}" ${dblClickAttr('image', s.keyImg)}/></figure>
+<!-- /wp:image -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading" ${editAttr(s.keyTitle)}>${s.t}</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p ${editAttr(s.keyText)}>${s.tx}</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></div>
+<!-- /wp:column -->\n`;
+    });
+
+    return `<!-- wp:group {"align":"wide","className":"services-section"} -->
+<div class="wp-block-group alignwide services-section"><!-- wp:heading {"textAlign":"center"} -->
+<h2 class="wp-block-heading has-text-align-center" ${editAttr('title')}>${sectionTitle}</h2>
+<!-- /wp:heading -->
+
+<!-- wp:columns -->
+<div class="wp-block-columns">
+${columnBlocks}</div>
+<!-- /wp:columns --></div>
+<!-- /wp:group -->`;
+  }
+
+  function generateTestimonials(d, isIframe = false) {
+    const secTitle = d.title || "Success Stories";
+    const editAttr = (key) => isIframe ? `contenteditable="true" data-section="testimonials" data-key="${key}"` : '';
+    const dblClickAttr = (type, key) => isIframe ? `data-dbl-type="${type}" data-section="testimonials" data-key="${key}"` : '';
+
+    const authors = [
+      { q: d.t1_quote, n: d.t1_name, r: d.t1_role, img: d.t1_img, kQ: 't1_quote', kN: 't1_name', kR: 't1_role', kI: 't1_img' },
+      { q: d.t2_quote, n: d.t2_name, r: d.t2_role, img: d.t2_img, kQ: 't2_quote', kN: 't2_name', kR: 't2_role', kI: 't2_img' },
+      { q: d.t3_quote, n: d.t3_name, r: d.t3_role, img: d.t3_img, kQ: 't3_quote', kN: 't3_name', kR: 't3_role', kI: 't3_img' }
+    ];
+
+    let itemsBlock = '';
+    authors.forEach(a => {
+      itemsBlock += `<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:group {"className":"testimonial-card"} -->
+<div class="wp-block-group testimonial-card"><!-- wp:paragraph {"className":"testimonial-quote"} -->
+<p class="testimonial-quote" ${editAttr(a.kQ)}>“${a.q}”</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:columns {"className":"testimonial-meta-cols"} -->
+<div class="wp-block-columns testimonial-meta-cols"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image {"url":"${a.img}","sizeSlug":"thumbnail","linkDestination":"none"} -->
+<figure class="wp-block-image size-thumbnail"><img src="${a.img}" alt="${a.n}" ${dblClickAttr('image', a.kI)}/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph {"className":"testimonial-author-name"} -->
+<p class="testimonial-author-name" ${editAttr(a.kN)}><strong>${a.n}</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"testimonial-author-role"} -->
+<p class="testimonial-author-role" ${editAttr(a.kR)}>${a.r}</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns --></div>
+<!-- /wp:group --></div>
+<!-- /wp:column -->\n`;
+    });
+
+    return `<!-- wp:group {"align":"wide","className":"testimonials-section"} -->
+<div class="wp-block-group alignwide testimonials-section"><!-- wp:heading {"textAlign":"center"} -->
+<h2 class="wp-block-heading has-text-align-center" ${editAttr('title')}>${secTitle}</h2>
+<!-- /wp:heading -->
+
+<!-- wp:columns -->
+<div class="wp-block-columns">
+${itemsBlock}</div>
+<!-- /wp:columns --></div>
+<!-- /wp:group -->`;
+  }
+
+  function generatePortfolio(d, isIframe = false) {
+    const title = d.title || "Our Works";
+    const editAttr = (key) => isIframe ? `contenteditable="true" data-section="portfolio" data-key="${key}"` : '';
+    const dblClickAttr = (type, key) => isIframe ? `data-dbl-type="${type}" data-section="portfolio" data-key="${key}"` : '';
+
+    return `<!-- wp:group {"align":"wide","className":"portfolio-section"} -->
+<div class="wp-block-group alignwide portfolio-section"><!-- wp:heading {"textAlign":"center"} -->
+<h2 class="wp-block-heading has-text-align-center" ${editAttr('title')}>${title}</h2>
+<!-- /wp:heading -->
+
+<!-- wp:columns -->
+<div class="wp-block-columns">
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image {"url":"${d.img1}","sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="${d.img1}" alt="Work Portfolio item 1" ${dblClickAttr('image', 'img1')}/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image {"url":"${d.img2}","sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="${d.img2}" alt="Work Portfolio item 2" ${dblClickAttr('image', 'img2')}/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image {"url":"${d.img3}","sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="${d.img3}" alt="Work Portfolio item 3" ${dblClickAttr('image', 'img3')}/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:column -->
+</div>
+<!-- /wp:columns --></div>
+<!-- /wp:group -->`;
+  }
+
+  function generateCTA(d, isIframe = false) {
+    const title = d.title || "Call to Action";
+    const sub = d.sub || "";
+    const btnText = d.btn_text || "Click Here";
+    const btnLink = d.btn_link || "#";
+
+    const editAttr = (key) => isIframe ? `contenteditable="true" data-section="cta" data-key="${key}"` : '';
+    const dblClickAttr = (type, key, linkKey = '') => isIframe ? `data-dbl-type="${type}" data-section="cta" data-key="${key}" ${linkKey ? `data-link-key="${linkKey}"` : ''}` : '';
+
+    return `<!-- wp:group {"align":"full","className":"cta-section"} -->
+<div class="wp-block-group alignfull cta-section"><!-- wp:heading {"textAlign":"center"} -->
+<h2 class="wp-block-heading has-text-align-center" ${editAttr('title')}>${title}</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center" ${editAttr('sub')}>${sub}</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons" style="justify-content: center !important;"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="${btnLink}" ${editAttr('btn_text')} ${dblClickAttr('link', 'btn_text', 'btn_link')}>${btnText}</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons --></div>
+<!-- /wp:group -->`;
+  }
+
+  function generateContact(d, isIframe = false) {
+    const text = d.title || "Reach out to us";
+    const address = d.address || "";
+    const phone = d.phone || "";
+    const email = d.email || "";
+    const img = d.img || "";
+
+    const pinIcon = `<svg viewBox="0 0 24 24" class="contact-icon-svg"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`;
+    const phoneIcon = `<svg viewBox="0 0 24 24" class="contact-icon-svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>`;
+    const emailIcon = `<svg viewBox="0 0 24 24" class="contact-icon-svg"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`;
+
+    const editAttr = (key) => isIframe ? `contenteditable="true" data-section="contact" data-key="${key}"` : '';
+    const dblClickAttr = (type, key, linkKey = '') => isIframe ? `data-dbl-type="${type}" data-section="contact" data-key="${key}" ${linkKey ? `data-link-key="${linkKey}"` : ''}` : '';
+
+    return `<!-- wp:group {"align":"wide","className":"contact-section"} -->
+<div class="wp-block-group alignwide contact-section"><!-- wp:columns -->
+<div class="wp-block-columns"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image {"url":"${img}","sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="${img}" alt="Contact Visual Representation" ${dblClickAttr('image', 'img')}/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:heading -->
+<h2 class="wp-block-heading" ${editAttr('title')}>${text}</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>${pinIcon}<strong>Address:</strong> <span ${editAttr('address')}>${address}</span></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>${phoneIcon}<strong>Phone:</strong> <a href="tel:${phone}" ${editAttr('phone')} ${dblClickAttr('link', 'phone', 'phone')}>${phone}</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>${emailIcon}<strong>Email:</strong> <a href="mailto:${email}" ${editAttr('email')} ${dblClickAttr('link', 'email', 'email')}>${email}</a></p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns --></div>
+<!-- /wp:group -->`;
+  }
+
+  function getInlineCSSBlock() {
+    return `<!-- wp:html -->
+<style>
+  /* Standard structural columns layout styles */
+  @media (min-width: 782px) {
+    .wp-block-columns {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      align-items: stretch !important;
+      gap: 2rem !important;
+    }
+    .wp-block-column {
+      flex: 1 1 0% !important;
+      min-width: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      height: 100% !important;
+    }
+    .wp-block-column > .wp-block-group,
+    .wp-block-column > div {
+      flex: 1 1 auto !important;
+      display: flex !important;
+      flex-direction: column !important;
+      height: 100% !important;
+    }
+    .service-card, .testimonial-card {
+      height: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+    }
+  }
+
+  /* Service Card elements styling */
+  .service-card {
+    background: #ffffff !important;
+    border: 1px solid #e5e2da !important;
+    border-radius: 12px !important;
+    padding: 2rem !important;
+    box-shadow: 0 4px 12px rgba(29, 27, 22, 0.02) !important;
+    transition: transform 180ms ease, box-shadow 180ms ease !important;
+  }
+  .service-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 12px 24px rgba(29, 27, 22, 0.05) !important;
+  }
+  .service-card img {
+    aspect-ratio: 16/10 !important;
+    height: 220px !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    border-radius: 8px !important;
+  }
+  .service-card > p {
+    flex-grow: 1 !important;
+  }
+
+  /* Testimonials Card elements styling - strictly locked proportions */
+  .testimonial-card {
+    background: #ffffff !important;
+    border: 1px solid #e5e2da !important;
+    border-radius: 12px !important;
+    padding: 2.5rem !important;
+    box-shadow: 0 4px 12px rgba(29, 27, 22, 0.02) !important;
+    flex-grow: 1 !important;
+  }
+  .testimonial-quote {
+    font-size: 1.05rem !important;
+    font-style: italic !important;
+    line-height: 1.6 !important;
+    color: #1d1b16 !important;
+    margin-bottom: 2rem !important;
+    flex-grow: 1 !important;
+  }
+  .testimonial-meta-cols {
+    align-items: center !important;
+    gap: 1rem !important;
+    margin-top: auto !important;
+    margin-bottom: 0 !important;
+  }
+  .testimonial-meta-cols .wp-block-column:first-child {
+    flex: 0 0 48px !important;
+    min-width: auto !important;
+  }
+  .testimonial-meta-cols img {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 9999px !important;
+    object-fit: cover !important;
+    aspect-ratio: 1/1 !important;
+  }
+  .testimonial-author-name {
+    margin-bottom: 0.1rem !important;
+    font-size: 0.95rem !important;
+    color: #1d1b16 !important;
+  }
+  .testimonial-author-role {
+    font-size: 0.85rem !important;
+    margin-bottom: 0 !important;
+    color: #69665d !important;
+  }
+
+  /* Portfolio squares grid */
+  .portfolio-section img {
+    aspect-ratio: 1/1 !important;
+    height: 320px !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    border-radius: 12px !important;
+  }
+
+  /* Hero Banner Image */
+  .hero-section img {
+    aspect-ratio: 16/10 !important;
+    height: 380px !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    border-radius: 12px !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.06) !important;
+  }
+
+  /* Contact Image */
+  .contact-section img {
+    aspect-ratio: 16/10 !important;
+    height: 380px !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    border-radius: 12px !important;
+  }
+
+  /* Contact section strict icon sizing */
+  .contact-section .contact-icon-svg {
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    min-height: 18px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin-right: 8px !important;
+    stroke: currentColor !important;
+    stroke-width: 2px !important;
+    fill: none !important;
+    color: #026a71 !important;
+  }
+
+  /* Category Badges */
+  .hero-badge {
+    display: inline-block !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    color: #026a71 !important;
+    background: #d4e6e5 !important;
+    padding: 6px 14px !important;
+    border-radius: 9999px !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* Centered CTA Section button styling override */
+  .cta-section .wp-block-buttons {
+    display: flex !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .cta-section .wp-block-button {
+    margin: 0 auto !important;
+  }
+</style>
+<!-- /wp:html -->\n\n`;
+  }
+
+  // Master visual generator compiler
+  function generateCodeOnly() {
+    const inlineCSSBlock = getInlineCSSBlock();
+    let html = inlineCSSBlock + `<!-- wp:group {"align":"full","layout":{"type":"constrained"}} -->\n<div class="wp-block-group alignfull">`;
+
+    sectionsOrder.forEach(secId => {
+      if (!sectionData[secId].active) return;
+      
+      if (secId === 'hero') html += generateHero(sectionData.hero, false);
+      if (secId === 'main') html += generateMainText(sectionData.main, false);
+      if (secId === 'services') html += generateServices(sectionData.services, false);
+      if (secId === 'testimonials') html += generateTestimonials(sectionData.testimonials, false);
+      if (secId === 'portfolio') html += generatePortfolio(sectionData.portfolio, false);
+      if (secId === 'cta') html += generateCTA(sectionData.cta, false);
+      if (secId === 'contact') html += generateContact(sectionData.contact, false);
+    });
+
+    html += `\n</div>\n<!-- /wp:group -->`;
+
+    const codeEl = document.getElementById('output-code');
+    codeEl.textContent = html;
+  }
+
+  function generate() {
+    generateCodeOnly();
+
+    // Rebuild iframe source using the exact clean structural templates (no control buttons inside the layout)
+    const inlineCSSBlock = getInlineCSSBlock();
+    let iframeHtml = inlineCSSBlock + `<!-- wp:group {"align":"full","layout":{"type":"constrained"}} -->\n<div class="wp-block-group alignfull">`;
+
+    sectionsOrder.forEach(secId => {
+      if (!sectionData[secId].active) return;
+      
+      if (secId === 'hero') iframeHtml += generateHero(sectionData.hero, true);
+      if (secId === 'main') iframeHtml += generateMainText(sectionData.main, true);
+      if (secId === 'services') iframeHtml += generateServices(sectionData.services, true);
+      if (secId === 'testimonials') iframeHtml += generateTestimonials(sectionData.testimonials, true);
+      if (secId === 'portfolio') iframeHtml += generatePortfolio(sectionData.portfolio, true);
+      if (secId === 'cta') iframeHtml += generateCTA(sectionData.cta, true);
+      if (secId === 'contact') iframeHtml += generateContact(sectionData.contact, true);
+    });
+
+    iframeHtml += `\n</div>\n<!-- /wp:group -->`;
+
+    injectIframe(iframeHtml);
+  }
+
+  function injectIframe(htmlCode) {
+    const iframe = document.getElementById('preview-iframe');
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+    const previewCSS = `
+      :root {
+        --color-primary: #026a71;
+        --color-primary-hover: #0a4f54;
+        --color-primary-highlight: #d4e6e5;
+        --color-text: #1d1b16;
+        --color-text-muted: #69665d;
+        --color-bg-light: #faf9f6;
+        --color-divider: #e5e2da;
+        --radius-md: 8px;
+        --radius-lg: 12px;
+        --radius-full: 9999px;
+      }
+      * { box-sizing: border-box; }
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--color-text);
+        background-color: #ffffff;
+        margin: 0; padding: 0;
+      }
+      
+      .alignwide { max-width: 1200px; margin-left: auto; margin-right: auto; padding-left: 2rem; padding-right: 2rem; }
+      .alignfull { width: 100%; margin-left: auto; margin-right: auto; }
+
+      .wp-block-group { padding: 5rem 2rem; position: relative; }
+      
+      h1, h2, h3, h4 { margin-top: 0; line-height: 1.2; color: var(--color-text); font-weight: 700; }
+      h1 { font-size: clamp(2.25rem, 4vw, 3.5rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+      h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+      h3 { font-size: clamp(1.25rem, 2vw, 1.45rem); font-weight: 600; margin-bottom: 0.75rem; }
+      p { margin-top: 0; margin-bottom: 1.25rem; color: var(--color-text-muted); font-size: 1rem; }
+      a { color: var(--color-primary); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+
+      .wp-block-buttons { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.5rem; }
+      .wp-block-buttons[style*="justify-content:center"] { justify-content: center; }
+      .wp-block-button__link {
+        display: inline-block; background-color: var(--color-primary); color: #ffffff !important;
+        padding: 0.85rem 2rem; text-decoration: none !important; font-weight: 600; font-size: 0.95rem;
+        border-radius: var(--radius-md); transition: background-color 150ms ease, color 150ms ease, outline 150ms ease;
+      }
+      .wp-block-button__link:hover { background-color: var(--color-primary-hover); }
+
+      .hero-section { background-color: #ffffff; padding-top: 6rem; padding-bottom: 6rem; }
+      .hero-section .wp-block-columns { align-items: center; gap: 4rem; }
+      .hero-section p { font-size: 1.15rem; line-height: 1.6; margin-bottom: 2rem; }
+
+      .intro-section {
+        background-color: var(--color-bg-light); text-align: center;
+        border-top: 1px solid var(--color-divider); border-bottom: 1px solid var(--color-divider);
+      }
+      .intro-section p { max-width: 800px; margin-left: auto; margin-right: auto; font-size: 1.2rem; line-height: 1.7; }
+
+      .services-section { background-color: #ffffff; }
+      .services-section h2 { margin-bottom: 3.5rem; }
+      .services-section .wp-block-columns { gap: 2.5rem; }
+
+      .testimonials-section {
+        background-color: var(--color-bg-light); border-top: 1px solid var(--color-divider); border-bottom: 1px solid var(--color-divider);
+      }
+      .testimonials-section h2 { margin-bottom: 3.5rem; }
+
+      .portfolio-section { background-color: #ffffff; }
+      .portfolio-section h2 { margin-bottom: 3.5rem; }
+
+      .cta-section {
+        background-color: #1d1b16; color: #ffffff !important; text-align: center; padding-top: 6.5rem; padding-bottom: 6.5rem;
+      }
+      .cta-section h2 { color: #ffffff; }
+      .cta-section p { color: #a7a398; font-size: 1.15rem; max-width: 650px; margin-left: auto; margin-right: auto; margin-bottom: 2rem; }
+      .cta-section .wp-block-button__link { background-color: #ffffff; color: #1d1b16 !important; }
+      .cta-section .wp-block-button__link:hover { background-color: #faf9f6; }
+
+      /* Rigid centered CTA buttons override */
+      .cta-section .wp-block-buttons {
+        display: flex !important;
+        justify-content: center !important;
+        text-align: center !important;
+        width: 100% !important;
+      }
+      .cta-section .wp-block-button {
+        margin: 0 auto !important;
+      }
+
+      .contact-section { background-color: #ffffff; }
+      .contact-section .wp-block-columns { align-items: center; gap: 4rem; }
+      .contact-section h2 { margin-bottom: 1.5rem; }
+      .contact-section p { margin-bottom: 1rem; font-size: 1.05rem; }
+
+      .contact-section .contact-icon-svg {
+        width: 18px; height: 18px; display: inline-block; vertical-align: middle;
+        margin-right: 8px; stroke: currentColor; stroke-width: 2px; fill: none; color: var(--color-primary);
+      }
+      
+      /* Pure visual design cue borders highlighting editable nodes in Sandbox Mode */
+      [contenteditable="true"] {
+        outline: 1px dashed rgba(2, 106, 113, 0.2);
+        border-radius: 4px;
+        padding: 1px;
+        transition: outline 0.15s ease, background 0.15s ease;
+      }
+      [contenteditable="true"]:hover {
+        outline: 1px dashed #026a71;
+        background: rgba(2, 106, 113, 0.03);
+      }
+      [contenteditable="true"]:focus {
+        outline: 2px solid #026a71;
+        background: rgba(2, 106, 113, 0.06);
+      }
+      
+      /* Distinct high-contrast styles while editing buttons */
+      .wp-block-button__link[contenteditable="true"]:focus {
+        outline: 3px solid #f59e0b !important; /* Prominent Amber Outline */
+        outline-offset: 3px !important;
+        background-color: #ffffff !important;
+        color: #026a71 !important; /* Easy to read primary color */
+        text-shadow: none !important;
+      }
+      
+      /* Inverted high-contrast styles for dark background CTA button */
+      .cta-section .wp-block-button__link[contenteditable="true"]:focus {
+        background-color: #026a71 !important;
+        color: #ffffff !important;
+        outline: 3px solid #f59e0b !important;
+      }
+
+      [data-dbl-type="image"], [data-dbl-type="link"] {
+        cursor: pointer;
+        transition: outline 0.15s ease, filter 0.15s ease;
+      }
+      [data-dbl-type="image"]:hover {
+        outline: 2px dashed #026a71;
+      }
+      [data-dbl-type="link"]:hover {
+        outline: 2px dashed #026a71;
+      }
+
+      /* Desktop Locked Equal Columns Constraint preventing text smushing */
+      @media (min-width: 782px) {
+        .wp-block-columns { display: flex !important; flex-wrap: nowrap !important; gap: 2.5rem !important; }
+        .wp-block-column { 
+          flex: 1 1 0% !important; 
+          min-width: 0 !important; 
+          display: flex !important; 
+          flex-direction: column !important; 
+        }
+      }
+
+      @media (max-width: 768px) {
+        .wp-block-columns { flex-direction: column !important; gap: 2rem !important; }
+        .wp-block-group { padding: 4rem 1.25rem; }
+        .hero-section, .contact-section { padding-top: 4rem; padding-bottom: 4rem; }
+        .hero-section .wp-block-columns, .contact-section .wp-block-columns { gap: 2rem; }
+      }
+    `;
+
+    // Visual sandboxing internal scripting payload
+    const iframeScript = `
+      <script>
+        // Track visual keystrokes instantly to coordinate clean Code Output compiles
+        document.body.addEventListener('input', (e) => {
+          const target = e.target;
+          if (target.hasAttribute('data-section') && target.hasAttribute('data-key')) {
+            const section = target.getAttribute('data-section');
+            const key = target.getAttribute('data-key');
+            window.parent.updateStateValue(section, key, target.innerText || target.textContent);
+          }
+        });
+
+        // Intercept formatting paste events to enforce styling-free raw data imports
+        document.body.addEventListener('paste', (e) => {
+          e.preventDefault();
+          const text = (e.clipboardData || window.clipboardData).getData('text/plain');
+          
+          if (document.queryCommandSupported('insertText')) {
+            document.execCommand('insertText', false, text);
+          } else {
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+            selection.deleteFromDocument();
+            selection.getRangeAt(0).insertNode(document.createTextNode(text));
+          }
+
+          const target = e.target;
+          if (target.hasAttribute('data-section') && target.hasAttribute('data-key')) {
+            const section = target.getAttribute('data-section');
+            const key = target.getAttribute('data-key');
+            window.parent.updateStateValue(section, key, target.innerText || target.textContent);
+          }
+        });
+
+        // Prompt window coordinates for URLs and dynamic source attributes
+        document.body.addEventListener('dblclick', (e) => {
+          const target = e.target.closest('[data-dbl-type]');
+          if (!target) return;
+          
+          const type = target.getAttribute('data-dbl-type');
+          const section = target.getAttribute('data-section');
+          const key = target.getAttribute('data-key');
+          
+          if (type === 'image') {
+            const currentVal = target.getAttribute('src');
+            const newVal = prompt('Edit Image URL:', currentVal);
+            if (newVal !== null && newVal.trim() !== '') {
+              target.setAttribute('src', newVal.trim());
+              window.parent.updateStateValue(section, key, newVal.trim());
+            }
+          } else if (type === 'link') {
+            const currentVal = target.getAttribute('href');
+            const newVal = prompt('Edit Link Target URL:', currentVal);
+            if (newVal !== null) {
+              target.setAttribute('href', newVal.trim());
+              const linkKey = target.getAttribute('data-link-key');
+              window.parent.updateStateValue(section, linkKey, newVal.trim());
+            }
+          }
+        });
+      <\/script>
+    `;
+
+    iframeDoc.open();
+    iframeDoc.write(`
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <style>${previewCSS}</style>
+        </head>
+        <body>
+          ${htmlCode}
+          ${iframeScript}
+        </body>
+      </html>
+    `);
+    iframeDoc.close();
+  }
+
+  function copyCode() {
+    const code = document.getElementById('output-code').textContent;
+    if (!code) return;
+    const btn = document.getElementById('copy-btn');
+    const success = () => {
+      btn.classList.add('copied');
+      btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M2.5 8.5l3.5 3.5 7-8" stroke-linecap="round" stroke-linejoin="round"/></svg> Copied!';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M10 5V3.5A1.5 1.5 0 0 0 8.5 2h-5A1.5 1.5 0 0 0 2 3.5v5A1.5 1.5 0 0 0 3.5 10H5" stroke-linecap="round"/></svg> Copy Blocks';
+      }, 2000);
+    };
+    navigator.clipboard.writeText(code).then(success).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = code; ta.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      success();
+    });
+  }
+
+  // Run initial loading coordinates
+  generate();
+  renderSectionsDropdown();
+</script>
+</body>
+</html>
