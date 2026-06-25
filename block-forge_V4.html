@@ -1,3 +1,5 @@
+<!-- START OF FILE block-forge_V4.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1000,7 +1002,7 @@ ${itemsBlock}</div>
 <!-- /wp:paragraph -->
 
 <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
-<div class="wp-block-buttons" style="justify-content: center !important;"><!-- wp:button -->
+<div class="wp-block-buttons"><!-- wp:button -->
 <div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="${btnLink}" ${editAttr('btn_text')} ${dblClickAttr('link', 'btn_text', 'btn_link')}>${btnText}</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
@@ -1053,13 +1055,71 @@ ${itemsBlock}</div>
   function getInlineCSSBlock() {
     return `<!-- wp:html -->
 <style>
+  /* Core layout design variables */
+  :root {
+    --bf-primary: #026a71;
+    --bf-primary-hover: #0a4f54;
+    --bf-primary-highlight: #d4e6e5;
+    --bf-text: #1d1b16;
+    --bf-text-muted: #69665d;
+    --bf-bg-light: #faf9f6;
+    --bf-divider: #e5e2da;
+  }
+
+  /* Spacious Section Padding layout standard */
+  .hero-section, .intro-section, .services-section, .testimonials-section, .portfolio-section, .cta-section, .contact-section {
+    padding-top: clamp(6rem, 11vw, 10rem) !important;
+    padding-bottom: clamp(6rem, 11vw, 10rem) !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+  }
+
+  /* Wide and Full block alignment layout support */
+  .alignwide {
+    max-width: 1200px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .alignfull {
+    width: 100% !important;
+  }
+
+  /* Background values synchronizing look and feel on WordPress */
+  .hero-section { background-color: #ffffff !important; }
+  .intro-section {
+    background-color: var(--bf-bg-light) !important;
+    border-top: 1px solid var(--bf-divider) !important;
+    border-bottom: 1px solid var(--bf-divider) !important;
+    text-align: center !important;
+  }
+  .intro-section p { max-width: 800px !important; margin-left: auto !important; margin-right: auto !important; }
+  .services-section { background-color: #ffffff !important; }
+  .testimonials-section {
+    background-color: var(--bf-bg-light) !important;
+    border-top: 1px solid var(--bf-divider) !important;
+    border-bottom: 1px solid var(--bf-divider) !important;
+  }
+  .portfolio-section { background-color: #ffffff !important; }
+  .cta-section {
+    background-color: #1d1b16 !important;
+    color: #ffffff !important;
+    text-align: center !important;
+  }
+  .cta-section h2 { color: #ffffff !important; }
+  .cta-section p { color: #a7a398 !important; }
+  .cta-section .wp-block-button__link { background-color: #ffffff !important; color: #1d1b16 !important; }
+  .cta-section .wp-block-button__link:hover { background-color: #faf9f6 !important; }
+  .contact-section { background-color: #ffffff !important; }
+
   /* Standard structural columns layout styles */
   @media (min-width: 782px) {
     .wp-block-columns {
       display: flex !important;
       flex-wrap: nowrap !important;
       align-items: stretch !important;
-      gap: 2rem !important;
+      gap: 2.5rem !important;
     }
     .wp-block-column {
       flex: 1 1 0% !important;
@@ -1301,7 +1361,15 @@ ${itemsBlock}</div>
       .alignwide { max-width: 1200px; margin-left: auto; margin-right: auto; padding-left: 2rem; padding-right: 2rem; }
       .alignfull { width: 100%; margin-left: auto; margin-right: auto; }
 
-      .wp-block-group { padding: 5rem 2rem; position: relative; }
+      /* Visual spacing rule applied directly inside visually simulated sections */
+      .hero-section, .intro-section, .services-section, .testimonials-section, .portfolio-section, .cta-section, .contact-section {
+        padding-top: clamp(6rem, 11vw, 10rem) !important;
+        padding-bottom: clamp(6rem, 11vw, 10rem) !important;
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+        box-sizing: border-box;
+        position: relative;
+      }
       
       h1, h2, h3, h4 { margin-top: 0; line-height: 1.2; color: var(--color-text); font-weight: 700; }
       h1 { font-size: clamp(2.25rem, 4vw, 3.5rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
@@ -1312,7 +1380,6 @@ ${itemsBlock}</div>
       a:hover { text-decoration: underline; }
 
       .wp-block-buttons { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.5rem; }
-      .wp-block-buttons[style*="justify-content:center"] { justify-content: center; }
       .wp-block-button__link {
         display: inline-block; background-color: var(--color-primary); color: #ffffff !important;
         padding: 0.85rem 2rem; text-decoration: none !important; font-weight: 600; font-size: 0.95rem;
@@ -1320,7 +1387,7 @@ ${itemsBlock}</div>
       }
       .wp-block-button__link:hover { background-color: var(--color-primary-hover); }
 
-      .hero-section { background-color: #ffffff; padding-top: 6rem; padding-bottom: 6rem; }
+      .hero-section { background-color: #ffffff; }
       .hero-section .wp-block-columns { align-items: center; gap: 4rem; }
       .hero-section p { font-size: 1.15rem; line-height: 1.6; margin-bottom: 2rem; }
 
@@ -1343,7 +1410,7 @@ ${itemsBlock}</div>
       .portfolio-section h2 { margin-bottom: 3.5rem; }
 
       .cta-section {
-        background-color: #1d1b16; color: #ffffff !important; text-align: center; padding-top: 6.5rem; padding-bottom: 6.5rem;
+        background-color: #1d1b16; color: #ffffff !important; text-align: center;
       }
       .cta-section h2 { color: #ffffff; }
       .cta-section p { color: #a7a398; font-size: 1.15rem; max-width: 650px; margin-left: auto; margin-right: auto; margin-bottom: 2rem; }
@@ -1427,7 +1494,6 @@ ${itemsBlock}</div>
 
       @media (max-width: 768px) {
         .wp-block-columns { flex-direction: column !important; gap: 2rem !important; }
-        .wp-block-group { padding: 4rem 1.25rem; }
         .hero-section, .contact-section { padding-top: 4rem; padding-bottom: 4rem; }
         .hero-section .wp-block-columns, .contact-section .wp-block-columns { gap: 2rem; }
       }
